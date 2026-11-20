@@ -39,3 +39,7 @@ Node 18+ (22 recommended), ffmpeg on PATH, Python 3.10+ with numpy. Optional: `t
 ## Studio authoring (MF-05)
 
 For requests to publish or edit a MotionForge Studio project, read docs/STUDIO_WORKFLOW.md after the existing motion-director skill. Author all files in videos/<slug>/, update the v1 project manifest, and use a GitHub feature branch and PR. Preserve existing approval gates, asset licensing, and QA. The public Pages site is read-only, and Actions only deploys the site, not the video.
+
+## Studio templates and QA (MF-08)
+
+When a Studio video fits a book trailer, walking route, infographic or app-preview format, consult docs/STUDIO_TEMPLATES.md and use the reusable source template in studio/project-templates. Run node tools/studio-qa.mjs <slug> before opening a project PR. Do not publish schematic route drawings as genuine maps, demo numbers as real statistics, or concept UI as real app screenshots. Maintain all motion-director approvals and licensing checks.

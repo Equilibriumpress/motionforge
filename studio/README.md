@@ -75,3 +75,7 @@ The optional --formats flag uses the existing tools/export.mjs with blurred fill
 The GitHub Pages app displays a render command for Canvas/HyperFrames. It cannot run arbitrary HyperFrames HTML through FFmpeg inside the browser. Remotion template projects retain the browser renderer. Rendering does not run in GitHub Actions.
 
 Full 3D scenes, module imports, audio synchronization, cross-scene effects, layout overflow and visual quality still require a production preview and final QA review.
+
+## MF-08 · Video templates and QA
+
+Four reusable video templates can be created with npm run new:template -- --template book-trailer --slug my-book --title "MY BOOK". See docs/STUDIO_TEMPLATES.md. Use npm run qa:projects for fast structural checks and npm run test:studio for the built-in template and manifest tests. Source projects remain in videos/ and are rendered locally, not on GitHub Actions.
