@@ -15,7 +15,7 @@
     "test:studio": "node --test project-templates/library.test.mjs ../tools/studio-qa.test.mjs",
     "test:catalog": "node --test scripts/build-motion-catalog.test.mjs",
     "new:upstream": "node scripts/new-from-upstream.mjs",
-    "test:upstream": "node --test scripts/new-from-upstream.test.mjs scripts/build-motion-catalog.test.mjs"
+    "test:upstream": "node --test scripts/new-from-upstream.test.mjs scripts/validate-native-production.test.mjs scripts/build-motion-catalog.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
