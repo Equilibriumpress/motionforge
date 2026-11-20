@@ -1,70 +1,86 @@
 {
-  "concept": "Peak District roadtrip — four confirmed places, one 30-second cinematic map story",
-  "selectedStyle": "route-journey",
-  "sourceStyle": "skills/style-library/styles/route-journey/STYLE.md",
-  "sourceTemplate": "templates/globe-arcs-3d",
-  "format": "16:9",
-  "fps": 30,
-  "durationSeconds": 30,
-  "palette": {
-    "background": "#EEEBE3",
-    "dark": "#1D2326",
-    "ink": "#1E2B2F",
-    "accent": "#E23D6F",
-    "water": "#AECBD8",
-    "forest": "#CFDCC0"
+  "slug": "peak-district-roadtrip",
+  "language": "nl",
+  "format": {
+    "main": "16:9",
+    "extra": [],
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
   },
-  "typography": {
-    "display": "Outfit 800 or system-ui fallback",
-    "caption": "Outfit 500",
-    "labels": "Overpass Mono 600 or monospace fallback"
-  },
-  "sound": {
-    "status": "none included",
-    "proposed": "indie roadtrip ambience, subject to rights and approval"
-  },
+  "story_format": 4,
+  "style": "style/STYLE.md",
+  "brand": "brand.json",
+  "concept": "Vier echte haltes in het Peak District, verbonden door een geografische kennismaking en een 3D-wereldbolopening.",
+  "visual_rule": "Route Journey: rustige kleurtinten en één roze accent voor actieve locaties. Alle beweging komt uit originele HyperFrames GSAP-tijdlijnen en 3D globe.",
+  "motif": "Vier haltes, als wereldbolpins, routechecklist en slotregel",
+  "approved_by": null,
   "scenes": [
     {
       "id": "globe",
-      "title": "Engeland op de wereldbol",
-      "startSeconds": 0,
-      "durationSeconds": 8,
+      "start": 0,
+      "end": 8,
+      "cue": "In het hart van Engeland",
+      "estimate": true,
       "engine": "hyperframes",
-      "source": "scenes/globe/index.html",
-      "visual": "original 3D globe with indexed UK waypoints"
+      "template": "templates/globe-arcs-3d",
+      "layout": "3D globe op rechter 2/3, tekst links",
+      "entrance": "orbital turn, pins appear",
+      "hero": "3D globe gericht op Peak District",
+      "on_screen_text": "PEAK DISTRICT · ROADTRIP",
+      "assets": [],
+      "sfx": [],
+      "notes": "Reisregio: vier dicht bij elkaar liggende geografische punten; geen autoroute vanuit de globe"
     },
     {
       "id": "route",
-      "title": "Vier haltes op de kaart",
-      "startSeconds": 8,
-      "durationSeconds": 10,
-      "engine": "canvas",
-      "source": "scenes/route/index.html",
-      "visual": "geographic point positions; schematic connecting lines"
+      "start": 8,
+      "end": 18,
+      "cue": "Begin in Castleton",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/checklist-reveal",
+      "layout": "vier haltes links, geografisch puntenschema rechts",
+      "entrance": "original staggered rows, route line travels across points",
+      "hero": "Castleton → Mam Tor → Ladybower → Bakewell",
+      "on_screen_text": "VIER HALTES, ÉÉN ROADTRIP",
+      "assets": [
+        "data/stops.geojson"
+      ],
+      "sfx": [],
+      "notes": "De verbindingen zijn schematisch, geen OSM-weggeometrie; navigeer niet op deze kaart"
     },
     {
       "id": "highlights",
-      "title": "Heuvels, water en dorpen",
-      "startSeconds": 18,
-      "durationSeconds": 7,
-      "engine": "canvas",
-      "source": "scenes/highlights/index.html",
-      "visual": "original stylized vector triptych"
+      "start": 18,
+      "end": 25,
+      "cue": "Heuvelruggen",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/kinetic-title",
+      "layout": "grote kinetische kop op neutrale achterzijde met heuvellijnen",
+      "entrance": "original word-by-word GSAP rise, accent and underline",
+      "hero": "HEUVELS EN VERGEZICHTEN",
+      "on_screen_text": "HEUVELS EN VERGEZICHTEN · WATER & DORPEN",
+      "assets": [],
+      "sfx": [],
+      "notes": "Geen fotografie of verzonnen bezienswaardigheden"
     },
     {
       "id": "outro",
-      "title": "Plan de roadtrip",
-      "startSeconds": 25,
-      "durationSeconds": 5,
-      "engine": "canvas",
-      "source": "scenes/outro/index.html",
-      "visual": "animated title and route line"
+      "start": 25,
+      "end": 30,
+      "cue": "Vier haltes",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/kinetic-title",
+      "layout": "full-width typografie en haltesstrip",
+      "entrance": "original kinetic GSAP entrance",
+      "hero": "JOUW VOLGENDE ROADTRIP?",
+      "on_screen_text": "JOUW VOLGENDE ROADTRIP?",
+      "assets": [],
+      "sfx": [],
+      "notes": "conceptversie, geen audio"
     }
-  ],
-  "constraints": [
-    "No fake road routing",
-    "No copyrighted media assets",
-    "All location points are approximate",
-    "No paid API calls"
   ]
 }

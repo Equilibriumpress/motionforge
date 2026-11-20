@@ -24,13 +24,35 @@ export function originalProductionFindings(project,production,exists=()=>true){
     fail('TEMPLATE_PARAMS','Original params.json contract not recorded.');
   if(production.selectedStyle!==style)fail('STYLE','Project style and approved source style differ.');
   if(project?.engine!==production.engine)fail('ENGINE','Production engine and project engine differ.');
-  if(project?.format!==production.originalFormat)
-    fail('FORMAT','Original template size differs from the project format. A new approved layout is required.');
+  if(project?.format!==production.originalFormat){
+    const adaptation=production.adaptation;
+    if(adaptation?.targetFormat!==project?.format||
+       !['draft','review','approved'].includes(adaptation?.status)||
+       !adaptation?.notes?.trim())
+      fail('FORMAT','Original template size differs and no documented source-based adaptation exists.');
+    else if(project?.status==='ready'&&
+      (adaptation.status!=='approved'||!adaptation.evidence||!exists(adaptation.evidence)))
+      fail('FORMAT_APPROVAL','A landscape adaptation requires approved rendered storyboard evidence before READY.');
+  }
   if(!exists('style/STYLE.md'))fail('STYLE_FILE','Project copy of the selected STYLE.md missing.');
   if(!exists(production.parameterValues))fail('PARAMETER_VALUES','Edited original parameter file missing.');
+  const sourceScene=production.sourceScene||'scenes/intro/index.html';
   if(!Array.isArray(project?.scenes)||!project.scenes.some(scene=>
-    scene.engine===production.engine&&scene.source==='scenes/intro/index.html'))
-    fail('SOURCE_SCENE','Original source scene missing from the project. Do not replace with generic Canvas.');
+    scene.engine===production.engine&&scene.source===sourceScene))
+    fail('SOURCE_SCENE','Registered original source scene missing from the project: '+sourceScene);
+  if(production.sceneTemplates!==undefined){
+    if(!Array.isArray(production.sceneTemplates)||production.sceneTemplates.length!==project?.scenes?.length)
+      fail('SCENE_PROVENANCE','Every selected original scene must have its own original template record.');
+    else for(const item of production.sceneTemplates){
+      const scene=project.scenes.find(s=>s.id===item.id);
+      if(!scene||scene.engine!=='hyperframes'||
+        scene.source!==item.source||!slugPattern.test(item.template||'')||
+        item.originalSource!=='templates/'+item.template+'/index.html')
+        fail('SCENE_PROVENANCE','Invalid original MotionForge source for scene: '+item.id);
+      if(!exists(item.source)||!exists(item.parameters))
+        fail('SCENE_FILES','Scene source or original parameter values missing: '+item.id);
+    }
+  }
   const gates=production.gates||{};
   const required=['G1','G2','G3','G4','G5','G6','G7'];
   for(const gate of required){
@@ -57,10 +79,30 @@ export async function checkOriginalProject(folder){
   const prod=JSON.parse(await readFile(file,'utf8'));
   // Every evidence path is checked as a project-relative path, never outside
   // the user's project. Source and parameter files are stable references.
-  return originalProductionFindings(manifest,prod,value=>{
+  const findings=originalProductionFindings(manifest,prod,value=>{
     if(typeof value!=='string'||value.startsWith('/')||value.split('/').includes('..'))return false;
     return existsSync(path.join(folder,value));
   });
+  // Inspect the actual source too. A provenance declaration alone is not
+  // evidence that the original MotionForge animation source was retained.
+  if(Array.isArray(prod.sceneTemplates))for(const item of prod.sceneTemplates){
+    const where=item.source;
+    if(typeof where!=='string'||where.startsWith('/')||where.split('/').includes('..'))continue;
+    try{
+      const html=await readFile(path.join(folder,where),'utf8');
+      const match=html.match(/motionforge template:\s*([a-z0-9-]+)/);
+      if(match?.[1]!==item.template)findings.push({level:'FAIL',code:'REAL_SOURCE',
+        reason:'Scene '+item.id+' does not contain original template source '+item.template});
+      const schemaFile=path.join(path.dirname(path.join(folder,where)),'params.json');
+      const schema=JSON.parse(await readFile(schemaFile,'utf8'));
+      if(schema.id!==item.template)findings.push({level:'FAIL',code:'REAL_PARAMS',
+        reason:'Original parameter schema mismatch: '+item.id});
+    }catch(error){
+      findings.push({level:'FAIL',code:'SOURCE_INSPECTION',
+        reason:'Cannot verify original source and parameters for '+item.id+': '+error.message});
+    }
+  }
+  return findings;
 }
 const direct=process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url);
 if(direct){

@@ -1,0 +1,17 @@
+{
+  "lines": [
+    "HEUVELS EN",
+    "VERGEZICHTEN",
+    "WATER & DORPEN"
+  ],
+  "accentWord": "WATER",
+  "eyebrow": "PEAK DISTRICT · ONDERWEG",
+  "theme": "dark",
+  "lang": "nl",
+  "fontSize": 90,
+  "start": 0.35,
+  "stagger": 0.19,
+  "underline": true,
+  "exit": true,
+  "duration": 7
+}

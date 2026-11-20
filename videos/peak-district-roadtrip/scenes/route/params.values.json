@@ -1,0 +1,22 @@
+{
+  "title": "Vier haltes, één <span class=\"serif accent\">roadtrip</span>",
+  "items": [
+    "Castleton",
+    "Mam Tor",
+    "Ladybower",
+    "Bakewell"
+  ],
+  "times": [
+    1,
+    2.9,
+    4.8,
+    6.7
+  ],
+  "start": 1,
+  "gap": 1.9,
+  "checkDelay": 0.4,
+  "numbered": true,
+  "theme": "light",
+  "lang": "nl",
+  "duration": 10
+}

@@ -34,7 +34,9 @@
     "esbuild": "^0.25.0",
     "@fontsource/inter": "^5.2.0",
     "@fontsource/instrument-serif": "^5.2.0",
-    "@fontsource/jetbrains-mono": "^5.2.0"
+    "@fontsource/jetbrains-mono": "^5.2.0",
+    "@fontsource/outfit": "^5.2.0",
+    "@fontsource/overpass-mono": "^5.2.0"
   },
   "engines": {
     "node": ">=20.19.0"

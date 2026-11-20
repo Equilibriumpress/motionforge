@@ -1,32 +1,28 @@
-# PEAK DISTRICT · ROADTRIP
+# PEAK DISTRICT · ROADTRIP — Tweede concepteditie
 
-Status: conceptscript, niet ingesproken en nog niet door gebruiker goedgekeurd.
+Status: herschreven storyboard, Nederlandse tekst niet ingesproken of definitief goedgekeurd.
 
-## Voice-over, Nederlands, ongeveer 64 woorden
+## Script / voice-over (voorstel)
 
-0:00–0:08 · "In het hart van Engeland ligt de Peak District. Een streek voor wie graag onderweg is en af en toe stopt."
+00:00–00:08 · In het hart van Engeland ligt de Peak District. Een streek met uitzicht, dorpen en onverwachte wegen.
 
-0:08–0:18 · "Begin in Castleton. Kijk uit vanaf Mam Tor, ontdek het water van Ladybower Reservoir en neem de tijd voor Bakewell."
+00:08–00:18 · Begin in Castleton. Kijk uit vanaf Mam Tor, ontdek Ladybower Reservoir en neem de tijd voor Bakewell.
 
-0:18–0:25 · "Heuvelruggen, brede vergezichten, een stuwmeer en dorpen vol karakter. Iedere halte laat een ander stukje van de streek zien."
+00:18–00:25 · Heuvelruggen en vergezichten. Water en dorpen. Je stopt waar het landschap je aandacht trekt.
 
-0:25–0:30 · "Vier haltes. Eén roadtrip. Peak District. Waar begin jij?"
+00:25–00:30 · Vier haltes. Eén roadtrip. Peak District. Waar begin jij?
 
-## Storyboard
+## Storyboard · 900 frames
 
-| Tijd | Scène | Visueel | Tekst in beeld |
+| Tijd | Frames | Original MotionForge scene | In beeld |
 |---|---|---|---|
-| 00:00–00:08 | globe | Originele 3D-globe, camera draait naar Engeland, locatiepins en gebogen verbindingen | PEAK DISTRICT / ENGELAND |
-| 00:08–00:18 | route | Vier geografische haltepunten, schematische verbindingen, nummers verschijnen | CASTLETON / MAM TOR / LADYBOWER / BAKEWELL |
-| 00:18–00:25 | highlights | Drie originele vectorpanelen met heuveltop, reservoir en dorp | MAM TOR / LADYBOWER / BAKEWELL |
-| 00:25–00:30 | outro | Route-lijn en titels keren terug | PEAK DISTRICT / JOUW VOLGENDE ROADTRIP? |
+| 0–8 s | 0–239 | globe-arcs-3d, Three.js + GSAP | 3D-globe draait naar Engeland, Peak District-title en pins |
+| 8–18 s | 240–539 | checklist-reveal, GSAP + originele kaartoverlay | vier haltes verschijnen, roze lijn langs geografische punten |
+| 18–25 s | 540–749 | kinetic-title, GSAP | HEUVELS EN / VERGEZICHTEN / WATER & DORPEN |
+| 25–30 s | 750–899 | kinetic-title, GSAP | JOUW VOLGENDE / ROADTRIP? |
 
-## Feitenlijst
+## Bronnen en eerlijkheid
 
-- Castleton ligt in de Hope Valley en wordt omringd door Mam Tor: Peak District National Park Authority.
-- Mam Tor heeft een uitzicht over de Peak District: National Trust.
-- Ladybower Reservoir ligt in het Peak District: Peak District National Park Authority.
-- Bakewell is toegangspoort tot White Peak: Peak District National Park Authority.
-- Puntlocaties zijn indicatief en niet bedoeld voor navigatie; zie data/SOURCES.md.
+De namen Castleton, Mam Tor, Ladybower Reservoir en Bakewell zijn redactioneel gecontroleerd. De GeoJSON bevat indicatieve coördinaten. Verbindingen in de animatie zijn schematisch, niet bereden, niet vanuit een routeringstool berekend en niet bedoeld als routeadvies. Zie data/SOURCES.md.
 
-Geen niet-geverifieerde kilometers, rijtijden, wegopenstellingen of specifieke routeclaims. Geen muziek of beeld van derden in deze concepteditie.
+Er is geen audio, beeldmateriaal van derden of commerciële kaartlaag opgenomen. Het commentaar is nog niet tijdgesynchroniseerd met een echte voice-over. MotionForge G2, G5, G6 en G7 staan open.

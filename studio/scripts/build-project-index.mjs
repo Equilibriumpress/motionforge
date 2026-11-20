@@ -104,15 +104,32 @@ async function copySceneFiles(from,to,budget) {
 
 async function ensureHyperFramesAssets(target) {
   const base=path.join(path.dirname(target),'assets');
-  for (const [name,from] of [
+  for(const [name,from] of [
     ['base.css',path.join(repoRoot,'engines/hyperframes/base.css')],
     ['mf-runtime.js',path.join(repoRoot,'engines/hyperframes/mf-runtime.js')],
     ['vendor/gsap.min.js',path.join(studioRoot,'node_modules/gsap/dist/gsap.min.js')]
-  ]) {
+  ]){
     const dst=path.join(base,name);
-    if (!existsSync(dst) && existsSync(from)) {
+    requireCondition(existsSync(from),target,'Missing original HyperFrames runtime dependency: '+from+' (npm install)');
+    if(!existsSync(dst)){
       await mkdir(path.dirname(dst),{recursive:true});
       await copyFile(from,dst);
+    }
+  }
+  // Native Route Journey typography from licensed npm packages.
+  // Keep font binaries out of committed source.
+  const html=await readFile(target,'utf8');
+  if(html.includes('route-journey-landscape-fonts')){
+    for(const [filename,packagePath] of [
+      ['outfit-latin-500-normal.woff2','@fontsource/outfit/files/outfit-latin-500-normal.woff2'],
+      ['outfit-latin-800-normal.woff2','@fontsource/outfit/files/outfit-latin-800-normal.woff2'],
+      ['overpass-mono-latin-600-normal.woff2','@fontsource/overpass-mono/files/overpass-mono-latin-600-normal.woff2']
+    ]){
+      const src=path.join(studioRoot,'node_modules',packagePath);
+      requireCondition(existsSync(src),target,'Missing Route Journey font: '+packagePath+' (npm install)');
+      const dst=path.join(base,'fonts',filename);
+      await mkdir(path.dirname(dst),{recursive:true});
+      if(!existsSync(dst))await copyFile(src,dst);
     }
   }
 }
