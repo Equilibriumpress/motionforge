@@ -125,6 +125,8 @@ if [ "$THREE" = 1 ]; then
   }
   VENDOR="$OUT/assets/vendor"
   THREE_MIN="$(npm_file three build/three.module.min.js)"
+  # Three.js r170 also ships the unminified module; keep the original import-map path.
+  [ -n "$THREE_MIN" ] || THREE_MIN="$(npm_file three build/three.module.js)"
   if [ -n "$THREE_MIN" ]; then
     THREE_PKG="$(dirname "$(dirname "$THREE_MIN")")"
     cp "$THREE_MIN" "$VENDOR/three.module.min.js"
