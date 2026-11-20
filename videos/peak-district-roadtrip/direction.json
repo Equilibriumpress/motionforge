@@ -1,0 +1,70 @@
+{
+  "concept": "Peak District roadtrip — four confirmed places, one 30-second cinematic map story",
+  "selectedStyle": "route-journey",
+  "sourceStyle": "skills/style-library/styles/route-journey/STYLE.md",
+  "sourceTemplate": "templates/globe-arcs-3d",
+  "format": "16:9",
+  "fps": 30,
+  "durationSeconds": 30,
+  "palette": {
+    "background": "#EEEBE3",
+    "dark": "#1D2326",
+    "ink": "#1E2B2F",
+    "accent": "#E23D6F",
+    "water": "#AECBD8",
+    "forest": "#CFDCC0"
+  },
+  "typography": {
+    "display": "Outfit 800 or system-ui fallback",
+    "caption": "Outfit 500",
+    "labels": "Overpass Mono 600 or monospace fallback"
+  },
+  "sound": {
+    "status": "none included",
+    "proposed": "indie roadtrip ambience, subject to rights and approval"
+  },
+  "scenes": [
+    {
+      "id": "globe",
+      "title": "Engeland op de wereldbol",
+      "startSeconds": 0,
+      "durationSeconds": 8,
+      "engine": "hyperframes",
+      "source": "scenes/globe/index.html",
+      "visual": "original 3D globe with indexed UK waypoints"
+    },
+    {
+      "id": "route",
+      "title": "Vier haltes op de kaart",
+      "startSeconds": 8,
+      "durationSeconds": 10,
+      "engine": "canvas",
+      "source": "scenes/route/index.html",
+      "visual": "geographic point positions; schematic connecting lines"
+    },
+    {
+      "id": "highlights",
+      "title": "Heuvels, water en dorpen",
+      "startSeconds": 18,
+      "durationSeconds": 7,
+      "engine": "canvas",
+      "source": "scenes/highlights/index.html",
+      "visual": "original stylized vector triptych"
+    },
+    {
+      "id": "outro",
+      "title": "Plan de roadtrip",
+      "startSeconds": 25,
+      "durationSeconds": 5,
+      "engine": "canvas",
+      "source": "scenes/outro/index.html",
+      "visual": "animated title and route line"
+    }
+  ],
+  "constraints": [
+    "No fake road routing",
+    "No copyrighted media assets",
+    "All location points are approximate",
+    "No paid API calls"
+  ]
+}
