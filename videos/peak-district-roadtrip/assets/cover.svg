@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Peak District roadtrip filmcover">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#182a2c"/><stop offset="1" stop-color="#1d2326"/></linearGradient></defs>
+<rect width="1920" height="1080" fill="url(#sky)"/>
+<path d="M0 760Q180 580 330 660T720 575T1120 660T1540 540T1920 700V1080H0Z" fill="#344844"/>
+<path d="M0 856Q280 730 510 860T1100 770T1500 795T1920 710V1080H0Z" fill="#53675b"/>
+<path d="M0 945Q340 870 680 948T1320 910T1920 855V1080H0Z" fill="#9aa88e"/>
+<path d="M210 952C570 780 690 965 1010 780S1530 754 1760 562" stroke="#fffdf7" stroke-width="25" fill="none" stroke-linecap="round"/>
+<path d="M210 952C570 780 690 965 1010 780S1530 754 1760 562" stroke="#E23D6F" stroke-width="12" fill="none" stroke-linecap="round"/>
+<circle cx="1760" cy="562" r="22" fill="#E23D6F" stroke="#fff" stroke-width="8"/>
+<rect x="100" y="96" width="660" height="320" rx="26" fill="#122128" fill-opacity=".93"/>
+<text x="150" y="162" font-family="Arial, sans-serif" font-weight="700" font-size="26" letter-spacing="6" fill="#FF8BAA">ENGELAND · REISVIDEO</text>
+<text x="145" y="262" font-family="Arial, sans-serif" font-weight="800" font-size="86" fill="#fffdf7">PEAK DISTRICT</text>
+<text x="150" y="336" font-family="Arial, sans-serif" font-size="44" fill="#f6d7de">ROADTRIP</text>
+<text x="154" y="1022" font-family="Arial, sans-serif" font-size="25" fill="#17262a">CASTLETON · MAM TOR · LADYBOWER · BAKEWELL</text>
+</svg>

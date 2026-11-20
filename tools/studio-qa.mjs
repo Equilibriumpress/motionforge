@@ -87,7 +87,7 @@ export async function auditProject(slug) {
           if(!html.includes('window.READY'))push('WARN','READY','Canvas scene missing readiness flag: '+scene.id);
           if(!html.includes('window.TEXTS'))push('WARN','TEXTS','Canvas scene missing text bounding boxes: '+scene.id);
         }else if(scene.engine==='hyperframes'){
-          if(!html.includes('__timelines'))push('FAIL','HF_SEEK','HyperFrames scene missing paused timeline: '+scene.id);
+          if(!html.includes('__timelines') && !/\bMF\.timeline\s*\(/.test(html))push('FAIL','HF_SEEK','HyperFrames scene missing paused timeline: '+scene.id);
         }
         if(/Math\.random\s*\(|Date\.now\s*\(|setInterval\s*\(|@keyframes\b/.test(html)){
           push('WARN','NONDETERMINISTIC','Potential wall-clock animation: '+scene.id);

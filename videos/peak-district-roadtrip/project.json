@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "peak-district-roadtrip",
+  "title": "PEAK DISTRICT · ROADTRIP",
+  "description": "30 seconden originele reisanimatie met de Globe Arcs 3D-template, vier geografisch gecontroleerde haltes en schematische route. Nederlandstalig.",
+  "status": "draft",
+  "language": "nl",
+  "format": "16:9",
+  "engine": "hyperframes",
+  "durationSeconds": 30,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": [
+    "peak-district",
+    "roadtrip",
+    "reisvideo",
+    "route-journey",
+    "globe-arcs-3d"
+  ],
+  "styleId": "route-journey",
+  "templateId": "globe-arcs-3d",
+  "mapData": "data/stops.geojson",
+  "scenes": [
+    {
+      "id": "globe",
+      "title": "Engeland op de wereldbol",
+      "startSeconds": 0,
+      "durationSeconds": 8,
+      "engine": "hyperframes",
+      "source": "scenes/globe/index.html"
+    },
+    {
+      "id": "route",
+      "title": "Vier haltes op de kaart",
+      "startSeconds": 8,
+      "durationSeconds": 10,
+      "engine": "canvas",
+      "source": "scenes/route/index.html"
+    },
+    {
+      "id": "highlights",
+      "title": "Heuvels, water en dorpen",
+      "startSeconds": 18,
+      "durationSeconds": 7,
+      "engine": "canvas",
+      "source": "scenes/highlights/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "Plan de roadtrip",
+      "startSeconds": 25,
+      "durationSeconds": 5,
+      "engine": "canvas",
+      "source": "scenes/outro/index.html"
+    }
+  ]
+}

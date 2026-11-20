@@ -1,0 +1,19 @@
+{
+  "name": "PEAK DISTRICT · ROADTRIP",
+  "tagline": "Vier haltes. Eén roadtrip.",
+  "style": "route-journey",
+  "colors": {
+    "background": "#EEEBE3",
+    "dark": "#1D2326",
+    "ink": "#1E2B2F",
+    "accent": "#E23D6F",
+    "water": "#AECBD8",
+    "forest": "#CFDCC0"
+  },
+  "fontFamilies": {
+    "display": "Outfit 800 or system-ui fallback",
+    "caption": "Outfit 500",
+    "labels": "Overpass Mono 600 or monospace fallback"
+  },
+  "watermark": false
+}

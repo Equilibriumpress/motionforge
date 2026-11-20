@@ -1,0 +1,129 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vier plekken, één reis</title><style>html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#EEEBE3}canvas{display:block;width:100%;height:100%}</style></head><body><canvas id="frame" width="1920" height="1080"></canvas><script>const SCENE={"kind":"route","duration":10,"heading":"Vier plekken, één reis"};
+
+const cv=document.getElementById('frame'),g=cv.getContext('2d');
+const W=1920,H=1080;
+cv.width=W;cv.height=H;
+const D=SCENE.duration;
+const A='#E23D6F',PAPER='#EEEBE3',INK='#1E2B2F',WATER='#AECBD8',GREEN='#CFDCC0';
+const clamp=x=>Math.max(0,Math.min(1,x));
+const ease=x=>{const v=clamp(x);return v*v*(3-2*v);};
+window.DUR=D;window.SIZE=[W,H];
+function rect(x,y,w,h,r,fill){
+ g.fillStyle=fill;g.beginPath();g.roundRect(x,y,w,h,r);g.fill();
+}
+function label(text,x,y,size=36,fill=INK,weight=600,max=1000){
+ g.fillStyle=fill;let font=size;do{g.font=weight+' '+font+'px Arial, sans-serif';if(g.measureText(text).width<=max||font<=18)break;font-=2;}while(true);g.textBaseline='alphabetic';g.fillText(text,x,y);
+}
+function line(points,fraction,color=A,width=13){
+ const total=points.reduce((sum,p,i)=>i?sum+Math.hypot(p[0]-points[i-1][0],p[1]-points[i-1][1]):sum,0);
+ let left=total*clamp(fraction);g.beginPath();g.moveTo(...points[0]);
+ for(let i=1;i<points.length&&left>0;i++){const a=points[i-1],b=points[i],d=Math.hypot(b[0]-a[0],b[1]-a[1]);const k=Math.min(1,left/d);g.lineTo(a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k);left-=d;}
+ g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.lineJoin='round';g.stroke();
+}
+const spots=[
+ {name:'Castleton',lat:53.3431,lon:-1.7764,x:0,y:0,labelX:1080,labelY:435},
+ {name:'Mam Tor',lat:53.34999,lon:-1.80942,x:0,y:0,labelX:780,labelY:245},
+ {name:'Ladybower',lat:53.39278,lon:-1.72306,x:0,y:0,labelX:1430,labelY:218},
+ {name:'Bakewell',lat:53.212,lon:-1.675,x:0,y:0,labelX:1570,labelY:840}
+];
+function placePositions(){
+ for(const p of spots){
+  p.x=915+(p.lon+1.83)/.18*800;
+  p.y=215+(53.42-p.lat)/.235*610;
+ }
+}
+placePositions();
+function paper(){
+ g.fillStyle=PAPER;g.fillRect(0,0,W,H);
+ g.fillStyle='#e1e6d5';g.beginPath();g.ellipse(1450,400,450,320,-.2,0,Math.PI*2);g.fill();
+ g.fillStyle='#d8e1d0';g.beginPath();g.ellipse(1080,760,320,240,.25,0,Math.PI*2);g.fill();
+ g.lineWidth=3;g.strokeStyle='#c4d1bd';for(let n=0;n<5;n++){g.beginPath();g.ellipse(1250,525,210+n*90,160+n*68,.1,0,Math.PI*2);g.stroke();}
+}
+function header(kicker,title){
+ label(kicker.toUpperCase(),100,98,28,A,700,1600);
+ label(title,100,188,79,INK,800,1600);
+ g.fillStyle=A;g.fillRect(101,208,155,9);
+}
+function drawRoute(t){
+ paper();
+ header('Peak District roadtrip','Vier plekken, één reis');
+ rect(100,310,575,515,28,'#ffffffd0');
+ label('01  Castleton',137,398,42,INK,700,500);
+ label('02  Mam Tor',137,489,42,INK,700,500);
+ label('03  Ladybower',137,580,42,INK,700,500);
+ label('04  Bakewell',137,671,42,INK,700,500);
+ label('ROUTE-SCHETS',138,755,28,A,800,460);
+ const active=Math.min(3,Math.floor(t/2.5));
+ rect(135,358+active*91,15,53,7,A);
+ const order=[spots[0],spots[1],spots[2],spots[3]];
+ const pts=order.map(p=>[p.x,p.y]);
+ line(pts,ease((t-.35)/7.5),'#ffffff',22);
+ line(pts,ease((t-.35)/7.5),A,12);
+ order.forEach((p,i)=>{
+  const on=clamp((t-i*1.7)/.65);
+  g.globalAlpha=ease(on);
+  g.beginPath();g.arc(p.x,p.y,19,0,Math.PI*2);g.fillStyle=i===active?A:INK;g.fill();
+  g.lineWidth=5;g.strokeStyle='#fff';g.stroke();
+  label(String(i+1),p.x-8,p.y+8,25,'#fff',800,35);
+  label(p.name,p.labelX,p.labelY,32,INK,650,280);
+  g.globalAlpha=1;
+ });
+ label('Geografische haltes · verbindingen schematisch',102,983,24,'#546269',500,1700);
+ label('Geen wegenkaart of routeadvies',102,1023,22,'#64757b',500,1200);
+}
+function drawHighlights(t){
+ paper();header('Onderweg','Van heuveltop tot water');
+ const data=[
+  {name:'MAM TOR',sub:'Uitzicht over de Hope Valley',kind:'hill',x:105},
+  {name:'LADYBOWER',sub:'Water en heuvels',kind:'water',x:700},
+  {name:'BAKEWELL',sub:'Een dorp om te pauzeren',kind:'town',x:1295}
+ ];
+ data.forEach((item,i)=>{
+  const p=ease((t-i*.75)/1.2),x=item.x,y=290;
+  g.globalAlpha=p;
+  rect(x,y+34*(1-p),510,615,27,'#ffffff');
+  g.save();g.beginPath();g.roundRect(x+19,y+18+34*(1-p),472,405,18);g.clip();
+  g.fillStyle='#dae3d6';g.fillRect(x+19,y+18,472,405);
+  if(item.kind==='hill'){
+   g.fillStyle='#819a86';g.beginPath();g.moveTo(x,y+405);g.lineTo(x+185,y+90);g.lineTo(x+490,y+405);g.fill();
+   g.strokeStyle='#f7f4e7';g.lineWidth=10;g.beginPath();g.moveTo(x+185,y+90);g.lineTo(x+300,y+210);g.stroke();
+  } else if(item.kind==='water'){
+   g.fillStyle='#6b9487';g.beginPath();g.moveTo(x,y+320);g.lineTo(x+210,y+80);g.lineTo(x+520,y+280);g.fill();
+   g.fillStyle=WATER;g.fillRect(x,y+320,530,130);g.strokeStyle='#f5f9f5';g.lineWidth=7;
+   for(let j=0;j<4;j++){g.beginPath();g.moveTo(x+35,y+350+j*25);g.quadraticCurveTo(x+210,y+330+j*25,x+450,y+360+j*25);g.stroke();}
+  }else{
+   g.fillStyle='#aebaa4';g.fillRect(x,y+315,510,150);
+   for(let j=0;j<3;j++){
+    const bx=x+52+j*133;g.fillStyle='#b0a596';g.fillRect(bx,y+175,105,165);
+    g.fillStyle='#7b625a';g.beginPath();g.moveTo(bx-11,y+175);g.lineTo(bx+54,y+100);g.lineTo(bx+115,y+175);g.fill();
+    rect(bx+29,y+243,30,64,3,'#f1ead8');
+   }
+  }
+  g.restore();
+  label(item.name,x+34,y+507,36,INK,800,450);
+  label(item.sub,x+34,y+565,25,'#65737b',550,455);
+  g.globalAlpha=1;
+ });
+ label('Originele vectorillustraties · geen fotografie',104,1005,22,'#687c80',500,1750);
+}
+function drawOutro(t){
+ g.fillStyle='#1D2326';g.fillRect(0,0,W,H);
+ g.fillStyle='#354c49';g.beginPath();g.moveTo(0,780);g.quadraticCurveTo(590,470,1100,720);g.quadraticCurveTo(1570,970,1920,590);g.lineTo(1920,1080);g.lineTo(0,1080);g.fill();
+ line([[170,870],[570,800],[930,670],[1250,760],[1760,450]],ease(t/3),A,17);
+ const p=ease(t/.7);g.globalAlpha=p;
+ label('JOUW VOLGENDE ROADTRIP?',145,268,39,'#f69ab8',700,1600);
+ label('PEAK DISTRICT',138,405,136,'#fffdf7',800,1640);
+ label('Castleton  ·  Mam Tor  ·  Ladybower  ·  Bakewell',148,517,39,'#d2dbdc',550,1600);
+ label('30 SECONDEN IN HET HART VAN ENGELAND',148,1005,29,'#c6d1d0',650,1600);
+ g.globalAlpha=1;
+}
+window.render=function(t){
+ t=Math.max(0,Math.min(D,Number(t)||0));
+ if(SCENE.kind==='route')drawRoute(t);
+ if(SCENE.kind==='highlights')drawHighlights(t);
+ if(SCENE.kind==='outro')drawOutro(t);
+};
+window.TEXTS=function(t){return t<.1?[]:[{id:'headline',text:SCENE.heading,x0:80,y0:40,x1:1830,y1:220}]};
+window.render(0);window.READY=true;
+
+</script></body></html>

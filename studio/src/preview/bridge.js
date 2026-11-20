@@ -32,7 +32,11 @@
       pending = null;
       try {
         if (typeof window.render === 'function') await window.render(seconds);
-        else if (typeof timeline()?.seek === 'function') timeline().seek(seconds);
+        else if (typeof timeline()?.seek === 'function') {
+          timeline().seek(seconds);
+          // HyperFrames 3D layers listen for hf-seek; GSAP .seek() alone only moves HTML.
+          window.dispatchEvent(new CustomEvent('hf-seek',{detail:{time:seconds}}));
+        }
         else throw Error('Geen tijdgestuurde Canvas- of HyperFrames-scène gevonden');
         send('frame',{seconds});
       } catch (error) {
