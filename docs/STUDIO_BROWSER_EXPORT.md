@@ -58,3 +58,18 @@ Vanuit een Node-checkout met npm-toegang:
 Pages: https://equilibriumpress.github.io/motionforge/
 
 Geen externe betaalde mediadienst of GitHub Actions-render is nodig. Browsercompatibiliteit en echte scenebeelden moeten wel op een apparaat worden geverifieerd.
+
+## Volledig videokader: herstel kleine scène
+
+Een originele HyperFrames-scène moet het volledige uitvoerkader vullen.
+Een portret-template mag niet onbedoeld als een klein vak in een landschapsexport verschijnen.
+
+1. Build-time: controleer originele data-width en data-height van de compositie tegen het projectformaat. STAGE_ASPECT blokkeert een foutieve publicatie.
+2. Preview: de originele scène wordt opgeschaald naar het volledige iframekader. De brug rapporteert de gemeten afmetingen aan de Studio. Bij onjuiste vulling verschijnt een duidelijke foutmelding.
+3. MP4: elke browserframe-sample wordt aan de brongeometrie getoetst. Minder dan 98,5% kaderdekking, een verkeerde beeldverhouding of foutieve centrering stopt de export.
+4. Andere Canvas-previewprojecten blijven werken via hun eigen renderer.
+
+Een klein 3D-object of één titel in een correct volledig gevuld beeld is een ontwerpkwestie die bij de visuele QA beoordeeld moet worden.
+Dit herstel produceert niet zelfstandig een nieuwe MP4; de browserexport en oorspronkelijke QA blijven nodig.
+
+Regressie: cd studio && npm run test:browser-original. De nieuwe stage-fill-test draait ook vóór iedere Pages-build.

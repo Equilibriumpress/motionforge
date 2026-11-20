@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { loadProject } from '../lib/projects.js';
+import {validateStageFill} from './stage-fill.mjs';
 
 const protocol = 'MF_PREVIEW';
 const clock = (value) => {
@@ -18,6 +19,7 @@ export default function PreviewPlayer({ project, coverUrl }) {
   const [playing,setPlaying] = useState(false);
   const [ready,setReady] = useState(false);
   const [error,setError] = useState(null);
+  const [frameError,setFrameError] = useState(null);
   const iframe = useRef(null);
   const time = useRef(0);
 
@@ -55,13 +57,18 @@ export default function PreviewPlayer({ project, coverUrl }) {
     return () => cancelAnimationFrame(request);
   },[playing,duration]);
 
-  useEffect(() => {setReady(false);setError(null);},[url]);
+  useEffect(() => {setReady(false);setError(null);setFrameError(null);},[url]);
 
   useEffect(() => {
     const handle = (event) => {
       if (event.source !== iframe.current?.contentWindow || event.data?.type !== protocol) return;
       if (event.data.kind === 'ready') {
+        // Canvas previews use their own viewport drawing; the native stage
+        // geometry contract applies only to original HyperFrames scenes.
+        const fill=scene?.engine==='hyperframes'?validateStageFill(event.data.stage):{ok:true};
+        if(!fill.ok){setReady(false);setFrameError(fill.reason);setPlaying(false);return;}
         setReady(true);
+        setFrameError(null);
         setError(null);
         iframe.current?.contentWindow?.postMessage({type:protocol,kind:'seek',seconds:Math.max(0,time.current-(scene?.startSeconds||0))},'*');
       }
@@ -92,7 +99,8 @@ export default function PreviewPlayer({ project, coverUrl }) {
         {loaded.error && <div className="player-overlay" role="alert">{loaded.error}</div>}
         {!loaded.loading && !loaded.error && !url && <div className="player-overlay">Geen browserpreview voor deze scène</div>}
         {error && <div className="player-overlay" role="alert">{error}</div>}
-        {url && !ready && !error && <div className="player-overlay" role="status">Preview laden…</div>}
+        {frameError && <div className="player-overlay" role="alert">Onjuist videokader: {frameError}</div>}
+        {url && !ready && !error && !frameError && <div className="player-overlay" role="status">Preview laden…</div>}
       </div>
       <div className="player-controls">
         <div className="player-controls-top">

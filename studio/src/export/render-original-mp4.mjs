@@ -10,6 +10,7 @@
  * No auto-approval of G1–G7, text/safe-area QA or independent critic.
  */
 import {exportPlan,frameAt,sampleFrames,captureCrop} from './hyperframes-plan.mjs';
+import {validateStageFill} from '../preview/stage-fill.mjs';
 
 const PROTOCOL='MF_PREVIEW';
 const CALIBRATION=[38,74,104];
@@ -95,13 +96,20 @@ async function switchScene(stage,scene,baseUrl,signal){
  const ready=awaitMessage(iframe,'ready',null,signal,30000);
  stage.replaceChildren(iframe);
  iframe.src=baseUrl+scene.source;
- await ready;
+ const receipt=await ready;
+ const fill=validateStageFill(receipt.stage);
+ if(!fill.ok){
+  iframe.remove();
+  throw Error('Scène '+scene.id+': '+fill.reason);
+ }
  return iframe;
 }
 async function seekScene(iframe,seconds,requestId,signal){
  const ack=awaitMessage(iframe,'frame',requestId,signal,12000);
  iframe.contentWindow.postMessage({type:PROTOCOL,kind:'seek',seconds,requestId},'*');
- await ack;
+ const result=await ack;
+ const fill=validateStageFill(result.stage);
+ if(!fill.ok)throw Error('Scèneframe '+requestId+': '+fill.reason);
 }
 // Await a fresh captured tab frame (even when the seeked source is a WebGL canvas).
 function capturedPaint(video,signal){
@@ -264,7 +272,9 @@ export async function renderOriginalMp4(manifest,{
     capturePixelHeight:Math.round(captureResolution?.height||0),
     upscaled:!!captureResolution&&(captureResolution.width<plan.width*.95||
       captureResolution.height<plan.height*.95)},
-   scenes:plan.scenes.map(s=>({id:s.id,startFrame:s.startFrame,frames:s.frames,source:s.source})),
+   scenes:plan.scenes.map(s=>({id:s.id,startFrame:s.startFrame,frames:s.frames,source:s.source,
+    fullFrameGeometryVerified:true})),
+   sourceStage:{fullFrameVerified:true,validation:'every original source frame carries stage geometry'},
    originalSkill:'skills/qa-review/SKILL.md',
    qa:{status:'requires-review',G5:'pending',G6:'pending',G7:'pending',
     explanation:'Contact sheet generated from captured frames. Browser export does not replace textcheck, ffprobe, audio QA, independent critic or user approval.'},

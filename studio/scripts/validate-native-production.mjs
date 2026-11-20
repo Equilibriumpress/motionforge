@@ -108,6 +108,16 @@ export async function checkOriginalProject(folder){
       const match=html.match(/motionforge template:\s*([a-z0-9-]+)/);
       if(match?.[1]!==item.template)findings.push({level:'FAIL',code:'REAL_SOURCE',
         reason:'Scene '+item.id+' does not contain original template source '+item.template});
+      // Never publish a native portrait stage nested as a small video in a
+      // landscape project (or vice versa). The DOM stage must match export.
+      const expectedSizes={'9:16':[1080,1920],'16:9':[1920,1080],
+        '1:1':[1080,1080],'4:5':[1080,1350]};
+      const size=expectedSizes[manifest.format];
+      const actual=html.match(/data-composition-id=["']main["'][^>]*data-width=["'](\d+)["'][^>]*data-height=["'](\d+)["']/);
+      if(!size||!actual||Number(actual[1])!==size[0]||Number(actual[2])!==size[1])
+        findings.push({level:'FAIL',code:'STAGE_ASPECT',
+          reason:'Scene '+item.id+' video stage must fill '+manifest.format+
+            ' ('+(size||[]).join('x')+'); the original template cannot be nested in the wrong export ratio.'});
       if(prod.workflow?.agent==='ChatGPT' &&
         (!html.includes('MF.timeline(')||!html.includes('data-composition-id')))
         findings.push({level:'FAIL',code:'SOURCE_ENGINE',
