@@ -24,11 +24,11 @@
     document.body.style.overflow = 'hidden';
   }
   async function draw(t) {
-    pending = Math.max(0,Number(t)||0);
+    pending = {seconds:Math.max(0,Number(t)||0),requestId:arguments[1]??null};
     if (!ready || busy) return;
     busy = true;
     while (pending !== null) {
-      const seconds = pending;
+      const {seconds,requestId} = pending;
       pending = null;
       try {
         if (typeof window.render === 'function') await window.render(seconds);
@@ -38,9 +38,12 @@
           window.dispatchEvent(new CustomEvent('hf-seek',{detail:{time:seconds}}));
         }
         else throw Error('Geen tijdgestuurde Canvas- of HyperFrames-scène gevonden');
-        send('frame',{seconds});
+        // Export requests need a completed browser paint, including 3D WebGL.
+        if(requestId!==null)
+          await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
+        send('frame',{seconds,requestId});
       } catch (error) {
-        send('error',{message:String(error?.message || error)});
+        send('error',{message:String(error?.message || error),requestId});
         break;
       }
     }
@@ -63,7 +66,7 @@
   window.addEventListener('resize',resizeStage);
   window.addEventListener('message',event => {
     if (event.source !== window.parent || event.data?.type !== 'MF_PREVIEW') return;
-    if (event.data.kind === 'seek') draw(event.data.seconds);
+    if (event.data.kind === 'seek') draw(event.data.seconds,event.data.requestId);
     if (event.data.kind === 'ping' && ready) send('ready');
   });
   if (document.readyState === 'complete') init();
