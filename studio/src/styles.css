@@ -257,3 +257,10 @@ h1 em{font-style:normal;color:#a9f0ad}
 
 .footer-about{border:0;background:none;color:#a2b5c4;font-size:12px;padding:0;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .footer-about:hover{color:#e7f4ec}
+
+/* MF-10: native format and original production method */
+.catalog-native-spec{font-size:11px!important;font-weight:650;color:#d3e7d8!important;border-top:1px solid #395064;padding-top:8px}
+.catalog-format-warning{margin:18px 0;padding:15px 17px;border-radius:10px;border:1px solid #8b7856;color:#f6d9a2;background:#302b22;font-size:13px;line-height:1.6}
+.catalog-pipeline-info{margin:18px 0;padding:17px 18px;border:1px solid #435d56;border-radius:10px;background:#163029}
+.catalog-pipeline-info strong{display:block;font-size:13px;color:#d2f5dd;margin-bottom:8px}
+.catalog-pipeline-info span{font-size:12px;color:#b6d0c9;line-height:1.65}
