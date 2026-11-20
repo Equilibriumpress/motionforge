@@ -1,0 +1,14 @@
+{
+  "name": "@equilibriumpress/motionforge-render-worker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Locally installed original HyperFrames renderer. No GitHub Actions media rendering.",
+  "dependencies": {
+    "hyperframes": "0.8.92"
+  },
+  "scripts": {
+    "check": "node ../tools/studio-render-doctor.mjs",
+    "render": "node ../tools/studio-render.mjs"
+  }
+}
