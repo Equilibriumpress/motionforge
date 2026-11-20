@@ -276,3 +276,5 @@ h1 em{font-style:normal;color:#a9f0ad}
 .browser-contact-preview{width:100%;height:auto;max-height:400px;object-fit:contain;
  background:#08121c;border:1px solid #405767;border-radius:9px;margin:10px 0}
 .browser-downloads{display:flex;flex-wrap:wrap;gap:9px}
+
+.browser-render-playback{width:100%;aspect-ratio:16/9;max-height:450px;background:#060e17;border-radius:10px;border:1px solid #3c5968;margin:10px 0}

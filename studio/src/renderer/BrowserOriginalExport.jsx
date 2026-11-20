@@ -19,6 +19,7 @@ export default function BrowserOriginalExport({manifest}){
  const [error,setError]=useState('');
  const [result,setResult]=useState(null);
  const [sheetUrl,setSheetUrl]=useState('');
+ const [videoUrl,setVideoUrl]=useState('');
  const controller=useRef(null);
  useEffect(()=>{
   let active=true;
@@ -43,10 +44,11 @@ export default function BrowserOriginalExport({manifest}){
   return()=>{active=false;controller.current?.abort()};
  },[manifest.fps,manifest.format]);
  useEffect(()=>{
-  if(!result?.sheet){setSheetUrl('');return}
-  const url=URL.createObjectURL(result.sheet);
-  setSheetUrl(url);
-  return()=>URL.revokeObjectURL(url);
+  if(!result?.sheet||!result?.mp4){setSheetUrl('');setVideoUrl('');return}
+  const sheet=URL.createObjectURL(result.sheet);
+  const movie=URL.createObjectURL(result.mp4);
+  setSheetUrl(sheet);setVideoUrl(movie);
+  return()=>{URL.revokeObjectURL(sheet);URL.revokeObjectURL(movie)};
  },[result]);
  const start=async()=>{
   if(controller.current)return;
@@ -111,12 +113,15 @@ export default function BrowserOriginalExport({manifest}){
    {error&&<p className="export-error" role="alert">{error}</p>}
    {result&&<div className="browser-render-result" role="status">
     <p className="export-done">MP4 opgenomen: {result.report.output.encodedFrames} frames. Controleer het resultaat en keur G5–G7 afzonderlijk goed.</p>
+    {videoUrl&&<video className="browser-render-playback" src={videoUrl} controls playsInline
+      aria-label="Bekijk de gerenderde MotionForge MP4"/>}
     {sheetUrl&&<img className="browser-contact-preview" src={sheetUrl} alt="Contact sheet van de werkelijk opgenomen scènes"/>}
     <div className="export-actions browser-downloads">
      <button type="button" className="button button-primary" onClick={()=>saveBlob(result.mp4,fileName(manifest.id,'.mp4'))}>Download MP4</button>
      <button type="button" className="button button-outline" onClick={()=>saveBlob(result.cover,fileName(manifest.id,'-cover.png'))}>Cover</button>
      <button type="button" className="button button-outline" onClick={()=>saveBlob(result.sheet,fileName(manifest.id,'-contact-sheet.png'))}>Storyboard</button>
      <button type="button" className="button button-outline" onClick={()=>saveBlob(result.qa,fileName(manifest.id,'-browser-qa.json'))}>QA-rapport</button>
+     <button type="button" className="button button-outline" onClick={()=>saveBlob(result.post,fileName(manifest.id,'-post.txt'))}>Posttekst</button>
      {result.subtitles&&<button type="button" className="button button-outline" onClick={()=>saveBlob(result.subtitles,fileName(manifest.id,'.srt'))}>Ondertitels</button>}
     </div>
    </div>}

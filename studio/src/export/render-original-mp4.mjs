@@ -266,6 +266,7 @@ export async function renderOriginalMp4(manifest,{
   };
   return {plan,mp4,cover:coverBlob,sheet:sheetBlob,
    subtitles:subtitleFile||null,
+   post:new Blob([plan.title+'\n\n'+(manifest.description||'')+'\n'],{type:'text/plain;charset=utf-8'}),
    qa:new Blob([JSON.stringify(report,null,2)+'\n'],{type:'application/json'}),
    report};
  }finally{

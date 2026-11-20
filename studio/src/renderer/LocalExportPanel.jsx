@@ -20,7 +20,7 @@ export default function LocalExportPanel({manifest}) {
     <BrowserOriginalExport manifest={manifest}/>
     <section className="local-export" aria-labelledby="local-export-heading">
       <div className="export-title"><strong id="local-export-heading">MP4 · Lokale export</strong><span>{manifest.engine}</span></div>
-      <p className="export-note">Canvas- en HyperFrames-scènes renderen via je eigen computer. GitHub Pages voert geen video-render uit.</p>
+      <p className="export-note">De browserexport hierboven ondersteunt originele HyperFrames-scènes. Voor zwaardere projecten of een browser zonder H.264-ondersteuning blijft de lokale render-worker beschikbaar.</p>
       <div className="local-options">
         <label>Kwaliteit
           <select value={quality} onChange={event=>{setQuality(event.target.value);setMessage('');}}>
