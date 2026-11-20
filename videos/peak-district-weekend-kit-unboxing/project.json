@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "peak-district-weekend-kit-unboxing",
   "title": "PEAK DISTRICT · THE WEEKEND KIT",
-  "description": "Fictieve Unboxing Pop-conceptvideo. G1/G2 ter goedkeuring, zonder originele scène-HTML of MP4.",
+  "description": "Five original source-derived 16:9 HyperFrames scene HTML files. Preview not yet runtime-complete. G5–G7 pending.",
   "status": "concept",
   "language": "nl",
   "format": "16:9",
@@ -18,5 +18,47 @@
   ],
   "styleId": "unboxing-pop",
   "templateId": "product-turntable-3d",
-  "scenes": []
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Hook",
+      "startSeconds": 0,
+      "durationSeconds": 4,
+      "engine": "hyperframes",
+      "source": "scenes/hook/index.html"
+    },
+    {
+      "id": "box-open",
+      "title": "Box opening",
+      "startSeconds": 4,
+      "durationSeconds": 6,
+      "engine": "hyperframes",
+      "source": "scenes/box-open/index.html"
+    },
+    {
+      "id": "item-reveal",
+      "title": "Four item reveals",
+      "startSeconds": 10,
+      "durationSeconds": 9,
+      "engine": "hyperframes",
+      "source": "scenes/item-reveal/index.html"
+    },
+    {
+      "id": "contents",
+      "title": "Contents flatlay",
+      "startSeconds": 19,
+      "durationSeconds": 6,
+      "engine": "hyperframes",
+      "source": "scenes/contents/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "End card",
+      "startSeconds": 25,
+      "durationSeconds": 5,
+      "engine": "hyperframes",
+      "source": "scenes/outro/index.html"
+    }
+  ],
+  "cover": "assets/cover.svg"
 }

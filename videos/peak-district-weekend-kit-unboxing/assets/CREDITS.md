@@ -1,8 +1,7 @@
-# Asset- en bronrechten
-- Originele MotionForge-scènes: © MotionForge contributors, MIT; bron-HTML, params en preview alleen als referentie bekeken.
-- Stijl: `unboxing-pop`, oorspronkelijke volledige STYLE.md zonder wijziging, MIT.
-- Producten: vier fictieve productnamen, nog geen 3D-modellen, foto's, afbeeldingen of verpakkingsbestanden.
-- De naam Mam Tor verwijst naar een echte plek, maar er is geen foto of kaartmateriaal ingeladen.
-- Rubik: vereist door STYLE.md (OFL); nog niet gedownload, gebundeld of als fontbestand opgenomen.
-- Geen muziek, sfx, voice-over, betaald TTS, assetservice of beelden gebruikt.
-- Copyright/attributie van alle toekomstige beeld- en audiodragers blijft te controleren vóór G5.
+# Rights and sources
+- Original HyperFrames templates and assets originate in Equilibriumpress/motionforge, MIT © MotionForge contributors.
+- Original Unboxing Pop STYLE.md retained byte-for-byte from the source.
+- The cardboard box and four fictional items are built with self-authored geometry using original three.js scene contract, not external models.
+- The vector cover is an original schematic title artwork, not footage or a video frame.
+- Rubik font is specified by style (SIL OFL), binaries are NOT bundled. Original engine requires npm GSAP, Three.js and related assets.
+- No external media, video clips, voice, TTS or music files used. No paid services.

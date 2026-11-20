@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  motionforge template: checklist-reveal — a title, then items that slide in one by one and get a drawn check mark
+  © 2026 motionforge contributors, MIT
+  Sync each item to the word that names it: set "times" to the voiceover seconds (scene-local), or use start + gap.
+-->
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/mf-runtime.js"></script>
+    <link rel="stylesheet" href="assets/base.css" />
+    <style>
+      #title { top: 330px; font-size: 88px; }
+      #list { position: absolute; left: 90px; right: 90px; top: 620px; }
+      .item { display: flex; align-items: center; gap: 30px; padding: 30px 34px; margin-bottom: 24px; border-radius: 30px; background: var(--mf-card); border: 2px solid var(--mf-line); }
+      .box { flex: none; width: 74px; height: 74px; border-radius: 20px; border: 4px solid var(--mf-line); position: relative; }
+      .box svg { position: absolute; inset: -4px; width: 74px; height: 74px; }
+      .box path { fill: none; stroke: var(--mf-accent-ink); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+      .fill { position: absolute; inset: -4px; border-radius: 20px; background: var(--mf-accent); transform: scale(0); }
+      .label { font: 700 50px/1.2 var(--mf-font-display); letter-spacing: -0.02em; }
+      .num { font: 500 28px var(--mf-font-mono); color: var(--mf-muted); margin-left: auto; }
+
+:root {--mf-w:1920px;--mf-h:1080px;--mf-bg:#CDA77C;--mf-bg-light:#CDA77C;--mf-glow:#CDA77C;--mf-card:#FFFDF7;--mf-line:#8A6F52;--mf-text:#1E1A16;--mf-text-dark:#1E1A16;--mf-muted:#8A6F52;--mf-accent:#FF3E8A;--mf-accent-ink:#1E1A16;--mf-font-display:"Rubik",system-ui,sans-serif;--mf-font-body:"Rubik",system-ui,sans-serif;--mf-font-accent:"Rubik",system-ui,sans-serif;--mf-font-mono:"Rubik",system-ui,sans-serif}
+html,body {width:1920px;height:1080px;background:#CDA77C}
+#root.mf-stage,#root.mf-stage.light {width:1920px;height:1080px;color:#1E1A16;background:#CDA77C}
+#root.mf-stage::after {background:radial-gradient(ellipse at 50% 50%,transparent 66%,rgba(70,45,24,.11) 100%)}
+#root.mf-stage::before {opacity:.08;mix-blend-mode:multiply}
+.serif,.accent,.accent-word {color:#FF3E8A;font:900 1em/1 "Rubik",system-ui,sans-serif;font-style:normal}
+#eyebrow {left:1145px;right:90px;top:138px;text-align:left;color:#1E1A16;font:500 26px/1.25 "Rubik",system-ui,sans-serif;letter-spacing:.1em}
+
+#title {left:1040px;right:85px;top:145px;text-align:left;font:900 83px/1.08 "Rubik",system-ui,sans-serif}
+#list {left:1040px;right:100px;top:337px}
+.item {display:flex;gap:16px;padding:17px 22px;margin-bottom:18px;border-radius:14px;background:#FFFDF7;
+ border:3px solid #FFFDF7;box-shadow:0 7px 0 rgba(0,0,0,.17)}
+.label {font:700 44px/1.13 "Rubik",system-ui,sans-serif}
+.box {width:55px;height:55px;border-radius:9px;border:3px solid #FF3E8A}
+.box svg {width:55px;height:55px}
+.box path {stroke:#1E1A16}
+.fill {border-radius:8px;background:#FF3E8A}
+.num {font:500 28px "Rubik",system-ui,sans-serif;background:#FFD23F;color:#1E1A16;padding:8px 12px;border-radius:5px}
+#flatlay {position:absolute;left:80px;top:210px;width:840px;height:690px}
+.product-sketch {position:absolute;background:#FFFDF7;border:9px solid #FFFDF7;box-shadow:12px 16px 0 rgba(0,0,0,.16)}
+.product-sketch.book {left:54px;top:20px;width:300px;height:300px;background:#FF3E8A;transform:rotate(-8deg)}
+.product-sketch.book::after {content:"PEAK\\A DISTRICT";white-space:pre;position:absolute;left:30px;top:60px;
+ font:900 58px/1 "Rubik",system-ui,sans-serif;color:#1E1A16}
+.product-sketch.map {left:410px;top:5px;width:335px;height:290px;transform:rotate(5deg);
+ background:repeating-linear-gradient(90deg,#FFFDF7 0 67px,#DAD0AB 68px 73px)}
+.product-sketch.card {left:70px;top:390px;width:315px;height:235px;transform:rotate(5deg);
+ background:linear-gradient(150deg,#FFFDF7 48%,#678063 49%,#678063 60%,#FFFDF7 61%)}
+.product-sketch.sheet {left:425px;top:365px;width:300px;height:270px;transform:rotate(-7deg);
+ background:radial-gradient(circle at 28% 31%,#FF3E8A 0 31px,transparent 32px),radial-gradient(circle at 72% 31%,#FFD23F 0 31px,transparent 32px),radial-gradient(circle at 28% 74%,#FF3E8A 0 31px,transparent 32px),radial-gradient(circle at 72% 74%,#FFD23F 0 31px,transparent 32px),#FFFDF7}
+
+    </style>
+  </head>
+  <body>
+    <div id="root" class="mf-stage" data-composition-id="main" data-start="0" data-duration="6" data-width="1920" data-height="1080">
+      <div id="flatlay" class="clip" data-start="0" data-duration="6" data-track-index="2"><div class="product-sketch book"></div><div class="product-sketch map"></div><div class="product-sketch card"></div><div class="product-sketch sheet"></div></div>
+      <h1 id="title" class="title clip" data-start="0" data-duration="6" data-track-index="0"></h1>
+      <div id="list" class="clip" data-start="0" data-duration="6" data-track-index="1"></div>
+    </div>
+
+    <script id="params" type="application/json">
+{
+  "title": "4 onderdelen · één kit",
+  "items": [
+    "Reisgids",
+    "Wandelkaart",
+    "Mam Tor-kaart",
+    "Stickervel"
+  ],
+  "times": [],
+  "start": 0.7,
+  "gap": 1.1,
+  "checkDelay": 0.32,
+  "numbered": true,
+  "theme": "light",
+  "lang": "nl",
+  "duration": 6
+}
+    </script>
+
+    <script>
+      const P = MF.params();
+      document.documentElement.lang = P.lang;
+      if (P.theme === "light") document.getElementById("root").classList.add("light");
+      document.getElementById("title").innerHTML = P.title || "";
+
+      const list = document.getElementById("list");
+      const rows = P.items.map((text, i) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = '<div class="box"><div class="fill"></div><svg viewBox="0 0 74 74"><path d="M20 38 L32 50 L55 25" /></svg></div><div class="label"></div>' +
+          (P.numbered ? `<div class="num">${String(i + 1).padStart(2, "0")}</div>` : "");
+        row.querySelector(".label").textContent = text;
+        list.appendChild(row);
+        return row;
+      });
+
+      const tl = MF.timeline("main", P.duration);
+      tl.fromTo(".product-sketch",{opacity:0,scale:.65,y:130},{opacity:1,scale:1,y:0,duration:.45,stagger:.22,ease:"back.out(1.8)"},.32);
+      tl.fromTo("#title", { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "back.out(1.6)" }, 0.15);
+      rows.forEach((row, i) => {
+        const at = P.times && P.times[i] != null ? P.times[i] : P.start + i * P.gap;
+        const path = row.querySelector("path");
+        const length = 60; // the check path is about 55 units long
+        path.style.strokeDasharray = length;
+        tl.fromTo(row, { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, at);
+        tl.fromTo(row.querySelector(".fill"), { scale: 0 }, { scale: 1, duration: 0.25, ease: "back.out(2.2)" }, at + P.checkDelay);
+        tl.fromTo(path, { strokeDashoffset: length }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, at + P.checkDelay + 0.08);
+        tl.to(row.querySelector(".box"), { borderColor: "transparent", duration: 0.1 }, at + P.checkDelay);
+      });
+      MF.ready();
+      tl.seek(0);
+    </script>
+  </body>
+</html>

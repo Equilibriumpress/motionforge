@@ -18,14 +18,14 @@
   "paidServicesUsed": false,
   "generatedMediaUsed": false,
   "voiceMode": "none",
-  "projectStage": "approved-G1-to-G4-awaiting-scene-source-and-G5",
+  "projectStage": "source-authored-requires-upstream-scaffold-and-G5",
   "formatFidelity": {
     "nativeWidth": 1080,
     "nativeHeight": 1920,
     "targetWidth": 1920,
     "targetHeight": 1080,
     "sourceAdaptationRequired": true,
-    "sourceAdaptationDone": false,
+    "sourceAdaptationDone": true,
     "renderVerified": false
   },
   "templateCandidates": [
@@ -147,10 +147,16 @@
     "textcheckRun": false,
     "readcheckRun": false,
     "realVideoQARun": false,
-    "independentCriticRun": false
+    "independentCriticRun": false,
+    "sourceAdaptationsAuthored": true,
+    "originalGeneratorExecuted": false
   },
   "outstanding": [
-    "16:9 originele HTML-scènes met brongetrouwe 3D-doos en Rubik uitwerken",
+    "Run original new-from-upstream.mjs --plan in a clean project target with npm GSAP, Three.js, Fontsource Rubik and pinned HyperFrames installed",
+    "G5 actual scene stills and human approval",
+    "G6 render-based full original QA",
+    "G7 independent fresh-context critic",
+    "No MP4 exported or tested",
     "Originele new-from-upstream.mjs CLI uitvoeren met geldige aangepaste scènebronnen",
     "G5: echte storyboardstills renderen en door gebruiker goedkeuren",
     "G6: echte HyperFrames MP4 en volledige QA",
@@ -186,6 +192,104 @@
       "actor": "user",
       "evidence": "qa/approval-record.md",
       "decision": "Original Unboxing Pop selected by user and approved in the subsequent G1/G2 decision."
+    }
+  ],
+  "adaptation": {
+    "targetFormat": "16:9",
+    "status": "source_authored_unrendered",
+    "notes": "Three.js/GSAP source 1920x1080, original template marker and contracts retained, original product speaker geometry replaced with hinged cardboard box and fictional products",
+    "evidence": "qa/source-adaptation.md"
+  },
+  "sceneTemplates": [
+    {
+      "id": "hook",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/hook/index.html",
+      "parameters": "scenes/hook/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
+      "renderVerified": false
+    },
+    {
+      "id": "box-open",
+      "template": "product-turntable-3d",
+      "originalSource": "templates/product-turntable-3d/index.html",
+      "source": "scenes/box-open/index.html",
+      "parameters": "scenes/box-open/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
+      "renderVerified": false
+    },
+    {
+      "id": "item-reveal",
+      "template": "product-turntable-3d",
+      "originalSource": "templates/product-turntable-3d/index.html",
+      "source": "scenes/item-reveal/index.html",
+      "parameters": "scenes/item-reveal/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
+      "renderVerified": false
+    },
+    {
+      "id": "contents",
+      "template": "checklist-reveal",
+      "originalSource": "templates/checklist-reveal/index.html",
+      "source": "scenes/contents/index.html",
+      "parameters": "scenes/contents/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166",
+      "renderVerified": false
+    },
+    {
+      "id": "outro",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/outro/index.html",
+      "parameters": "scenes/outro/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
+      "renderVerified": false
     }
   ]
 }

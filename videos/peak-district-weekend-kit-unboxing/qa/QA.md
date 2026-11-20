@@ -1,8 +1,8 @@
-# QA en status
+# QA state
 
-Status: `concept / awaiting-G1`. Dit dossier is G1/G2, zonder gegenereerde native scènes of render.
-- Voorgestelde speelduur: 4+6+9+6+5 = 30 seconden (900 frames bij 30 fps).
-- Alle vier geselecteerde oorspronkelijke templates: 1080×1920, dus **niet direct bruikbaar als 1920×1080**.
-- Oorspronkelijke previews dienen uitsluitend ter keuze van scènes. Er is geen storyboard uit dit project gerenderd.
-- Ontbreekt: gescaffold originele HyperFrames-scènes, echte 16:9-kadercheck, storyboard, T/X/P/A/H-checks, audio, MP4, onafhankelijk critic.
-- Geen enkele G1–G7-status mag worden gemarkeerd als gepasseerd op basis van deze documenten.
+G1 and G2: user-approved. G3: silent concept, no paid services. G4: Unboxing Pop user-approved.
+G5: PENDING, no rendered storyboard stills or human storyboard approval.
+G6: PENDING, no HyperFrames CLI lint, textcheck, readcheck, MP4, frame-fill, audio/video QA.
+G7: PENDING, no fresh-context critic.
+
+Source assertions: original template markers, params, 1920x1080 stage sizes, Three.js hf-seek API and 900-frame timeline. These checks are NOT render QA. GSAP/Three.js binaries and Rubik fonts must be staged from approved npm packages by original CLI.

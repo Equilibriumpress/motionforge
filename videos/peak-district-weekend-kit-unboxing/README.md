@@ -1,26 +1,19 @@
 # PEAK DISTRICT · THE WEEKEND KIT
 
-Origineel MotionForge Unboxing Pop-productiedossier. 30s, Nederlands, 16:9 (1920×1080, 30fps), fictief productconcept.
+Fictieve Unboxing Pop-promovideo, Nederlands, 30s, 1920x1080, 30fps.
 
-## Huidige fase
-G1 en G2 zijn uitgewerkt maar nog niet goedgekeurd. Geen betaalde diensten, geen gegeneerde media, geen fysieke doos en geen gerenderde video. De geselecteerde originele stijl is exact gekopieerd naar `style/STYLE.md`.
+G1, G2 and G4 approved by the user, G3 silent with no paid services. Project is a source-authored concept until actual video rendering, G5 storyboard approval, G6 complete QA and G7 independent critic.
 
-## Inhoud
-- `brief.md`: precies vijf briefingregels
-- `script.md`: drie hooks, script, shotlist en claims
-- `direction.json`: voorlopige kaders, bewegingen en on-screen teksten
-- `video-plan.json`: **conceptvoorstel**, niet uitvoerbaar als originele scaffold zonder per-scène 16:9-bronbestanden
-- `production.json`: expliciete G1–G7- en bronstatus
-- `qa/template-audit.md`: kandidaattemplates, GIF-previews, native formats en kloof in doosanimatie
+## Native source-based scenes
+- 0–4s `hook` original kinetic-title, source 16:9
+- 4–10s `box-open` original product-turntable-3d, real Three.js four flap animation
+- 10–19s `item-reveal` original product-turntable-3d, four modelled products, name stickers
+- 19–25s `contents` original checklist-reveal + illustrated flatlay
+- 25–30s `outro` original kinetic-title
 
-## Volgende fase (alleen na expliciete goedkeuring)
-1. Gerichte 1920×1080-bronafgeleiden schrijven vanuit originele `templates/<id>/index.html`.
-2. `video-plan.json` omzetten naar het exacte originele CLI-plan met per scène `adaptation.source` naar de werkelijke aangepaste bronbestanden.
-3. Met Node, echte dependencies en de originele `new-from-upstream.mjs --plan` de native scènes aanmaken. Geen GitHub Actions-videorender.
-4. Werkelijke frames renderen, G5-goedkeuring vragen; vervolgens G6/G7 en master-MP4.
-5. Na later toegestane merge de Studio op Pages bekijken en waar ondersteund lokaal browser-MP4 exporteren.
+Source adaptations are stored in `source-adaptations/` and under the corresponding `scenes/<id>/index.html`. The approved, CLI-format `video-plan.json` supplies per-scene `adaptation.source`.
 
-Studio: https://equilibriumpress.github.io/motionforge/
+## Next steps
+The original `new-from-upstream.mjs --plan` cannot overwrite this project folder. In an authorized local checkout with gsap, three, Fontsource fonts and pinned HyperFrames installed, move the source plan and adaptations into a clean staging location, generate a clean project with the original CLI, then reconcile the generated vendor assets and preserve user-approval evidence. No alternate Canvas implementation.
 
-## Rechten
-Alles is een concept en wordt niet als bestaand product aangeboden. Geen externe beelden, audio of fonts meegecommit.
+No local render occurred, no real MP4 or preview verification exists. The GitHub PR is not merged. Pages can list the project only after merge and proper assets.
