@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "sourceMethod": "original-motionforge",
+  "workflow": {
+    "agent": "ChatGPT",
+    "entrypoint": "skills/motion-director/SKILL.md",
+    "protocol": "docs/STUDIO_AGENT_WORKFLOW.md",
+    "state": "awaiting-G5",
+    "styleDelegated": false
+  },
+  "sourceMainCommit": "82fb907e8a47b01db704008f2591c533a4d120e3",
+  "selectedStyle": "unboxing-pop",
+  "styleFile": "style/STYLE.md",
+  "originalStyleBlobSha": "44eaca9deeadfa1ff27ef50c06835e38d90416f6",
+  "originalFormat": "9:16",
+  "requestedFormat": "16:9",
+  "engine": "hyperframes",
+  "paidServicesUsed": false,
+  "generatedMediaUsed": false,
+  "voiceMode": "none",
+  "projectStage": "source-authored-requires-upstream-scaffold-and-G5",
+  "formatFidelity": {
+    "nativeWidth": 1080,
+    "nativeHeight": 1920,
+    "targetWidth": 1920,
+    "targetHeight": 1080,
+    "sourceAdaptationRequired": true,
+    "sourceAdaptationDone": true,
+    "renderVerified": false
+  },
+  "templateCandidates": [
+    {
+      "id": "kinetic-title",
+      "originalHtml": "templates/kinetic-title/index.html",
+      "originalParams": "templates/kinetic-title/params.json",
+      "preview": "https://github.com/Equilibriumpress/motionforge/blob/main/templates/kinetic-title/preview.gif",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "htmlBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
+      "paramsBlobSha": "b8f931f96ff44a4606a32830c440790e94bab632"
+    },
+    {
+      "id": "product-turntable-3d",
+      "originalHtml": "templates/product-turntable-3d/index.html",
+      "originalParams": "templates/product-turntable-3d/params.json",
+      "preview": "https://github.com/Equilibriumpress/motionforge/blob/main/templates/product-turntable-3d/preview.gif",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "htmlBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
+      "paramsBlobSha": "b73a6bda1c45767bb357f7011bc8fd6f98cc4d12"
+    },
+    {
+      "id": "checklist-reveal",
+      "originalHtml": "templates/checklist-reveal/index.html",
+      "originalParams": "templates/checklist-reveal/params.json",
+      "preview": "https://github.com/Equilibriumpress/motionforge/blob/main/templates/checklist-reveal/preview.gif",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "htmlBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166",
+      "paramsBlobSha": "b5108da152f5fbe30a7c9cc8ac20b69a941c62ba"
+    },
+    {
+      "id": "cover-still",
+      "originalHtml": "templates/cover-still/index.html",
+      "originalParams": "templates/cover-still/params.json",
+      "preview": "https://github.com/Equilibriumpress/motionforge/blob/main/templates/cover-still/preview.gif",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "htmlBlobSha": "8247083cea1d6efdbc8873c595fed49f562f58bc",
+      "paramsBlobSha": "59ae8afd1e9d3380685f354c044c4d92aaf935e3"
+    }
+  ],
+  "externalCoverTemplate": {
+    "id": "cover-still",
+    "htmlBlobSha": "8247083cea1d6efdbc8873c595fed49f562f58bc"
+  },
+  "gates": {
+    "G1": {
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved the proposed five-line brief."
+    },
+    "G2": {
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved hook 1, Dutch 30-second script, five-scene selection and 16:9 source adaptations."
+    },
+    "G3": {
+      "status": "not_applicable",
+      "actor": "agent",
+      "evidence": null,
+      "reason": "Silent concept without paid services, voice, music, models or media."
+    },
+    "G4": {
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "Original Unboxing Pop selected by user and approved in the subsequent G1/G2 decision."
+    },
+    "G5": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G6": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G7": {
+      "status": "pending",
+      "evidence": null
+    }
+  },
+  "approvals": {
+    "brief": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
+    "script": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
+    "sceneSelection": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
+    "storyboard": null
+  },
+  "evidence": {
+    "readOriginalSkills": true,
+    "readOriginalStyle": true,
+    "readOriginalTemplateCode": true,
+    "sourceManifestInspection": "qa/template-audit.md",
+    "nativeScenesInstantiated": false,
+    "storyboardStillsRendered": false,
+    "mp4Rendered": false,
+    "hyperframesLintRun": false,
+    "textcheckRun": false,
+    "readcheckRun": false,
+    "realVideoQARun": false,
+    "independentCriticRun": false,
+    "sourceAdaptationsAuthored": true,
+    "originalGeneratorExecuted": false
+  },
+  "outstanding": [
+    "Run original new-from-upstream.mjs --plan in a clean project target with npm GSAP, Three.js, Fontsource Rubik and pinned HyperFrames installed",
+    "G5 actual scene stills and human approval",
+    "G6 render-based full original QA",
+    "G7 independent fresh-context critic",
+    "No MP4 exported or tested",
+    "Originele new-from-upstream.mjs CLI uitvoeren met geldige aangepaste scènebronnen",
+    "G5: echte storyboardstills renderen en door gebruiker goedkeuren",
+    "G6: echte HyperFrames MP4 en volledige QA",
+    "G7: critic in onafhankelijke context",
+    "MP4 en Pages Studio zichtbaarheid pas na goedgekeurde broncode en merge",
+    "Requires real browser-rendered G5 storyboard and user approval"
+  ],
+  "decisions": [
+    {
+      "gate": "G1",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved the proposed five-line brief."
+    },
+    {
+      "gate": "G2",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved hook 1, Dutch 30-second script, five-scene selection and 16:9 source adaptations."
+    },
+    {
+      "gate": "G3",
+      "status": "not_applicable",
+      "actor": "agent",
+      "evidence": null,
+      "reason": "Silent concept without paid services, voice, music, models or media."
+    },
+    {
+      "gate": "G4",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "Original Unboxing Pop selected by user and approved in the subsequent G1/G2 decision."
+    }
+  ],
+  "adaptation": {
+    "targetFormat": "16:9",
+    "status": "source_authored_unrendered",
+    "notes": "Three.js/GSAP source 1920x1080, original template marker and contracts retained, original product speaker geometry replaced with hinged cardboard box and fictional products",
+    "evidence": "qa/source-adaptation.md"
+  },
+  "sceneTemplates": [
+    {
+      "id": "hook",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/hook/index.html",
+      "parameters": "scenes/hook/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
+      "renderVerified": false
+    },
+    {
+      "id": "box-open",
+      "template": "product-turntable-3d",
+      "originalSource": "templates/product-turntable-3d/index.html",
+      "source": "scenes/box-open/index.html",
+      "parameters": "scenes/box-open/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
+      "renderVerified": false
+    },
+    {
+      "id": "item-reveal",
+      "template": "product-turntable-3d",
+      "originalSource": "templates/product-turntable-3d/index.html",
+      "source": "scenes/item-reveal/index.html",
+      "parameters": "scenes/item-reveal/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
+      "renderVerified": false
+    },
+    {
+      "id": "contents",
+      "template": "checklist-reveal",
+      "originalSource": "templates/checklist-reveal/index.html",
+      "source": "scenes/contents/index.html",
+      "parameters": "scenes/contents/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166",
+      "renderVerified": false
+    },
+    {
+      "id": "outro",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/outro/index.html",
+      "parameters": "scenes/outro/params.values.json",
+      "originalFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "adaptedStage": [
+        1920,
+        1080
+      ],
+      "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
+      "renderVerified": false
+    }
+  ]
+}

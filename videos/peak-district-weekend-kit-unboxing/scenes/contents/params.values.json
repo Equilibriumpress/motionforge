@@ -1,0 +1,17 @@
+{
+  "title": "4 onderdelen · één kit",
+  "items": [
+    "Reisgids",
+    "Wandelkaart",
+    "Mam Tor-kaart",
+    "Stickervel"
+  ],
+  "times": [],
+  "start": 0.7,
+  "gap": 1.1,
+  "checkDelay": 0.32,
+  "numbered": true,
+  "theme": "light",
+  "lang": "nl",
+  "duration": 6
+}

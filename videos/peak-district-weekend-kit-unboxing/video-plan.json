@@ -1,0 +1,221 @@
+{
+  "slug": "peak-district-weekend-kit-unboxing",
+  "title": "PEAK DISTRICT · THE WEEKEND KIT",
+  "description": "Fictieve native 16:9 source-authored HyperFrames Unboxing Pop conceptvideo. No actual render yet.",
+  "language": "nl",
+  "format": "16:9",
+  "fps": 30,
+  "durationSeconds": 30,
+  "style": "unboxing-pop",
+  "storyFormat": 8,
+  "brief": {
+    "goal": "Toon in 30 seconden de inhoud van een fictieve Weekend Kit",
+    "audience": "Nederlandstalige roadtrip- en wandelliefhebbers",
+    "platform": "YouTube, website en social media in 16:9",
+    "tone": "Speels, karton, stickers en duidelijke productvormen"
+  },
+  "direction": {
+    "concept": "Een fictieve Peak District Weekend Kit onthult achtereenvolgens vier reisproducten, met de verpakking steeds centraal.",
+    "visualRule": "Vaste top-down kraftdoos links en productnamen rechts; wit stickerpapier, donkere inkt, roze slechts op twee labels per frame, geel uitsluitend bij producttellingen; Rubik-typografie.",
+    "motif": "Roze die-cut sticker: vraag in hook, naamsticker bij producten, CTA op het slot."
+  },
+  "hooks": [
+    {
+      "type": "curiosity",
+      "text": "Wat zit er in deze Weekend Kit?"
+    },
+    {
+      "type": "count",
+      "text": "Vier onderdelen in één Peak District-doos."
+    },
+    {
+      "type": "product",
+      "text": "Dit zit in onze fictieve Peak District Weekend Kit."
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Vier producten in een fictieve demonstratiekit",
+      "source": "script.md"
+    },
+    {
+      "claim": "Mam Tor is een echte locatie in het Peak District",
+      "source": "https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/kinder-edale-and-the-high-peak/mam-tor-circular-walk"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Hook",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "WAT ZIT ER",
+          "IN DE BOX?"
+        ],
+        "accentWord": "BOX?",
+        "eyebrow": "PEAK DISTRICT · CONCEPT",
+        "theme": "light",
+        "fontSize": 92,
+        "start": 0.25,
+        "stagger": 0.12,
+        "underline": false,
+        "exit": false,
+        "duration": 4,
+        "lang": "nl"
+      },
+      "adaptation": {
+        "source": "source-adaptations/hook.html",
+        "notes": "Original HyperFrames/GSAP and native Three.js source redesigned at 1920×1080; box hinges added with seek-deterministic draw(t) in original product template."
+      },
+      "direction": {
+        "cue": "Wat",
+        "layout": "Volledig 16:9: doos links, headline op witte sticker rechts",
+        "entrance": "Originele GSAP woordopbouw plus conceptsticker",
+        "hero": "De gesloten kraftdoos en een roze vraagsticker",
+        "onScreenText": "WAT ZIT ER IN DE BOX?",
+        "motifRole": "Roze sticker in hook",
+        "narration": "Wat zit er in deze Weekend Kit?",
+        "notes": "Visual timing only; no voice recording, no measured word cues."
+      }
+    },
+    {
+      "id": "box-open",
+      "title": "Box opening",
+      "template": "product-turntable-3d",
+      "durationSeconds": 6,
+      "params": {
+        "eyebrow": "01 · DE VERPAKKING",
+        "title": "De doos {opent}",
+        "subline": "FICTIEVE PEAK DISTRICT WEEKEND KIT",
+        "model": "",
+        "callouts": [],
+        "calloutStart": 1.25,
+        "orbitDegrees": 0,
+        "theme": "light",
+        "duration": 6,
+        "lang": "nl"
+      },
+      "adaptation": {
+        "source": "source-adaptations/box-open.html",
+        "notes": "Original HyperFrames/GSAP and native Three.js source redesigned at 1920×1080; box hinges added with seek-deterministic draw(t) in original product template."
+      },
+      "direction": {
+        "cue": "De",
+        "layout": "Echte 1920×1080-top-down WebGL-scène, kraftondergrond, doos links",
+        "entrance": "Vier flaps 0→-170° 0,35s met 0,08s stagger, tissue wipe, eerste item squash",
+        "hero": "Doos met vier afzonderlijk openvouwende kleppen",
+        "onScreenText": "KIJK WAT ERIN ZIT",
+        "motifRole": "Roze sticker in box-open",
+        "narration": "De doos gaat open. Kijk mee.",
+        "notes": "Visual timing only; no voice recording, no measured word cues."
+      }
+    },
+    {
+      "id": "item-reveal",
+      "title": "Four item reveals",
+      "template": "product-turntable-3d",
+      "durationSeconds": 9,
+      "params": {
+        "eyebrow": "02 · DIT ZIT ERIN",
+        "title": "Vier {onderdelen}",
+        "subline": "REISGIDS · KAART · ANSICHT · STICKERS",
+        "model": "",
+        "callouts": [],
+        "calloutStart": 1.2,
+        "orbitDegrees": 0,
+        "theme": "light",
+        "duration": 9,
+        "lang": "nl"
+      },
+      "adaptation": {
+        "source": "source-adaptations/item-reveal.html",
+        "notes": "Original HyperFrames/GSAP and native Three.js source redesigned at 1920×1080; box hinges added with seek-deterministic draw(t) in original product template."
+      },
+      "direction": {
+        "cue": "Een",
+        "layout": "Vaste top-down camera, uitkomende producten links en naamstickers rechts",
+        "entrance": "Per item 220px rise, squash 1.08/0.92, sticker slap 1.6→1, overshoot en stagger",
+        "hero": "Reisgids, wandelkaart, Mam Tor-kaart, stickervel",
+        "onScreenText": "REISGIDS · WANDELKAART · MAM TOR · STICKERS",
+        "motifRole": "Roze sticker in item-reveal",
+        "narration": "Een reisgids, een wandelkaart, een Mam Tor-ansichtkaart en een stickervel.",
+        "notes": "Visual timing only; no voice recording, no measured word cues."
+      }
+    },
+    {
+      "id": "contents",
+      "title": "Contents flatlay",
+      "template": "checklist-reveal",
+      "durationSeconds": 6,
+      "params": {
+        "title": "4 onderdelen · één kit",
+        "items": [
+          "Reisgids",
+          "Wandelkaart",
+          "Mam Tor-kaart",
+          "Stickervel"
+        ],
+        "times": [],
+        "start": 0.7,
+        "gap": 1.1,
+        "checkDelay": 0.32,
+        "numbered": true,
+        "theme": "light",
+        "duration": 6,
+        "lang": "nl"
+      },
+      "adaptation": {
+        "source": "source-adaptations/contents.html",
+        "notes": "Original HyperFrames/GSAP and native Three.js source redesigned at 1920×1080; box hinges added with seek-deterministic draw(t) in original product template."
+      },
+      "direction": {
+        "cue": "Vier",
+        "layout": "Volledige flatlay links en rechts een checklist met 4 productnamen",
+        "entrance": "Oorspronkelijke getimede GSAP-checklist naast echte producten",
+        "hero": "Vier zichtbare onderdelen naast de geopende doos",
+        "onScreenText": "4 ONDERDELEN · ÉÉN WEEKEND KIT",
+        "motifRole": "Roze sticker in contents",
+        "narration": "Vier onderdelen voor je Peak District-weekend.",
+        "notes": "Visual timing only; no voice recording, no measured word cues."
+      }
+    },
+    {
+      "id": "outro",
+      "title": "End card",
+      "template": "kinetic-title",
+      "durationSeconds": 5,
+      "params": {
+        "lines": [
+          "PEAK DISTRICT",
+          "BEWAAR DIT IDEE"
+        ],
+        "accentWord": "IDEE",
+        "eyebrow": "THE WEEKEND KIT · FICTIEF PRODUCT",
+        "theme": "light",
+        "fontSize": 84,
+        "start": 0.27,
+        "stagger": 0.1,
+        "underline": false,
+        "exit": false,
+        "duration": 5,
+        "lang": "nl"
+      },
+      "adaptation": {
+        "source": "source-adaptations/outro.html",
+        "notes": "Original HyperFrames/GSAP and native Three.js source redesigned at 1920×1080; box hinges added with seek-deterministic draw(t) in original product template."
+      },
+      "direction": {
+        "cue": "Welk",
+        "layout": "Box- en productflatlay links, CTA-sticker rechts, laatste frame minstens 1s hold",
+        "entrance": "Originele GSAP titelopbouw met roze sticker-slap, rustige eindhold",
+        "hero": "Complete kit met roze CTA-sticker",
+        "onScreenText": "PEAK DISTRICT · THE WEEKEND KIT\nBEWAAR DIT IDEE",
+        "motifRole": "Roze sticker in outro",
+        "narration": "Welk onderdeel kies jij eerst? Bewaar dit idee.",
+        "notes": "Visual timing only; no voice recording, no measured word cues."
+      }
+    }
+  ]
+}

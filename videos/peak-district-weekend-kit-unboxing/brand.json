@@ -1,0 +1,27 @@
+{
+  "sourceStyle": "style/STYLE.md",
+  "brand": null,
+  "logo": null,
+  "palette": {
+    "background": "#CDA77C",
+    "sticker": "#FFFDF7",
+    "ink": "#1E1A16",
+    "accent": "#FF3E8A",
+    "support": "#FFD23F",
+    "shade": "#8A6F52"
+  },
+  "fonts": {
+    "display": "Rubik 900",
+    "stickerLabels": "Rubik 700",
+    "captions": "Rubik 600",
+    "labels": "Rubik 500"
+  },
+  "overrides": [],
+  "rules": [
+    "Maximaal twee roze stickers zichtbaar per frame",
+    "Geel uitsluitend voor getallen",
+    "Productkleuren onveranderd",
+    "Geen fictief logo als werkelijk merk tonen",
+    "16:9 doos links, namenlijst rechts"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "WAT ZIT ER",
+    "IN DE BOX?"
+  ],
+  "accentWord": "BOX?",
+  "eyebrow": "PEAK DISTRICT · CONCEPT",
+  "theme": "light",
+  "lang": "nl",
+  "fontSize": 92,
+  "start": 0.25,
+  "stagger": 0.12,
+  "underline": false,
+  "exit": false,
+  "duration": 4
+}
