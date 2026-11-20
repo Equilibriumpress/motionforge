@@ -145,8 +145,17 @@ export async function runQa(slug,{video=null,comparison=null,skipBrowser=false}=
   }
  }else pending('T5','Compare a second separately rendered MP4; source-only seeking is not proof.');
  try{
-   const board=await reviewRenderedVideo(slug,{mp4});
-   if(board.renderSha256!==sha)throw Error('MP4 changed during storyboard extraction.');
+   // A fresh MF-12D render already produced a matching actual storyboard.
+   const boardFile=path.join(qa,'render-report.json');
+   const cached=existsSync(boardFile)?
+     JSON.parse(await readFile(boardFile,'utf8')):null;
+   const validBoard=cached?.renderSha256===sha&&
+     Array.isArray(cached.stills)&&cached.stills.length===project.scenes.length*3&&
+     cached.stills.every(x=>safe(x.file)&&existsSync(path.join(folder,x.file)));
+   if(!validBoard){
+     const board=await reviewRenderedVideo(slug,{mp4});
+     if(board.renderSha256!==sha)throw Error('MP4 changed during storyboard extraction.');
+   }
  }catch(err){r.note+=' Per-scene storyboard not verified: '+err.message;}
  for(const [name,args] of [['sheet.png',['--every','0.5','--cols','6']],
    ['phone.png',['--every','1','--width','360','--cols','4']]]){
@@ -186,8 +195,10 @@ export async function runQa(slug,{video=null,comparison=null,skipBrowser=false}=
   pending('X1','Browser textcheck not completed: '+(skipBrowser?'explicitly skipped':toolErrors.join('; ')));
   pending('X3','Browser readcheck not completed: '+(skipBrowser?'explicitly skipped':toolErrors.join('; ')));
  }else{
-  set('X1',textErrors.length?'fail':'pass','qa/textcheck-*.log',textErrors.join('; '));
-  set('X3',readErrors.length?'fail':'pass','qa/readcheck-*.log',readErrors.join('; '));
+  const proof=await save('text-read-checks.json',
+    JSON.stringify({textErrors,readErrors,scenes:project.scenes.map(s=>s.id)},null,2));
+  set('X1',textErrors.length?'fail':'pass',proof,textErrors.join('; '));
+  set('X3',readErrors.length?'fail':'pass',proof,readErrors.join('; '));
  }
  for(const [id,description,evidence] of [
   ['X2','Typography/contrast and caption size need visual review.','qa/phone.png'],

@@ -138,6 +138,8 @@ export async function checkOriginalProject(folder){
         });
         const report=JSON.parse(await readFile(reportFile,'utf8'));
         const gate=renderGate(report,sha);
+        if(report.critic?.evidence&&!existsSync(path.join(folder,report.critic.evidence)))
+          gate.problems.push('Independent critic evidence file is missing.');
         for(const reason of gate.problems)
           findings.push({level:'FAIL',code:'QA_GATE',reason});
       }catch(error){

@@ -92,7 +92,8 @@ export function renderGate(report,sha){
      issues.push(id+' has unreasoned warning.');
    else if(c.status==='pass'&&!c.evidence)issues.push(id+' has no evidence.');
  }
- if(report.critic?.status!=='completed'||report.critic?.renderSha256!==sha||
+ if(report.critic?.status!=='completed'||!report.critic?.evidence||
+   report.critic?.renderSha256!==sha||
    report.critic?.freshContextConfirmed!==true||report.critic?.unresolvedFixes!==0)
    issues.push('Independent critic not completed for this render or open FIX remains.');
  for(const id of QA_IDS.human){

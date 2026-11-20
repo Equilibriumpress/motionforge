@@ -39,7 +39,8 @@ test('render hash, incomplete checks, missing independent critic and open FIX bl
  assert.ok(renderGate(r,'b'.repeat(64)).problems[0].includes('stale'));
  for(const id of QA_CHECK_IDS.filter(x=>!x.startsWith('H')))
    r.checks[id]=checkRecord(id,'pass','qa/log.json');
- r.critic={status:'completed',renderSha256:sha,freshContextConfirmed:true,unresolvedFixes:0};
+ r.critic={status:'completed',renderSha256:sha,freshContextConfirmed:true,
+   unresolvedFixes:0,evidence:'qa/critic-review.json'};
  assert.equal(renderGate(r,sha).ok,true);
  r.checks.T3=checkRecord('T3','warn','qa/accepted-holds.json',
    'Black frame intentionally holds for a documented reveal.');
