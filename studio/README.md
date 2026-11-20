@@ -51,3 +51,8 @@ Open a project detail in the library to see the scene player. Canvas and HyperFr
 ## ChatGPT project workflow (MF-05)
 
 Read docs/STUDIO_WORKFLOW.md. To create a local starter: node studio/scripts/new-project.mjs --slug my-video --title "My video" --duration 8 --format 16:9. This does not replace writing the finished scene content. GitHub remains the project storage, and Pages remains a read-only viewer.
+
+
+## Browser MP4 export (MF-06)
+
+Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Canvas / HyperFrames remain preview-only in this production round. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.

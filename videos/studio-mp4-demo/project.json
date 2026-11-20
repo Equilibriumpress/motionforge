@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "studio-mp4-demo",
+  "title": "STUDIO · Browser MP4 Demo",
+  "description": "Een korte Remotion-titelanimatie die rechtstreeks in de browser naar MP4 rendert.",
+  "status": "draft",
+  "language": "nl",
+  "format": "16:9",
+  "engine": "remotion",
+  "durationSeconds": 6,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": [
+    "remotion",
+    "mp4",
+    "demo"
+  ],
+  "browserRender": {
+    "template": "title-card-v1",
+    "title": "MOTIONFORGE STUDIO",
+    "subtitle": "VAN PROJECT NAAR MP4",
+    "background": "#0d1822",
+    "accent": "#a9f0ad"
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Titelanimatie",
+      "startSeconds": 0,
+      "durationSeconds": 6,
+      "engine": "remotion",
+      "source": "scenes/intro/index.html"
+    }
+  ]
+}
