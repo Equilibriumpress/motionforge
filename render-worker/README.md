@@ -33,3 +33,8 @@ Dockerfile presence alone is not successful browser/WebGL validation. Check brow
 ## Follow-up
 
 Use node tools/studio-render-review.mjs <slug> to regenerate the stills and FFprobe report from an existing MP4. Failed frames or missing browser dependencies must be fixed before delivery.
+
+
+## MF-12E QA
+
+Rendering now automatically starts tools/studio-qa-review.mjs after creating the MP4 and scene storyboard. It writes qa/report.json, qa/report.md, time-stamped qa/sheet.png, qa/phone.png, ffprobe and FFmpeg diagnostics. A second MP4 may be passed for T5 determinism. Missing dependencies and human observations stay pending. A nonzero fail count yields a nonzero renderer exit status without deleting the MP4. See docs/STUDIO_QA_REVIEW.md and the original skills/qa-review/SKILL.md. No video rendering is added to GitHub Actions.

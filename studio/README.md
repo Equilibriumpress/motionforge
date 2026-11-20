@@ -124,3 +124,8 @@ A separate pinned render-worker/ environment runs original HyperFrames 0.8.92 us
 From studio/: npm run render:doctor, npm run render:video -- <slug> --dry-run, npm run render:video -- <slug> --quality draft, npm run test:voice-render.
 
 Measured frames, ffprobe checks and contact sheet are created for review. The workflow does not automatically approve G5/G6/G7.
+
+
+## MF-12E · Original QA and independent critic
+
+The local renderer executes the original QA runner after writing a real MP4. See docs/STUDIO_QA_REVIEW.md and scripts qa:original, qa:critic and qa:annotations in studio/package.json. A report and contact sheet are only evidence, not an automatic G5–G7 signoff. Pending human review and critic tasks remain visible; READY is blocked until the MP4-bound checks and independent critic are complete.

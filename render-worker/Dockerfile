@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    chromium ffmpeg python3 python3-pip ca-certificates fonts-dejavu-core \
+    chromium ffmpeg python3 python3-pip python3-pil ca-certificates fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY . /app

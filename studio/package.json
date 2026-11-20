@@ -22,7 +22,11 @@
     "render:doctor": "node ../tools/studio-render-doctor.mjs",
     "render:video": "node ../tools/studio-render.mjs",
     "render:review": "node ../tools/studio-render-review.mjs",
-    "test:voice-render": "node --test ../tools/studio-voice.test.mjs ../tools/studio-render-doctor.test.mjs ../tools/studio-render-review.test.mjs"
+    "test:voice-render": "node --test ../tools/studio-voice.test.mjs ../tools/studio-render-doctor.test.mjs ../tools/studio-render-review.test.mjs",
+    "qa:original": "node ../tools/studio-qa-review.mjs",
+    "qa:critic": "node ../tools/studio-qa-critic.mjs",
+    "qa:annotations": "node ../tools/studio-qa-annotations.mjs",
+    "test:qa-original": "node --test ../tools/studio-qa-policy.test.mjs ../tools/studio-qa-review.test.mjs ../tools/studio-qa-critic.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
