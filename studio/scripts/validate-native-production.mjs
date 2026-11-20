@@ -79,10 +79,30 @@ export async function checkOriginalProject(folder){
   const prod=JSON.parse(await readFile(file,'utf8'));
   // Every evidence path is checked as a project-relative path, never outside
   // the user's project. Source and parameter files are stable references.
-  return originalProductionFindings(manifest,prod,value=>{
+  const findings=originalProductionFindings(manifest,prod,value=>{
     if(typeof value!=='string'||value.startsWith('/')||value.split('/').includes('..'))return false;
     return existsSync(path.join(folder,value));
   });
+  // Inspect the actual source too. A provenance declaration alone is not
+  // evidence that the original MotionForge animation source was retained.
+  if(Array.isArray(prod.sceneTemplates))for(const item of prod.sceneTemplates){
+    const where=item.source;
+    if(typeof where!=='string'||where.startsWith('/')||where.split('/').includes('..'))continue;
+    try{
+      const html=await readFile(path.join(folder,where),'utf8');
+      const match=html.match(/motionforge template:\\s*([a-z0-9-]+)/);
+      if(match?.[1]!==item.template)findings.push({level:'FAIL',code:'REAL_SOURCE',
+        reason:'Scene '+item.id+' does not contain original template source '+item.template});
+      const schemaFile=path.join(path.dirname(path.join(folder,where)),'params.json');
+      const schema=JSON.parse(await readFile(schemaFile,'utf8'));
+      if(schema.id!==item.template)findings.push({level:'FAIL',code:'REAL_PARAMS',
+        reason:'Original parameter schema mismatch: '+item.id});
+    }catch(error){
+      findings.push({level:'FAIL',code:'SOURCE_INSPECTION',
+        reason:'Cannot verify original source and parameters for '+item.id+': '+error.message});
+    }
+  }
+  return findings;
 }
 const direct=process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url);
 if(direct){
