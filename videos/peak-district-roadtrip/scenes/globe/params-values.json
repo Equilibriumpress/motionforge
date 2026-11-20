@@ -1,0 +1,36 @@
+{
+  "eyebrow": "ROADTRIP · ENGELAND",
+  "title": "Peak {District}",
+  "cities": [
+    {
+      "name": "Castleton",
+      "lat": 53.3431,
+      "lon": -1.7764
+    },
+    {
+      "name": "Mam Tor",
+      "lat": 53.34999,
+      "lon": -1.80942
+    },
+    {
+      "name": "Ladybower",
+      "lat": 53.39278,
+      "lon": -1.72306
+    },
+    {
+      "name": "Bakewell",
+      "lat": 53.212,
+      "lon": -1.675
+    }
+  ],
+  "arcs": "chain",
+  "focus": -1,
+  "spinFrom": 55,
+  "pinStart": 1.6,
+  "arcStart": 2.5,
+  "route": "Castleton → Mam Tor → Ladybower → Bakewell",
+  "landColor": "#bfc8b7",
+  "oceanColor": "#162c33",
+  "lang": "nl",
+  "duration": 8
+}
