@@ -10,6 +10,7 @@ export default function TitleSequence({title,subtitle,background,accent}) {
   const subtitleOpacity=interpolate(frame,[fps*1.2,fps*2],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
   const headingSize=Math.round(Math.min(width*.081,height*.128));
   const subSize=Math.round(Math.min(width*.026,height*.044));
+  const fittedHeading=Math.min(headingSize,Math.max(22,width*.79/Math.max(1,title.length*.62)));
   const vertical=height>width;
   const left=width*.10;
   const titleY=vertical?height*.48:height*.49;
@@ -24,7 +25,7 @@ export default function TitleSequence({title,subtitle,background,accent}) {
         pathLength={1} strokeDasharray={1} strokeDashoffset={1-line}/>
       <circle cx={left} cy={lineY} r={Math.max(5,width*.007)} fill={accent} opacity={line}/>
       <text x={left} y={titleY} fill="#f7f3ed"
-        fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize={headingSize}
+        fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize={fittedHeading}
         letterSpacing="-2" opacity={enter}>{title}</text>
       <text x={left} y={lowerY} fill={accent}
         fontFamily="Arial, Helvetica, sans-serif" fontWeight="600" fontSize={subSize}
