@@ -129,7 +129,7 @@ try{
       await run('ffmpeg',['-y','-hide_banner','-loglevel','error','-f','lavfi','-i',
         'color=c=0x0d1822:s='+w+'x'+h+':r='+fps,'-frames:v',String(shot.frames),'-c:v','libx264',
         '-preset','veryfast','-crf',crf,'-pix_fmt','yuv420p',
-        '-color_primaries','bt709','-color_trc','bt709','-colorspace','bt709',normalized]);
+        '-color_primaries','bt709','-color_trc','bt709','-colorspace','bt709','-bsf:v','h264_metadata=colour_primaries=1:transfer_characteristics=1:matrix_coefficients=1',normalized]);
     }else{
       const raw=path.join(temp,label+'-raw.mp4');
       if(shot.type==='canvas'){
@@ -154,7 +154,7 @@ try{
       await run('ffmpeg',['-y','-hide_banner','-loglevel','error','-i',raw,'-vf',filter,
         '-an','-r',String(fps),'-c:v','libx264','-preset','veryfast','-crf',crf,
         '-pix_fmt','yuv420p','-color_primaries','bt709','-color_trc','bt709',
-        '-colorspace','bt709','-frames:v',String(shot.frames),normalized]);
+        '-colorspace','bt709','-frames:v',String(shot.frames),'-bsf:v','h264_metadata=colour_primaries=1:transfer_characteristics=1:matrix_coefficients=1',normalized]);
     }
     segments.push(normalized);
   }
