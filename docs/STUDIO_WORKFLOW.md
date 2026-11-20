@@ -10,7 +10,7 @@ This protocol extends MotionForge's existing motion-director instructions. Keep 
 4. Ensure every scene supports deterministic seeking. Canvas uses window.render(t). HyperFrames uses window.__timelines. Choose Remotion only for templates supported by the Studio browser renderer.
 5. Keep project.json schemaVersion=1, duration/fps/format consistent and source paths relative to the project folder.
 6. Verify creative approvals and explicit consent for any paid call. Never commit secrets or credentials. Record image, music, font and footage usage rights.
-7. If a local runner exists, validate using cd studio && npm ci && npm run build. Otherwise perform source/manifest checks and report which runtime tests were not possible.
+7. If a local runner exists, validate using cd studio && npm install && npm run build. Otherwise perform source/manifest checks and report which runtime tests were not possible.
 8. Commit all authored source files to a dedicated GitHub branch and open a PR to main. If the user specifically asks to merge, inspect the diff and merge.
 9. Merging to main triggers the GitHub Pages site build and regenerates the project index. Confirm deployment status before claiming publication.
 10. Future revisions edit the same source project rather than creating a duplicate entry. Record decisions in brief.md.
