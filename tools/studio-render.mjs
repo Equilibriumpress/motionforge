@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 // Local MotionForge Studio video render. Requires Node 22, FFmpeg and scene engines.
 // Source stays in videos/<slug>. Output goes only to videos/<slug>/renders/.
-import {existsSync} from 'node:fs';
-import {copyFile, mkdir, mkdtemp, readFile, rm, writeFile} from 'node:fs/promises';
+import {existsSync,readFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {copyFile, cp, mkdir, mkdtemp, readFile, rm, writeFile} from 'node:fs/promises';
 import {spawn} from 'node:child_process';
 import {prepareHyperFramesSceneAssets} from '../studio/scripts/prepare-video-scene-assets.mjs';
+import {prepareGlobeScene} from '../studio/scripts/prepare-globe-scene.mjs';
+import {inspectRuntime,runtimeBin} from './studio-render-doctor.mjs';
+import {reviewRenderedVideo} from './studio-render-review.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -15,14 +19,14 @@ const slug=process.argv[2];
 const validSlug=value=>/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value||'');
 const validPath=value=>typeof value==='string'&&/^[a-zA-Z0-9_./-]+$/.test(value)&&
   !value.startsWith('/')&&!value.split('/').includes('..');
-if(!validSlug(slug))throw Error('Use node tools/studio-render.mjs <slug> [--dry-run] [--quality draft|final] [--formats 9:16,1:1] [--audio audio/voice.wav] [--overwrite]');
+if(!validSlug(slug))throw Error('Use node tools/studio-render.mjs <slug> [--dry-run] [--quality draft|final] [--audio auto|audio/voice.wav] [--no-review] [--overwrite]');
 const flags=new Map();
 const args=process.argv.slice(3);
 for(let i=0;i<args.length;i++){
   const value=args[i];
   if(!value.startsWith('--'))throw Error('Unknown argument: '+value);
   const key=value.slice(2);
-  if(['dry-run','overwrite'].includes(key)){flags.set(key,true);continue;}
+  if(['dry-run','overwrite','no-review'].includes(key)){flags.set(key,true);continue;}
   if(!['quality','formats','audio'].includes(key)||!args[i+1]||args[i+1].startsWith('--'))throw Error('Invalid option '+value);
   flags.set(key,args[++i]);
 }
@@ -30,8 +34,9 @@ const dry=flags.has('dry-run'),quality=flags.get('quality')||'final';
 if(!['draft','final'].includes(quality))throw Error('Quality must be draft or final');
 const extra=flags.get('formats')?.split(',').filter(Boolean)||[];
 if(extra.some(value=>!sizes[value]))throw Error('Unknown output format');
-const audio=flags.get('audio');
-if(audio&&(!validPath(audio)||!audio.startsWith('audio/')))throw Error('Audio must be inside audio/');
+let audio=flags.get('audio');
+if(audio&&audio!=='auto'&&(!validPath(audio)||!audio.startsWith('audio/')))
+  throw Error('Audio must be auto or a project-relative audio/ path.');
 const root=path.join(repo,'videos',slug);
 const project=JSON.parse(await readFile(path.join(root,'project.json'),'utf8'));
 if(project.schemaVersion!==1||project.id!==slug||!sizes[project.format])throw Error('Invalid project');
@@ -56,6 +61,27 @@ for(const scene of ordered){
 }
 if(position>total)throw Error('Scenes exceed project duration');
 if(position<total)shots.push({type:'gap',frames:total-position});
+if(audio==='auto'){
+  const planFile=path.join(root,'audio/voice-plan.json');
+  if(!existsSync(planFile))throw Error('No voice plan. Use tools/studio-voice.mjs first.');
+  const plan=JSON.parse(await readFile(planFile,'utf8'));
+  if(plan.mode==='none')audio=null;
+  else{
+    if(!['timed-review-required','estimated-review-required'].includes(plan.status))
+      throw Error('Audio not ready. Paid-plan is a proposal and never an actual voice.');
+    if(!existsSync(path.join(root,'audio/words.json'))||
+      !existsSync(path.join(root,'audio/scene-cues.json')))
+      throw Error('Voice requires real word timings and resolved scene cues.');
+    const prodFile=path.join(root,'production.json');
+    if(existsSync(prodFile)){
+      const prod=JSON.parse(await readFile(prodFile,'utf8'));
+      if(prod.gates?.G2?.status!=='passed'||
+        !['passed','not_applicable'].includes(prod.gates?.G3?.status))
+        throw Error('Script G2 and cost decision G3 must be approved before audio rendering.');
+    }
+    audio='audio/voice.wav';
+  }
+}
 if(audio&&!existsSync(path.join(root,audio)))throw Error('Missing audio file '+audio);
 const outputDir=path.join(root,'renders'),master=path.join(outputDir,slug+'.mp4');
 if(existsSync(master)&&!dry&&!flags.has('overwrite'))throw Error('Output exists; rerun with --overwrite');
@@ -63,6 +89,25 @@ console.log('Project '+slug+' · '+w+'×'+h+' · '+fps+' fps');
 console.log(shots.map(s=>s.type==='gap'?'GAP '+s.frames+'f':s.id+' ['+s.type+'] '+s.frames+'f').join(' → '));
 console.log('Master: '+master);
 if(dry){console.log('Dry-run succeeded, no renderer invoked.');process.exit(0);}
+const needsHyperFrames=shots.some(s=>s.type==='hyperframes');
+const needsThree=shots.some(s=>s.source&&existsSync(s.source)&&
+  /motionforge template: (globe-arcs-3d|[a-z0-9-]+-3d)/.test(
+    requireReadScene(s.source)));
+function requireReadScene(filename){
+  // Sync inspection here avoids dependency installs/network access.
+  return readFileSync(filename,'utf8');
+}
+const doctor=inspectRuntime({needsHyperFrames,needsThree});
+if(!doctor.ok)throw Error('Local render preflight failed:\n'+doctor.checks
+  .filter(x=>!x.ok).map(x=>x.name+': '+x.fix).join('\n'));
+if(audio){
+  const p=spawnSync('ffprobe',['-v','error','-show_entries','format=duration',
+    '-of','default=nk=1:nw=1',path.join(root,audio)],{encoding:'utf8'});
+  if(p.status!==0||!Number.isFinite(Number(p.stdout)))
+    throw Error('Cannot measure voice/audio duration.');
+  if(Number(p.stdout)>total/fps+.05)
+    throw Error('Voice exceeds video duration. Refusing to truncate spoken words.');
+}
 async function run(command,args,cwd=repo){
   console.log('$ '+command+' '+args.join(' '));
   await new Promise((resolve,reject)=>{
@@ -90,9 +135,16 @@ try{
         await run(process.execPath,[path.join(repo,'engines/canvas/render.mjs'),'video',
           path.dirname(shot.source),'--fps',String(fps),'--workers','2','--out',raw]);
       }else{
-        await prepareHyperFramesSceneAssets(path.dirname(shot.source));
-        await run('npx',['--yes','hyperframes@0.8.92','render','-c',path.basename(shot.source),
-          '-o',raw,'--fps',String(fps),...(quality==='draft'?['-q','draft']:[])],path.dirname(shot.source));
+        // Never mutate original template HTML when the 3D source is bundled.
+        const stage=path.join(temp,label+'-source');
+        await cp(path.dirname(shot.source),stage,{recursive:true});
+        await prepareHyperFramesSceneAssets(stage);
+        const localHtml=path.join(stage,path.basename(shot.source));
+        if((await readFile(localHtml,'utf8')).includes('motionforge template: globe-arcs-3d'))
+          await prepareGlobeScene(stage,{preview:true});
+        // Local pinned CLI: NO npx --yes, package downloads or GitHub Actions.
+        await run(runtimeBin,['render','-c',path.basename(localHtml),
+          '-o',raw,'--fps',String(fps),...(quality==='draft'?['-q','draft']:[])],stage);
       }
       const filter='fps='+fps+',scale='+w+':'+h+':force_original_aspect_ratio=decrease,'+
         'pad='+w+':'+h+':(ow-iw)/2:(oh-ih)/2,setsar=1,'+
@@ -123,6 +175,10 @@ try{
   if(extra.length){
     await run(process.execPath,[path.join(repo,'tools/export.mjs'),master,
       '--formats',extra.join(','),'--mode','fill','--out',outputDir]);
+  }
+  if(!flags.has('no-review')){
+    const review=await reviewRenderedVideo(slug,{mp4:master});
+    console.log('Review board: '+review.contactSheet+' (G5–G7 not approved)');
   }
   console.log('Saved '+master);
 }finally{await rm(temp,{recursive:true,force:true});}
