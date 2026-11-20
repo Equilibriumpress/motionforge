@@ -39,7 +39,8 @@
         "entrance": "Words enter one at a time",
         "hero": "MotionForge headline",
         "onScreenText": "ORIGINAL MOTIONFORGE",
-        "motifRole": "Circle as an opening word accent"
+        "motifRole": "Circle as an opening word accent",
+        "narration": "We beginnen bij een origineel MotionForge-template."
       }
     },
     {
@@ -62,7 +63,8 @@
         "entrance": "Each card reveals sequentially",
         "hero": "Three approved steps",
         "onScreenText": "Brief · Scenes · Review",
-        "motifRole": "Circle as a checklist marker"
+        "motifRole": "Circle as a checklist marker",
+        "narration": "Daarna verbinden we drie scènes met een gezamenlijke tijdlijn."
       }
     },
     {
@@ -83,8 +85,24 @@
         "entrance": "Headline lifts into the frame",
         "hero": "Review reminder",
         "onScreenText": "REVIEW BEFORE DELIVERY",
-        "motifRole": "Circle as a closing underscore"
+        "motifRole": "Circle as a closing underscore",
+        "narration": "Iedere scène krijgt een controle voordat de video wordt opgeleverd."
       }
     }
-  ]
+  ],
+  "hooks": [
+    {
+      "type": "question",
+      "text": "Hoe maakt MotionForge een video?"
+    },
+    {
+      "type": "contrast",
+      "text": "Niet alleen beelden. Ook broncode en controle."
+    },
+    {
+      "type": "promise",
+      "text": "Drie originele scènes, één tijdlijn."
+    }
+  ],
+  "claims": []
 }

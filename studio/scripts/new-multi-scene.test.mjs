@@ -37,6 +37,14 @@ test('dry-run leaves repo untouched and never invokes rendering',async()=>{
   assert.equal(result.approved,false);
   await assert.rejects(access(new URL('../../videos/original-workflow-test-reel',import.meta.url)));
 });
+test('missing hooks and unverified claims are rejected before project creation',async()=>{
+  const original=await load(),contracts=await specs();
+  const invalid=structuredClone(original);delete invalid.hooks;
+  assert.throws(()=>validateVideoPlan(invalid,contracts),/hook options/);
+  const missing=structuredClone(original);
+  missing.claims=[{claim:'Unverified distance'}];
+  assert.throws(()=>validateVideoPlan(missing,contracts),/claim list/);
+});
 test('duplicate IDs, non-original parameters and inconsistent durations fail before writing',async()=>{
   const original=await load(),contracts=await specs();
   const duplicate=structuredClone(original);
