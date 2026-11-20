@@ -5,7 +5,7 @@
     "agent": "ChatGPT",
     "entrypoint": "skills/motion-director/SKILL.md",
     "protocol": "docs/STUDIO_AGENT_WORKFLOW.md",
-    "state": "awaiting-G1",
+    "state": "awaiting-G5",
     "styleDelegated": false
   },
   "sourceMainCommit": "82fb907e8a47b01db704008f2591c533a4d120e3",
@@ -18,7 +18,7 @@
   "paidServicesUsed": false,
   "generatedMediaUsed": false,
   "voiceMode": "none",
-  "projectStage": "g1-g2-proposal",
+  "projectStage": "approved-G1-to-G4-awaiting-scene-source-and-G5",
   "formatFidelity": {
     "nativeWidth": 1080,
     "nativeHeight": 1920,
@@ -84,20 +84,28 @@
   },
   "gates": {
     "G1": {
-      "status": "pending",
-      "evidence": null
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved the proposed five-line brief."
     },
     "G2": {
-      "status": "pending",
-      "evidence": null
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved hook 1, Dutch 30-second script, five-scene selection and 16:9 source adaptations."
     },
     "G3": {
-      "status": "pending",
-      "evidence": null
+      "status": "not_applicable",
+      "actor": "agent",
+      "evidence": null,
+      "reason": "Silent concept without paid services, voice, music, models or media."
     },
     "G4": {
-      "status": "pending",
-      "evidence": null
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "Original Unboxing Pop selected by user and approved in the subsequent G1/G2 decision."
     },
     "G5": {
       "status": "pending",
@@ -113,9 +121,18 @@
     }
   },
   "approvals": {
-    "brief": null,
-    "script": null,
-    "sceneSelection": null,
+    "brief": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
+    "script": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
+    "sceneSelection": {
+      "actor": "user",
+      "evidence": "qa/approval-record.md"
+    },
     "storyboard": null
   },
   "evidence": {
@@ -133,15 +150,42 @@
     "independentCriticRun": false
   },
   "outstanding": [
-    "G1: vijfregelige briefing bevestigen",
-    "G2: hook, voice-overscript en originele scènekeuze bevestigen",
-    "G3: na G2 vastleggen dat geen betaalde diensten nodig zijn",
-    "G4: stijl geselecteerd door gebruiker, formeel afhandelen na G1",
     "16:9 originele HTML-scènes met brongetrouwe 3D-doos en Rubik uitwerken",
     "Originele new-from-upstream.mjs CLI uitvoeren met geldige aangepaste scènebronnen",
     "G5: echte storyboardstills renderen en door gebruiker goedkeuren",
     "G6: echte HyperFrames MP4 en volledige QA",
     "G7: critic in onafhankelijke context",
-    "MP4 en Pages Studio zichtbaarheid pas na goedgekeurde broncode en merge"
+    "MP4 en Pages Studio zichtbaarheid pas na goedgekeurde broncode en merge",
+    "Requires real browser-rendered G5 storyboard and user approval"
+  ],
+  "decisions": [
+    {
+      "gate": "G1",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved the proposed five-line brief."
+    },
+    {
+      "gate": "G2",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "User explicitly approved hook 1, Dutch 30-second script, five-scene selection and 16:9 source adaptations."
+    },
+    {
+      "gate": "G3",
+      "status": "not_applicable",
+      "actor": "agent",
+      "evidence": null,
+      "reason": "Silent concept without paid services, voice, music, models or media."
+    },
+    {
+      "gate": "G4",
+      "status": "passed",
+      "actor": "user",
+      "evidence": "qa/approval-record.md",
+      "decision": "Original Unboxing Pop selected by user and approved in the subsequent G1/G2 decision."
+    }
   ]
 }
