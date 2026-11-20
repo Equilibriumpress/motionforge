@@ -113,6 +113,23 @@ async function ensureHyperFramesAssets(target) {
     if (!existsSync(dst) && existsSync(from)) {
       await mkdir(path.dirname(dst),{recursive:true});
       await copyFile(from,dst);
+
+    // Native roadtrip typography is resolved from installed free OFL font packages.
+    // Do not commit or embed any font binaries in the source repository.
+    const htmlPath=path.join(path.dirname(target),'index.html');
+    if(existsSync(htmlPath) && (await readFile(htmlPath,'utf8')).includes('route-journey-landscape-fonts')){
+      for(const [filename,packagePath] of [
+        ['outfit-latin-500-normal.woff2','@fontsource/outfit/files/outfit-latin-500-normal.woff2'],
+        ['outfit-latin-800-normal.woff2','@fontsource/outfit/files/outfit-latin-800-normal.woff2'],
+        ['overpass-mono-latin-600-normal.woff2','@fontsource/overpass-mono/files/overpass-mono-latin-600-normal.woff2']
+      ]){
+        const src=path.join(studioRoot,'node_modules',packagePath);
+        requireCondition(existsSync(src),target,'Missing OFL font asset: '+packagePath+' (npm install)');
+        const destination=path.join(base,'fonts',filename);
+        await mkdir(path.dirname(destination),{recursive:true});
+        if(!existsSync(destination))await copyFile(src,destination);
+      }
+    }
     }
   }
 }

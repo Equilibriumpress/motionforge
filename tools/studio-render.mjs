@@ -4,6 +4,7 @@
 import {existsSync} from 'node:fs';
 import {copyFile, mkdir, mkdtemp, readFile, rm, writeFile} from 'node:fs/promises';
 import {spawn} from 'node:child_process';
+import {prepareHyperFramesSceneAssets} from '../studio/scripts/prepare-video-scene-assets.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -89,6 +90,7 @@ try{
         await run(process.execPath,[path.join(repo,'engines/canvas/render.mjs'),'video',
           path.dirname(shot.source),'--fps',String(fps),'--workers','2','--out',raw]);
       }else{
+        await prepareHyperFramesSceneAssets(path.dirname(shot.source));
         await run('npx',['--yes','hyperframes@0.8.92','render','-c',path.basename(shot.source),
           '-o',raw,'--fps',String(fps),...(quality==='draft'?['-q','draft']:[])],path.dirname(shot.source));
       }
