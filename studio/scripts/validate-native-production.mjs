@@ -90,7 +90,7 @@ export async function checkOriginalProject(folder){
     if(typeof where!=='string'||where.startsWith('/')||where.split('/').includes('..'))continue;
     try{
       const html=await readFile(path.join(folder,where),'utf8');
-      const match=html.match(/motionforge template:\\s*([a-z0-9-]+)/);
+      const match=html.match(/motionforge template:\s*([a-z0-9-]+)/);
       if(match?.[1]!==item.template)findings.push({level:'FAIL',code:'REAL_SOURCE',
         reason:'Scene '+item.id+' does not contain original template source '+item.template});
       const schemaFile=path.join(path.dirname(path.join(folder,where)),'params.json');
