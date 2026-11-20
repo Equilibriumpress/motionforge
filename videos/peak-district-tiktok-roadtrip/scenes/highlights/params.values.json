@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "HEUVELS EN",
+    "VERGEZICHTEN"
+  ],
+  "accentWord": "VERGEZICHTEN",
+  "eyebrow": "EVEN UIT DE AUTO",
+  "fontSize": 90,
+  "theme": "dark",
+  "lang": "nl",
+  "start": 0.08,
+  "stagger": 0.1,
+  "underline": true,
+  "exit": true,
+  "duration": 4
+}

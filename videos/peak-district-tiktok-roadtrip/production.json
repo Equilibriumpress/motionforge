@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "sourceMethod": "original-motionforge",
+  "workflow": {
+    "agent": "ChatGPT",
+    "entrypoint": "skills/motion-director/SKILL.md",
+    "protocol": "docs/STUDIO_AGENT_WORKFLOW.md",
+    "state": "awaiting-G1"
+  },
+  "sourceMainCommit": "a5a62dadddd035896bf1aa76d20f63f82e93fe56",
+  "selectedStyle": "route-journey",
+  "templateSource": "templates/kinetic-title/index.html",
+  "parameterContract": "templates/kinetic-title/params.json",
+  "parameterValues": "scenes/hook/params.values.json",
+  "sourceScene": "scenes/hook/index.html",
+  "originalFormat": "9:16",
+  "engine": "hyperframes",
+  "formatFidelity": {
+    "nativeWidth": 1080,
+    "nativeHeight": 1920,
+    "sourceReframing": false,
+    "renderVerified": false
+  },
+  "sceneTemplates": [
+    {
+      "id": "hook",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/hook/index.html",
+      "parameters": "scenes/hook/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4"
+    },
+    {
+      "id": "orientation",
+      "template": "globe-arcs-3d",
+      "originalSource": "templates/globe-arcs-3d/index.html",
+      "source": "scenes/orientation/index.html",
+      "parameters": "scenes/orientation/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "c97f8241b1c3b52f9e540411b68f0047ca9929df"
+    },
+    {
+      "id": "stops",
+      "template": "checklist-reveal",
+      "originalSource": "templates/checklist-reveal/index.html",
+      "source": "scenes/stops/index.html",
+      "parameters": "scenes/stops/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166"
+    },
+    {
+      "id": "highlights",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/highlights/index.html",
+      "parameters": "scenes/highlights/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4"
+    },
+    {
+      "id": "outro",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/outro/index.html",
+      "parameters": "scenes/outro/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4"
+    }
+  ],
+  "paidServicesUsed": false,
+  "generatedMediaUsed": false,
+  "voiceMode": "none",
+  "gates": {
+    "G1": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G2": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G3": {
+      "status": "not_applicable",
+      "evidence": null,
+      "reason": "Geen betaalde voice, muziek, afbeelding, video of renderdienst"
+    },
+    "G4": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G5": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G6": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G7": {
+      "status": "pending",
+      "evidence": null
+    }
+  },
+  "outstanding": [
+    "Brief en script niet door gebruiker goedgekeurd",
+    "G5: werkelijke storyboardframes ontbreken",
+    "G6: oorspronkelijke rendercheck/QA ontbreekt",
+    "G7: onafhankelijke critic ontbreekt",
+    "Geen MP4 gerenderd"
+  ]
+}

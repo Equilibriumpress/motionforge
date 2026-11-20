@@ -1,0 +1,222 @@
+{
+  "slug": "peak-district-tiktok-roadtrip",
+  "title": "PEAK DISTRICT · ROADTRIP FOR TIKTOK",
+  "description": "Vijf scènes op basis van de originele MotionForge HyperFrames-templates, native 9:16, zonder extern beeld of kunstmatige routes. Concept zonder MP4 of ingesproken audio.",
+  "language": "nl",
+  "format": "9:16",
+  "fps": 30,
+  "durationSeconds": 30,
+  "style": "route-journey",
+  "storyFormat": 3,
+  "brief": {
+    "goal": "Beveel vier stops aan voor een roadtrip door het Peak District.",
+    "audience": "Nederlandstalige TikTok-kijkers die een autorondreis in Engeland overwegen",
+    "platform": "TikTok, native staand 1080×1920",
+    "tone": "Snel, helder, geografisch correct"
+  },
+  "direction": {
+    "concept": "Vier herkenbare stops maken een roadtrip door het Peak District concreet en makkelijk te bewaren.",
+    "visualRule": "Originele Route Journey nachtvariant. Roze staat voor de huidige bestemming. Iedere scène heeft zijn eigen originele GSAP- of Three.js-beweging.",
+    "motif": "Roze focus: titelwoord, 3D-pin, vinkjes en sluitende onderstreping."
+  },
+  "hooks": [
+    {
+      "type": "N",
+      "text": "Peak District in vier stops."
+    },
+    {
+      "type": "C",
+      "text": "Waar stop je tijdens een Peak District-roadtrip?"
+    },
+    {
+      "type": "P",
+      "text": "Vier plekken voor een roadtrip door het Peak District."
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Castleton ligt in het Peak District",
+      "source": "https://www.peakdistrict.gov.uk/visiting/visitor-centres/castleton"
+    },
+    {
+      "claim": "Mam Tor biedt uitzicht over Hope Valley",
+      "source": "https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/kinder-edale-and-the-high-peak/mam-tor-circular-walk"
+    },
+    {
+      "claim": "Ladybower is een reservoir in het Peak District",
+      "source": "https://www.peakdistrict.gov.uk/visiting/miles-without-stiles/ladybower"
+    },
+    {
+      "claim": "Monsal Head kijkt uit over Headstone Viaduct",
+      "source": "https://www.peakdistrict.gov.uk/visiting/places-to-visit/trails/monsaltrail"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Peak District in vier stops",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "PEAK DISTRICT",
+          "IN 4 STOPS"
+        ],
+        "accentWord": "DISTRICT",
+        "eyebrow": "ROADTRIP · ENGELAND",
+        "fontSize": 102,
+        "theme": "dark",
+        "lang": "nl",
+        "start": 0.15,
+        "stagger": 0.11,
+        "underline": true,
+        "exit": true,
+        "duration": 4
+      },
+      "direction": {
+        "cue": "Peak",
+        "layout": "Titel op volledig staand kader",
+        "entrance": "Originele woord-voor-woord GSAP-opbouw",
+        "hero": "PEAK DISTRICT",
+        "onScreenText": "PEAK DISTRICT / IN 4 STOPS",
+        "motifRole": "Roze titelaccent",
+        "narration": "Peak District in vier stops."
+      }
+    },
+    {
+      "id": "orientation",
+      "title": "Waar ligt de Peak District?",
+      "template": "globe-arcs-3d",
+      "durationSeconds": 6,
+      "params": {
+        "eyebrow": "01 · WAAR BEN JE?",
+        "title": "Het {Peak District}",
+        "cities": [
+          {
+            "name": "Peak District",
+            "lat": 53.34,
+            "lon": -1.78
+          }
+        ],
+        "arcs": "chain",
+        "focus": 0,
+        "spinFrom": 50,
+        "pinStart": 1.35,
+        "arcStart": 2.5,
+        "route": "ENGELAND · NATIONAL PARK",
+        "landColor": "#CFDCC0",
+        "oceanColor": "#1D2326",
+        "lang": "nl",
+        "duration": 6
+      },
+      "direction": {
+        "cue": "Dit",
+        "layout": "Volledig originele 9:16 globe met één geografische pin",
+        "entrance": "3D-globe draait, pin valt op regio",
+        "hero": "Peak District-pin",
+        "onScreenText": "Het {Peak District}",
+        "motifRole": "Roze locatiepin",
+        "narration": "Dit nationale park ligt in het hart van Engeland."
+      }
+    },
+    {
+      "id": "stops",
+      "title": "Vier stops voor je roadtrip",
+      "template": "checklist-reveal",
+      "durationSeconds": 12,
+      "params": {
+        "title": "Vier <span class=\"serif accent\">stops</span>",
+        "items": [
+          "Castleton",
+          "Mam Tor",
+          "Ladybower Reservoir",
+          "Monsal Head"
+        ],
+        "times": [
+          0.9,
+          3.35,
+          5.8,
+          8.25
+        ],
+        "start": 0.9,
+        "gap": 2.45,
+        "checkDelay": 0.34,
+        "numbered": true,
+        "theme": "dark",
+        "lang": "nl",
+        "duration": 12
+      },
+      "direction": {
+        "cue": "Begin",
+        "layout": "Vier aparte kaarten onder een grote titel",
+        "entrance": "Originele staggered checklist met roze vinkjes",
+        "hero": "Vier geografisch gecontroleerde bestemmingen",
+        "onScreenText": "Castleton / Mam Tor / Ladybower Reservoir / Monsal Head",
+        "motifRole": "Roze aankruisvakjes",
+        "narration": "Begin in Castleton. Wandel naar Mam Tor. Stop bij Ladybower Reservoir. Bekijk vanaf Monsal Head het viaduct."
+      }
+    },
+    {
+      "id": "highlights",
+      "title": "Heuvels en vergezichten",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "HEUVELS EN",
+          "VERGEZICHTEN"
+        ],
+        "accentWord": "VERGEZICHTEN",
+        "eyebrow": "EVEN UIT DE AUTO",
+        "fontSize": 90,
+        "theme": "dark",
+        "lang": "nl",
+        "start": 0.08,
+        "stagger": 0.1,
+        "underline": true,
+        "exit": true,
+        "duration": 4
+      },
+      "direction": {
+        "cue": "Neem",
+        "layout": "Grote tweeregelige tekst met tekstaccent",
+        "entrance": "Woorden verschijnen in twee cadansen",
+        "hero": "VERGEZICHTEN",
+        "onScreenText": "HEUVELS EN / VERGEZICHTEN",
+        "motifRole": "Roze woordaccent",
+        "narration": "Neem tijd voor de heuvels en de vergezichten."
+      }
+    },
+    {
+      "id": "outro",
+      "title": "Bewaar de roadtrip",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "BEWAAR DEZE",
+          "ROADTRIP"
+        ],
+        "accentWord": "ROADTRIP",
+        "eyebrow": "PEAK DISTRICT · ENGELAND",
+        "fontSize": 100,
+        "theme": "dark",
+        "lang": "nl",
+        "start": 0.1,
+        "stagger": 0.09,
+        "underline": true,
+        "exit": false,
+        "duration": 4
+      },
+      "direction": {
+        "cue": "Bewaar",
+        "layout": "Grote actie met rustige eindhold",
+        "entrance": "Originele titelanimatie, zonder uitgangseffect",
+        "hero": "BEWAAR DEZE ROADTRIP",
+        "onScreenText": "BEWAAR DEZE / ROADTRIP",
+        "motifRole": "Roze underline als eindmarkering",
+        "narration": "Bewaar deze vier stops voor je volgende roadtrip."
+      }
+    }
+  ]
+}

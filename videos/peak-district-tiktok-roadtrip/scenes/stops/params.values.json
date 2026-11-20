@@ -1,0 +1,22 @@
+{
+  "title": "Vier <span class=\"serif accent\">stops</span>",
+  "items": [
+    "Castleton",
+    "Mam Tor",
+    "Ladybower Reservoir",
+    "Monsal Head"
+  ],
+  "times": [
+    0.9,
+    3.35,
+    5.8,
+    8.25
+  ],
+  "start": 0.9,
+  "gap": 2.45,
+  "checkDelay": 0.34,
+  "numbered": true,
+  "theme": "dark",
+  "lang": "nl",
+  "duration": 12
+}

@@ -1,0 +1,102 @@
+{
+  "slug": "peak-district-tiktok-roadtrip",
+  "language": "nl",
+  "format": {
+    "main": "9:16",
+    "extra": [],
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "story_format": 3,
+  "style": "style/STYLE.md",
+  "brand": "brand.json",
+  "concept": "Vier herkenbare stops maken een roadtrip door het Peak District concreet en makkelijk te bewaren.",
+  "visual_rule": "Originele Route Journey nachtvariant. Roze staat voor de huidige bestemming. Iedere scène heeft zijn eigen originele GSAP- of Three.js-beweging.",
+  "motif": "Roze focus: titelwoord, 3D-pin, vinkjes en sluitende onderstreping.",
+  "approved_by": null,
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 4,
+      "cue": "Peak",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/kinetic-title",
+      "layout": "Titel op volledig staand kader",
+      "entrance": "Originele woord-voor-woord GSAP-opbouw",
+      "hero": "PEAK DISTRICT",
+      "on_screen_text": "PEAK DISTRICT / IN 4 STOPS",
+      "assets": [],
+      "sfx": [],
+      "notes": "Geen opgenomen voice-over. Geschatte scènecues. Templatecode oorspronkelijk, uitsluitend geldige parameters aangepast."
+    },
+    {
+      "id": "orientation",
+      "start": 4,
+      "end": 10,
+      "cue": "Dit",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/globe-arcs-3d",
+      "layout": "Volledig originele 9:16 globe met één geografische pin",
+      "entrance": "3D-globe draait, pin valt op regio",
+      "hero": "Peak District-pin",
+      "on_screen_text": "Het {Peak District}",
+      "assets": [],
+      "sfx": [],
+      "notes": "Geen opgenomen voice-over. Geschatte scènecues. Templatecode oorspronkelijk, uitsluitend geldige parameters aangepast."
+    },
+    {
+      "id": "stops",
+      "start": 10,
+      "end": 22,
+      "cue": "Begin",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/checklist-reveal",
+      "layout": "Vier aparte kaarten onder een grote titel",
+      "entrance": "Originele staggered checklist met roze vinkjes",
+      "hero": "Vier geografisch gecontroleerde bestemmingen",
+      "on_screen_text": "Castleton · Mam Tor · Ladybower Reservoir · Monsal Head",
+      "assets": [
+        "data/stops.geojson"
+      ],
+      "sfx": [],
+      "notes": "Geen opgenomen voice-over. Geschatte scènecues. Templatecode oorspronkelijk, uitsluitend geldige parameters aangepast."
+    },
+    {
+      "id": "highlights",
+      "start": 22,
+      "end": 26,
+      "cue": "Neem",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/kinetic-title",
+      "layout": "Grote tweeregelige tekst met tekstaccent",
+      "entrance": "Woorden verschijnen in twee cadansen",
+      "hero": "VERGEZICHTEN",
+      "on_screen_text": "HEUVELS EN / VERGEZICHTEN",
+      "assets": [],
+      "sfx": [],
+      "notes": "Geen opgenomen voice-over. Geschatte scènecues. Templatecode oorspronkelijk, uitsluitend geldige parameters aangepast."
+    },
+    {
+      "id": "outro",
+      "start": 26,
+      "end": 30,
+      "cue": "Bewaar",
+      "estimate": true,
+      "engine": "hyperframes",
+      "template": "templates/kinetic-title",
+      "layout": "Grote actie met rustige eindhold",
+      "entrance": "Originele titelanimatie, zonder uitgangseffect",
+      "hero": "BEWAAR DEZE ROADTRIP",
+      "on_screen_text": "BEWAAR DEZE / ROADTRIP",
+      "assets": [],
+      "sfx": [],
+      "notes": "Geen opgenomen voice-over. Geschatte scènecues. Templatecode oorspronkelijk, uitsluitend geldige parameters aangepast."
+    }
+  ]
+}

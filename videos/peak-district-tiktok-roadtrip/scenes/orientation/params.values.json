@@ -1,0 +1,21 @@
+{
+  "eyebrow": "01 · WAAR BEN JE?",
+  "title": "Het {Peak District}",
+  "cities": [
+    {
+      "name": "Peak District",
+      "lat": 53.34,
+      "lon": -1.78
+    }
+  ],
+  "arcs": "chain",
+  "focus": 0,
+  "spinFrom": 50,
+  "pinStart": 1.35,
+  "arcStart": 2.5,
+  "route": "ENGELAND · NATIONAL PARK",
+  "landColor": "#CFDCC0",
+  "oceanColor": "#1D2326",
+  "lang": "nl",
+  "duration": 6
+}

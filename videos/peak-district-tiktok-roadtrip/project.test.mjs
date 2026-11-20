@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));const p=JSON.parse(fs.readFileSync(path.join(here,'project.json'),'utf8'));
+assert.equal(p.format,'9:16');assert.equal(p.fps,30);assert.equal(p.durationSeconds,30);assert.equal(p.scenes.length,5);
+let cursor=0;for(const s of p.scenes){assert.equal(s.startSeconds,cursor);cursor+=s.durationSeconds;const html=fs.readFileSync(path.join(here,s.source),'utf8');assert.match(html,/data-width="1080" data-height="1920"/);assert.match(html,/motionforge template:/);assert.ok(html.includes('data-duration="'+s.durationSeconds+'"'));}assert.equal(cursor,30);console.log('source-only portrait validations PASS; actual MP4 QA pending');

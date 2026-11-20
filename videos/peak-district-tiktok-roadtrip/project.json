@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "peak-district-tiktok-roadtrip",
+  "title": "PEAK DISTRICT · ROADTRIP FOR TIKTOK",
+  "description": "Vijf scènes op basis van de originele MotionForge HyperFrames-templates, native 9:16, zonder extern beeld of kunstmatige routes. Concept zonder MP4 of ingesproken audio.",
+  "status": "concept",
+  "language": "nl",
+  "format": "9:16",
+  "engine": "hyperframes",
+  "durationSeconds": 30,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": [
+    "peak-district",
+    "roadtrip",
+    "tiktok",
+    "9:16",
+    "travel",
+    "route-journey",
+    "original-motionforge",
+    "hyperframes"
+  ],
+  "styleId": "route-journey",
+  "templateId": "kinetic-title",
+  "mapData": "data/stops.geojson",
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Peak District in vier stops",
+      "startSeconds": 0,
+      "durationSeconds": 4,
+      "engine": "hyperframes",
+      "source": "scenes/hook/index.html"
+    },
+    {
+      "id": "orientation",
+      "title": "Waar ligt de Peak District?",
+      "startSeconds": 4,
+      "durationSeconds": 6,
+      "engine": "hyperframes",
+      "source": "scenes/orientation/index.html"
+    },
+    {
+      "id": "stops",
+      "title": "Vier stops voor je roadtrip",
+      "startSeconds": 10,
+      "durationSeconds": 12,
+      "engine": "hyperframes",
+      "source": "scenes/stops/index.html"
+    },
+    {
+      "id": "highlights",
+      "title": "Heuvels en vergezichten",
+      "startSeconds": 22,
+      "durationSeconds": 4,
+      "engine": "hyperframes",
+      "source": "scenes/highlights/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "Bewaar de roadtrip",
+      "startSeconds": 26,
+      "durationSeconds": 4,
+      "engine": "hyperframes",
+      "source": "scenes/outro/index.html"
+    }
+  ]
+}
