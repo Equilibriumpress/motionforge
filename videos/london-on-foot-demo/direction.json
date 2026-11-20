@@ -1,0 +1,16 @@
+{
+  "concept": "A route appears before the title LONDON ON FOOT.",
+  "visualRule": "High-contrast editorial typography and one continuous line.",
+  "motif": "A walking line across the city.",
+  "scenes": [
+    {
+      "id": "intro",
+      "startSeconds": 0,
+      "durationSeconds": 8,
+      "layout": "16:9 editorial title",
+      "engine": "canvas",
+      "hero": "LONDON ON FOOT",
+      "entrance": "Route draws first, title fades in."
+    }
+  ]
+}

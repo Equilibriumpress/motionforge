@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="London on Foot demo cover">
+<rect width="960" height="540" fill="#0d1822"/>
+<path d="M80 412C185 398 172 315 290 330S402 250 489 262 586 158 681 188 744 105 869 120" fill="none" stroke="#3f655b" stroke-width="9" stroke-linecap="round" stroke-dasharray="3 22"/>
+<path d="M80 412C185 398 172 315 290 330S402 250 489 262 586 158 681 188 744 105 869 120" fill="none" stroke="#b6e2b7" stroke-width="3" stroke-linecap="round"/>
+<circle cx="80" cy="412" r="11" fill="#b6e2b7"/><circle cx="869" cy="120" r="11" fill="#b6e2b7"/>
+<rect x="50" y="52" width="270" height="34" rx="17" fill="#263e3d"/>
+<text x="70" y="74" font-family="system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#b6e2b7">MOTIONFORGE DEMO</text>
+<text x="65" y="242" font-family="system-ui,sans-serif" font-size="79" font-weight="800" letter-spacing="-4" fill="#f5f1e8">LONDON</text>
+<text x="65" y="324" font-family="system-ui,sans-serif" font-size="79" font-weight="800" letter-spacing="-4" fill="#f5f1e8">ON FOOT</text>
+<text x="68" y="477" font-family="system-ui,sans-serif" font-size="22" fill="#acc5c5">WALKING THE CITY · STUDIO CONCEPT</text>
+</svg>
