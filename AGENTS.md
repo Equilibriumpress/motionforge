@@ -35,3 +35,7 @@ Node 18+ (22 recommended), ffmpeg on PATH, Python 3.10+ with numpy. Optional: `t
 - Skills are agent-facing: numbered steps, exact commands, explicit gates. Keep them short.
 - Every SKILL.md has frontmatter: `name`, `description` (when to trigger), `license: MIT`.
 - Examples use only original or fictional content. No personal data, client brands, voice IDs or keys.
+
+## Studio authoring (MF-05)
+
+For requests to publish or edit a MotionForge Studio project, read docs/STUDIO_WORKFLOW.md after the existing motion-director skill. Author all files in videos/<slug>/, update the v1 project manifest, and use a GitHub feature branch and PR. Preserve existing approval gates, asset licensing, and QA. The public Pages site is read-only, and Actions only deploys the site, not the video.
