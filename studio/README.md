@@ -79,3 +79,20 @@ Full 3D scenes, module imports, audio synchronization, cross-scene effects, layo
 ## MF-08 · Video templates and QA
 
 Four reusable video templates can be created with npm run new:template -- --template book-trailer --slug my-book --title "MY BOOK". See docs/STUDIO_TEMPLATES.md. Use npm run qa:projects for fast structural checks and npm run test:studio for the built-in template and manifest tests. Source projects remain in videos/ and are rendered locally, not on GitHub Actions.
+
+
+## MF-09: Original MotionForge style and scene catalogue
+
+The studio has a separate Stijlen & scènes page. It shows the original 100 motion styles across 20 categories and the 16 original animated scene templates. The four Studio-owned Canvas formats remain available.
+
+The catalog generator reads skills/style-library/styles/README.md and templates/README.md at build time and writes the generated studio/public/catalog/index.json. This folder is git-ignored. Preview GIFs are lazily loaded from raw.githubusercontent.com (Equilibriumpress/motionforge/main), without copying large animation files to the Pages build.
+
+Choose one style and up to six original scenes or one Studio-owned template, then enter a title, length and aspect ratio. Copy the generated production prompt into ChatGPT with a connected GitHub app. The public Pages site does not write GitHub commits.
+
+Run locally:
+    cd studio
+    npm install
+    npm run test:catalog
+    npm run build
+
+Style and template catalogue updates also trigger the Pages build.
