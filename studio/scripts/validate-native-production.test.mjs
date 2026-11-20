@@ -50,3 +50,33 @@ test('multiple original scene sources are allowed with full provenance',()=>{
     source:'scenes/globe/index.html',parameters:'scenes/globe/params-values.json'}];
   assert.deepEqual(originalProductionFindings(p,d,()=>true),[]);
 });
+
+test('individual native 9:16 scenes require adaptation even when the first scene is native',()=>{
+  const p=project();
+  p.scenes=[{id:'intro',engine:'hyperframes',source:'scenes/intro/index.html'},
+    {id:'landscape',engine:'hyperframes',source:'scenes/landscape/index.html'}];
+  const d=prod();
+  d.sceneTemplates=[
+    {id:'intro',template:'kinetic-title',nativeFormat:'9:16',
+      originalSource:'templates/kinetic-title/index.html',
+      source:'scenes/intro/index.html',parameters:'scenes/intro/params.values.json'},
+    {id:'landscape',template:'checklist-reveal',nativeFormat:'16:9',
+      originalSource:'templates/checklist-reveal/index.html',
+      source:'scenes/landscape/index.html',parameters:'scenes/landscape/params.values.json'}
+  ];
+  assert.ok(originalProductionFindings(p,d,()=>true).some(f=>f.code==='SCENE_FORMAT'));
+  d.sceneTemplates[1].adaptation={
+    targetFormat:'9:16',status:'draft',notes:'Authored from original HTML/GSAP'
+  };
+  assert.deepEqual(originalProductionFindings(p,d,()=>true),[]);
+  p.status='ready';
+  assert.ok(originalProductionFindings(p,d,()=>true).some(f=>f.code==='SCENE_APPROVAL'));
+});
+test('template source checksum is checked for valid SHA-256 format',()=>{
+  const p=project(),d=prod();
+  d.sceneTemplates=[{id:'intro',template:'kinetic-title',
+    originalSource:'templates/kinetic-title/index.html',
+    source:'scenes/intro/index.html',parameters:'scenes/intro/params.values.json',
+    sourceSha256:'bad'}];
+  assert.ok(originalProductionFindings(p,d,()=>true).some(f=>f.code==='SOURCE_HASH'));
+});
