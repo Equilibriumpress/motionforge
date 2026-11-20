@@ -63,12 +63,12 @@ export function validateVideoPlan(plan,specs){
     'A complete five-line brief needs goal, audience, platform and tone.');
   assert(isObject(plan.direction)&&['concept','visualRule','motif'].every(k=>nonempty(plan.direction[k])),
     'Specify concept, visualRule and recurring motif for direction.json.');
-  assert(Array.isArray(plan.scenes)&&plan.scenes.length>=2&&plan.scenes.length<=30,
-    'Provide 2–30 original HyperFrames scenes.');
+  assert(Array.isArray(plan.scenes)&&plan.scenes.length>=3&&plan.scenes.length<=30,
+    'Provide 3–30 scenes: original MotionForge direction requires a recurring motif in at least three scenes.');
   assert(!Object.hasOwn(plan,'paidCalls')||plan.paidCalls===false,
     'Paid calls are outside the scaffold. Request explicit approval under G3 first.');
   let frame=0;
-  const seen=new Set();
+  const seen=new Set(),motifRoles=[];
   const scenes=plan.scenes.map(scene=>{
     assert(isObject(scene)&&validSlug(scene.id)&&!seen.has(scene.id),
       'Scene IDs must be unique kebab-case strings.');
@@ -79,8 +79,9 @@ export function validateVideoPlan(plan,specs){
     assert(spec,'Scene '+scene.id+': original template contract is missing.');
     assert(frameValue(scene.durationSeconds,fps),
       'Scene '+scene.id+': duration must be >=1s and align exactly with '+fps+' fps.');
-    assert(isObject(scene.direction)&&['layout','entrance','hero','onScreenText','cue'].every(k=>nonempty(scene.direction[k])),
-      'Scene '+scene.id+': explicit cue, layout, entrance, hero and onScreenText required.');
+    assert(isObject(scene.direction)&&['layout','entrance','hero','onScreenText','cue','motifRole'].every(k=>nonempty(scene.direction[k])),
+      'Scene '+scene.id+': explicit cue, layout, entrance, hero, onScreenText and motifRole required.');
+    motifRoles.push(scene.direction.motifRole);
     const native=templateFormat(spec.size),params=normalizedParams(plan,scene,spec);
     verifyContract(spec,{template:scene.template,format:native,duration:scene.durationSeconds,params});
     if(native!==plan.format){
@@ -97,6 +98,14 @@ export function validateVideoPlan(plan,specs){
     frame+=result.frames;
     return result;
   });
+  for(let i=1;i<scenes.length;i++){
+    const a=scenes[i-1].direction,b=scenes[i].direction;
+    assert(a.layout!==b.layout||a.entrance!==b.entrance,
+      'Adjacent scenes '+scenes[i-1].id+' and '+scenes[i].id+
+      ' must differ in layout or entrance (original direction-json contract).');
+  }
+  assert(new Set(motifRoles).size>=2,
+    'The recurring motif must change role in at least one scene (original direction-json contract).');
   const duration=frame/fps;
   assert(Number.isInteger(frame)&&frame>0,'Frame total must be positive.');
   assert(Math.abs((plan.durationSeconds??duration)-duration)<1e-6,
