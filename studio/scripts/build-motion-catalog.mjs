@@ -65,8 +65,23 @@ export async function buildCatalog(){
     readFile(path.join(root,'skills/style-library/styles/README.md'),'utf8'),
     readFile(path.join(root,'templates/README.md'),'utf8')
   ]);
-  const styles=parseStyles(styleMd),scenes=parseScenes(sceneMd);
-  if(styles.length<1||scenes.length<1)throw Error('Could not parse MotionForge catalogue.');
+  const styles=parseStyles(styleMd),sceneIndex=parseScenes(sceneMd);
+  if(styles.length<1||sceneIndex.length<1)throw Error('Could not parse MotionForge catalogue.');
+  // Read original scene contracts, not just the README cards. Studio must know
+  // the native size, engine and supported parameter names before promising reuse.
+  const scenes=await Promise.all(sceneIndex.map(async scene=>{
+    const file=path.join(root,'templates',scene.id,'params.json');
+    const spec=JSON.parse(await readFile(file,'utf8'));
+    if(spec.id!==scene.id || !Array.isArray(spec.size) || spec.size.length!==2 ||
+      !spec.size.every(x=>Number.isInteger(x)&&x>0) || !spec.parameters ||
+      spec.engine!=='hyperframes')throw Error('Unsupported original template contract: '+scene.id);
+    const [w,h]=spec.size;
+    const nativeFormat=w*9===h*16?'16:9':w*16===h*9?'9:16':
+      w===h?'1:1':w*5===h*4?'4:5':'custom';
+    return {...scene,engine:spec.engine,nativeSize:spec.size,
+      nativeFormat,parameterNames:Object.keys(spec.parameters),
+      requires:spec.requires||[],supportsDuration:!!spec.parameters.duration};
+  }));
   const categories=[...new Set(styles.map(style=>style.category))];
   const catalog={schemaVersion:1,source:'MotionForge upstream library',
     generatedFrom:['skills/style-library/styles/README.md','templates/README.md'],
