@@ -1,5 +1,6 @@
-import {useEffect,useMemo,useState} from 'react';
+import {useEffect,useMemo,useRef,useState} from 'react';
 import {templates as ownTemplates,templateNames as ownTemplateNames} from '../../project-templates/library.mjs';
+import {makePrompt,canCopyStylePrompt} from '../lib/catalog-prompt.mjs';
 
 const PER_PAGE=24;
 const SCENE_LIMIT=6;
@@ -15,7 +16,7 @@ function Preview({item}){
   return <img src={item.previewUrl} loading="lazy" decoding="async" alt={'Bewegend voorbeeld: '+item.title}
     onError={()=>setBroken(true)} />;
 }
-function CatalogCard({item,selected,onPick,type}){
+function CatalogCard({item,selected,onPick,type,onCopyPrompt,copied}){
   const description=item.description||'Bekijk het voorbeeld en de bijbehorende bronbestanden.';
   return (
     <article className={'catalog-card'+(selected?' picked':'')}>
@@ -32,6 +33,10 @@ function CatalogCard({item,selected,onPick,type}){
             onClick={()=>onPick(item.id)} aria-pressed={selected}>
             {selected?'Geselecteerd ✓':type==='style'?'Kies stijl':'Kies scène'}
           </button>
+          {type==='style'&&<button type="button" className="catalog-copy-style"
+            onClick={()=>onCopyPrompt(item)} aria-label={'Kopieer ChatGPT-prompt voor '+item.title}>
+            {copied?'Gekopieerd ✓':'Kopieer prompt'}
+          </button>}
           <a href={item.sourceUrl} target="_blank" rel="noreferrer" aria-label={'Bekijk bron van '+item.title}>Bron ↗</a>
         </div>
       </div>
@@ -55,45 +60,28 @@ function OwnCard({item,name,selected,onPick}){
     </article>
   );
 }
-function makePrompt({style,scenes,own,title,aspect,length}){
-  if(!style)return 'Kies eerst één MotionForge-stijl. De originele productie begint met een expliciete stijlkeuze (G4).';
-  if(!own&&!scenes.length)return 'Kies minstens één originele scène of een apart Studio-format.';
-  const subject=title.trim()||'[onderwerp invullen]';
-  const sources=scenes.map(scene=>'templates/'+scene.id+
-    ' · '+(scene.engine||'hyperframes')+
-    ' · origineel '+(scene.nativeFormat||'onbekend formaat')+
-    ' ('+(scene.nativeSize?.join('×')||'zie params.json')+')');
-  const incompatible=scenes.filter(scene=>scene.nativeFormat&&scene.nativeFormat!==aspect);
-  const formatStep=incompatible.length?
-    'FORMAATCONFLICT: '+incompatible.map(scene=>scene.id+' is '+scene.nativeFormat).join(', ')+
-    '. Maak vóór productie een nieuwe layout/hero-still voor '+aspect+
-    ' vanuit de ECHTE broncode, toon die ter goedkeuring (G5) en controleer de render. Rek of crop de verticale preview niet en vervang het originele template niet door een willekeurige Canvas-animatie.':
-    'Gebruik het oorspronkelijke formaat van de template(s); controleer native resolutie en veilige marges.';
-  return [
-    'PRODUCTIEVERZOEK · ORIGINELE MOTIONFORGE-METHODE',
-    'Repository: Equilibriumpress/motionforge.',
-    'Onderwerp/titel: '+subject+'. Taal: Nederlands. Totale lengte: '+length+' seconden. Gewenst formaat: '+aspect+'.',
-    'Geselecteerde stijl: '+style.id+'. Lees de VOLLEDIGE skills/style-library/styles/'+style.id+'/STYLE.md en sla een projectkopie op onder style/STYLE.md.',
-    own?'Eigen experimenteel Studio-format: '+own+' (NIET één van de oorspronkelijke 16 MotionForge-templates).':
-      'Originele bron-scènes:\n'+sources.map(x=>'- '+x).join('\n'),
-    'Lees AGENTS.md, skills/motion-director/SKILL.md, references/building-scenes.md, direction-json.md, de script-/voice-/brand-/qa-skills en het productieprotocol in docs/STUDIO_ORIGINAL_PRODUCTION.md.',
-    'Gebruik docs/STUDIO_AGENT_WORKFLOW.md als ChatGPT-agentinstructie naast de ORIGINELE motion-director/SKILL.md. Lees de volledige originele skills per productiestap, niet alleen de samenvattingen.',
-    'G1: maak de vijfregelige briefing. Bepaal het verhaal en geef de keuze en aannames aan.',
-    'G2: schrijf hookopties, script, storyboardtekst en controleerbare claimlijst. Laat de tekst goedkeuren voor definitieve productie.',
-    'G3: vraag toestemming VOOR elke betaalde dienst. Als er geen audio of voice-over is, maak een stille conceptversie en claim geen gesproken timing.',
-    'G4: gebruik de gekozen stijl, met palette, typografie, kadrering, overgangen en beweging. Leg expliciete overrides vast.',
-    own?'Voor het eigen Studio-format: gebruik de eigen bron in studio/project-templates, vermeld dat dit geen upstream-template is.':
-      'Gebruik voor ELKE gekozen scène de ORIGINELE code, parameters en rendertechniek. Lees templates/<id>/index.html en params.json, vul projectspecifieke parameters in en gebruik engines/hyperframes/scripts/new-scene.sh --template <id> --params <values.json>. Gebruik studio/scripts/new-from-upstream.mjs --plan <video-plan.json> voor 3 of meer originele scènes; de planstructuur staat in studio/scripts/fixtures/multiscene-native.json. De generator roept new-scene.sh voor iedere scène aan, houdt de tijdlijn frame-exact en legt bron en params vast. Eén scène blijft ondersteund via studio/scripts/new-from-upstream.mjs --template <id>. Behoud de echte 3D/WebGL-, GSAP- en assetlogica; geen zelfbedachte imitatie of stilzwijgende vervanging.',
-    formatStep,
-    'G5: maak echte storyboardstills uit de ingerichte scènes, toon ze voor akkoord. Gebruik echte locaties/beelden alleen met gecontroleerde bronnen en rechten.',
-    'G6: voer HyperFrames lint, textcheck, readcheck, preview, contact sheet en relevante frame-/audio-/duurcontroles uit. Alleen geldige JSON en broncode zijn NIET voldoende.',
-    'G7: onafhankelijke critic op de daadwerkelijke beelden. Fix alle FAIL-punten vóór status ready.',
-    'Bewaar G1–G7 approvals en bewijs in production.json; node studio/scripts/motion-director-workflow.mjs --project <slug> toont de originele skills per fase. Neem geen automatische goedkeuringen aan.',
-    'Sla project.json, vijfregelige brief.md, script.md, direction.json volgens de originele specificatie, brand.json, style/STYLE.md, originele scènes, bronvermelding, parameters en QA-evidence onder één videos/<slug>/ op.',
-    'Statische templates zoals cover-still zijn alleen een cover, geen tijdgestuurde scene. Voor een videoproject moet minimaal één originele bewegende scène aanwezig zijn.',
-    'Maak alleen een featurebranch en een PR, niet mergen zonder mijn toestemming. Rapportage: noem expliciet wat wel en niet is gerenderd of beoordeeld.',
-    'Geen GitHub Actions-video-render, geen ongeautoriseerde kosten en geen ongecontroleerde externe assets.'
-  ].join('\n\n');
+/**
+ * iPad/Safari and embedded browsers sometimes deny navigator.clipboard.
+ * Use a user-initiated selection fallback before reporting success.
+ * Never clear the source prompt on a failed clipboard permission.
+ */
+async function copyText(text){
+  if(!text||!text.trim())throw Error('Er is nog geen opdracht samengesteld.');
+  if(navigator.clipboard?.writeText){
+    try{await navigator.clipboard.writeText(text);return true}
+    catch{ /* Fall back for Safari/iPad and denied clipboard permission. */ }
+  }
+  const scratch=document.createElement('textarea');
+  scratch.value=text;
+  scratch.setAttribute('aria-hidden','true');
+  scratch.style.cssText='position:fixed;top:0;left:-9999px;opacity:0;';
+  document.body.appendChild(scratch);
+  try{
+    scratch.focus();
+    scratch.select();
+    scratch.setSelectionRange(0,text.length);
+    return document.execCommand?.('copy')===true;
+  }finally{scratch.remove()}
 }
 
 export default function MotionCatalog(){
@@ -109,6 +97,8 @@ export default function MotionCatalog(){
   const [aspect,setAspect]=useState('16:9');
   const [length,setLength]=useState('30');
   const [notice,setNotice]=useState('');
+  const [copiedStyleId,setCopiedStyleId]=useState('');
+  const promptRef=useRef(null);
 
   useEffect(()=>{
     const controller=new AbortController();
@@ -148,13 +138,15 @@ export default function MotionCatalog(){
   const categories=tab==='styles'?data?.categories||[]:tab==='scenes'?[...new Set(data?.scenes.map(item=>item.category)||[])]:[];
   const formatConflicts=selectedScenes.filter(item=>item.nativeFormat&&item.nativeFormat!==aspect);
   const prompt=makePrompt({style:selectedStyle,scenes:selectedScenes,own:ownId,title,aspect,length});
-  const ready=Boolean(styleId&&(ownId||selectedScenes.some(scene=>scene.supportsDuration!==false)));
+  // Choosing one original style is enough. Scene selection is optional.
+  const ready=canCopyStylePrompt(selectedStyle);
 
   function chooseStyle(id){
     setStyleId(old=>old===id?'':id);
-    setNotice('');
+    setNotice('');setCopiedStyleId('');
   }
   function chooseScene(id){
+    setCopiedStyleId('');
     if(sceneIds.includes(id))setSceneIds(current=>current.filter(item=>item!==id));
     else if(sceneIds.length<SCENE_LIMIT){
       setSceneIds(current=>[...current,id]);
@@ -164,6 +156,7 @@ export default function MotionCatalog(){
     }
   }
   function chooseOwn(id){
+    setCopiedStyleId('');
     setOwnId(current=>current===id?'':id);
     setSceneIds([]);
     setNotice('');
@@ -171,14 +164,42 @@ export default function MotionCatalog(){
   function changeTab(next){
     setTab(next);setCategory('all');setTerm('');setLimit(PER_PAGE);
   }
+  function showManualPrompt(){
+    window.requestAnimationFrame(()=>{
+      document.getElementById('studio-create-from-style')?.scrollIntoView({behavior:'smooth',block:'start'});
+      promptRef.current?.focus();
+      promptRef.current?.select();
+    });
+  }
   async function copyPrompt(){
-    if(!ready){setNotice('Kies een stijl en minimaal één bewegende scène, of een eigen Studio-format.');return;}
+    if(!ready){setNotice('Kies eerst één MotionForge-stijl. Scènes kiezen is optioneel.');return;}
     try{
-      await navigator.clipboard.writeText(prompt);
-      setNotice('Opdracht gekopieerd. Plak deze in een ChatGPT-gesprek met toegang tot je GitHub-repository.');
-    }catch{
-      setNotice('Automatisch kopiëren is niet beschikbaar. Selecteer de tekst in het opdrachtveld.');
-    }
+      const success=await copyText(prompt);
+      if(!success){
+        setNotice('Je browser blokkeert automatisch kopiëren. De volledige opdracht staat hieronder: selecteer de tekst en kopieer handmatig.');
+        showManualPrompt();
+      }else{
+        setCopiedStyleId(styleId);
+        setNotice('Volledige ChatGPT-opdracht gekopieerd ('+prompt.length+' tekens). Plak deze in ChatGPT met toegang tot GitHub.');
+      }
+    }catch(error){setNotice(error.message);showManualPrompt()}
+  }
+  async function copyStylePrompt(style){
+    if(!canCopyStylePrompt(style))return;
+    // A style-only prompt is immediately useful, even without any scenes.
+    const text=makePrompt({style,scenes:selectedScenes,own:ownId,title,aspect,length});
+    setStyleId(style.id);
+    try{
+      const success=await copyText(text);
+      if(success){
+        setCopiedStyleId(style.id);
+        setNotice('Stijlopdracht voor '+style.title+' gekopieerd ('+text.length+' tekens).');
+      }else{
+        setCopiedStyleId('');
+        setNotice('Kopiëren geblokkeerd. De volledige stijlopdracht staat onderaan in het opdrachtveld.');
+        showManualPrompt();
+      }
+    }catch(error){setNotice(error.message);showManualPrompt()}
   }
 
   return (
@@ -211,6 +232,7 @@ export default function MotionCatalog(){
             selected={ownId===name} onPick={chooseOwn}/>):shown.map(item=><CatalogCard key={item.id} item={item}
             selected={tab==='styles'?styleId===item.id:sceneIds.includes(item.id)}
             onPick={tab==='styles'?chooseStyle:chooseScene}
+            onCopyPrompt={copyStylePrompt} copied={copiedStyleId===item.id}
             type={tab==='styles'?'style':'scene'}/>)}
         </div>
         {total>limit&&<button type="button" className="catalog-more" onClick={()=>setLimit(value=>value+PER_PAGE)}>
@@ -251,12 +273,18 @@ export default function MotionCatalog(){
               <option value="45">45 seconden</option><option value="60">60 seconden</option>
             </select></label>
           </div>
-          <label className="catalog-prompt-label">ChatGPT-opdracht<textarea readOnly rows={9} value={prompt}
-            aria-label="Samengestelde opdracht voor ChatGPT" onFocus={event=>event.target.select()}/></label>
+          <label className="catalog-prompt-label">ChatGPT-opdracht
+            <span className="catalog-prompt-count" role="status">
+              {ready?'Direct beschikbaar · '+prompt.length+' tekens · '+(selectedScenes.length?'met jouw scènes':'scènes kiezen is optioneel'):
+                'Selecteer één stijl om te beginnen'}
+            </span>
+            <textarea ref={promptRef} readOnly rows={11} value={prompt}
+              aria-label="Samengestelde opdracht voor ChatGPT" onFocus={event=>event.target.select()}/>
+          </label>
           <div className="catalog-composer-footer">
             <button type="button" className="button button-primary" onClick={copyPrompt}
               disabled={!ready}>Kopieer ChatGPT-opdracht</button>
-            <p>{ready?'Gereed om als GitHub-project uit te werken.':'Selecteer een stijl en een bewegende scène. Een cover-still is geen video.'}</p>
+            <p>{ready?'Gereed om te kopiëren. Zonder scènekeuze vraagt de prompt ChatGPT om originele MotionForge-scènes voor te stellen.':'Selecteer één stijl. Je hoeft geen scène te kiezen.'}</p>
           </div>
           {notice&&<p className="catalog-message" role="status">{notice}</p>}
         </div>

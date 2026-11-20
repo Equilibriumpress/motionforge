@@ -280,3 +280,12 @@ h1 em{font-style:normal;color:#a9f0ad}
 .browser-downloads{display:flex;flex-wrap:wrap;gap:9px}
 
 .browser-render-playback{width:100%;aspect-ratio:16/9;max-height:450px;background:#060e17;border-radius:10px;border:1px solid #3c5968;margin:10px 0}
+
+/* Style-only prompt is available on all original MotionForge style cards. */
+.catalog-card-actions{flex-wrap:wrap}
+.catalog-copy-style{border:1px solid #729b84;background:#203d36;color:#d4f1db;
+  padding:9px 10px;border-radius:8px;font-size:12px;font-weight:650}
+.catalog-copy-style:hover,.catalog-copy-style:focus-visible{border-color:#a9f0ad;background:#2f5647}
+.catalog-prompt-count{display:block;font-size:11px;color:#a9f0ad;font-weight:500;line-height:1.5}
+.catalog-prompt-label textarea{min-height:220px;white-space:pre-wrap}
+@media(max-width:520px){.catalog-card-actions{justify-content:flex-start}}

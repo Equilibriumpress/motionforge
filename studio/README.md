@@ -133,3 +133,13 @@ The local renderer executes the original QA runner after writing a real MP4. See
 ## MF-12F · Originele HyperFrames-scènes als MP4 op GitHub Pages
 
 De projectbibliotheek toont nu een browser-MP4-export voor volledige oorspronkelijke HyperFrames-tijdlijnen. Met tab-toestemming worden de originele HTML/GSAP/Three.js-scènes via de zoekbare tijdlijnbrug geframed en lokaal als H.264/MP4 gecodeerd. Proef- en native resolutie, eigen audio, losse SRT, cover, storyboard/contact sheet, browser-QA en video-terugkijken zijn ingebouwd. Andere engines blijven de bestaande export gebruiken. Zonder getDisplayMedia of H.264-ondersteuning blijft de lokale render-worker beschikbaar. Zie docs/STUDIO_BROWSER_EXPORT.md. G5–G7 vereisen altijd aparte echte goedkeuring.
+
+## MF Style Picker: 100 stijlen met kopieerbare ChatGPT-prompt
+
+Op de pagina Stijlen & scènes is de keuze van één originele stijl nu voldoende voor een complete ChatGPT-opdracht. Een vooraf geselecteerde scène is niet meer nodig. De opdracht instrueert ChatGPT om 3–5 originele MotionForge-scènes te selecteren met bronverificatie en G1–G7.
+
+Elke stijlkaart heeft de knop Kopieer prompt. De geselecteerde stijl verschijnt ook in Van stijl naar videoproject. Daar kan de gebruiker titel, lengte, formaat en eventueel scènes toevoegen. Formaatconflicten staan expliciet in de tekst.
+
+De pure generator staat in studio/src/lib/catalog-prompt.mjs. De bijbehorende tests controleren losse stijlen, eigen scènes, formaatconflicten en titelwijzigingen. Ze draaien tijdens npm run test:catalog en vóór elke Pages-build.
+
+De kopieerfunctie probeert de veilige Clipboard API en valt bij weigering terug op selecteerbare tekst, onder andere voor Safari en iPad. De UI claimt geen geslaagde kopie zonder positieve browserbevestiging. De volledige tekst blijft altijd in het opdrachtveld.
