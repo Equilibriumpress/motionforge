@@ -1,0 +1,90 @@
+{
+  "slug": "original-workflow-test-reel",
+  "title": "ORIGINAL MOTIONFORGE DEMO",
+  "description": "Fictional QA fixture. Not an approved video.",
+  "language": "nl",
+  "format": "9:16",
+  "fps": 30,
+  "durationSeconds": 14,
+  "style": "route-journey",
+  "storyFormat": 4,
+  "brief": {
+    "goal": "Test three original seekable MotionForge scenes",
+    "audience": "Developers testing the pipeline",
+    "platform": "Portrait video",
+    "tone": "Clear and restrained"
+  },
+  "direction": {
+    "concept": "Show that three upstream templates form a single deterministic timeline",
+    "visualRule": "One accent color marks every active element",
+    "motif": "A circle represents the current stage"
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Opening",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "ORIGINAL",
+          "MOTIONFORGE"
+        ],
+        "accentWord": "MOTIONFORGE",
+        "eyebrow": "STUDIO"
+      },
+      "direction": {
+        "cue": "Open",
+        "layout": "Centered headline",
+        "entrance": "Words enter one at a time",
+        "hero": "MotionForge headline",
+        "onScreenText": "ORIGINAL MOTIONFORGE",
+        "motifRole": "Circle as an opening word accent"
+      }
+    },
+    {
+      "id": "steps",
+      "title": "Three steps",
+      "template": "checklist-reveal",
+      "durationSeconds": 6,
+      "params": {
+        "title": "Three steps",
+        "items": [
+          "Brief",
+          "Scenes",
+          "Review"
+        ],
+        "numbered": true
+      },
+      "direction": {
+        "cue": "Steps",
+        "layout": "Left-hand checklist",
+        "entrance": "Each card reveals sequentially",
+        "hero": "Three approved steps",
+        "onScreenText": "Brief · Scenes · Review",
+        "motifRole": "Circle as a checklist marker"
+      }
+    },
+    {
+      "id": "outro",
+      "title": "Closing",
+      "template": "kinetic-title",
+      "durationSeconds": 4,
+      "params": {
+        "lines": [
+          "REVIEW",
+          "BEFORE DELIVERY"
+        ],
+        "accentWord": "REVIEW"
+      },
+      "direction": {
+        "cue": "Review",
+        "layout": "Full-width closing title",
+        "entrance": "Headline lifts into the frame",
+        "hero": "Review reminder",
+        "onScreenText": "REVIEW BEFORE DELIVERY",
+        "motifRole": "Circle as a closing underscore"
+      }
+    }
+  ]
+}
