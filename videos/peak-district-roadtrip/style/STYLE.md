@@ -5,7 +5,7 @@
 
 - 16:9 ontwerp (1920×1080). De 9:16 oorspronkelijke templates zijn per scène opnieuw gekadreerd vanuit de originele broncode.
 - 3D-globe op rechts met toelichting links. Checklist-map rechts en vier namen links.
-- Originele GSAP-animaties, kleuren volgens de Route Journey-palette. Lettertype Outlook/Overpass Mono indien lokaal beschikbaar, anders vergelijkbare systeemfonts.
+- Originele GSAP-animaties, kleuren volgens de Route Journey-palette. Lettertype Outfit/Overpass Mono indien lokaal beschikbaar, anders vergelijkbare systeemfonts.
 - In deze concepteditie ontbreken echte OSM-wegen en stopfotografie. Toon daarom expliciet: ‘verbindingen schematisch’. Geen niet-geverifieerde kilometers of rijtijden.
 - Geplande routebeelden en echte storyboardstills moeten eerst worden gecontroleerd. De originele stijl vereist OSM-kaartcredit wanneer een echte OSM-basislaag wordt toegevoegd.
 

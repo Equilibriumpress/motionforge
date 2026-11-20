@@ -20,6 +20,10 @@ Voor de lokale Studio-build:
     cd ..
     node tools/studio-qa.mjs peak-district-roadtrip
     node studio/scripts/validate-native-production.mjs peak-district-roadtrip
+    node --test videos/peak-district-roadtrip/project.test.mjs
+    node tools/studio-render.mjs peak-district-roadtrip --dry-run
+
+Voor lokale HyperFrames/MP4-rendering initialiseert tools/studio-render.mjs de oorspronkelijke runtimeassets en vrije Fontsource-lettertypen. Er worden geen externe mediabestanden aangeroepen.
 
 Op een computer met HyperFrames, Chromium/WebGL en FFmpeg volgt de daadwerkelijke video-render. Bekijk de contact sheet en raadpleeg `skills/qa-review/SKILL.md`. Het dossier en de scènes blijven draft tot de goedkeuringsstappen zijn uitgevoerd.
 

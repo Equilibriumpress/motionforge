@@ -10,6 +10,7 @@
 
 ## Nog nodig vóór publicatie als definitieve video
 - [ ] Node.js-installatie, Vite-build en originele HyperFrames-lints
+- [ ] Vrij gelicentieerde Outfit- en Overpass Mono-fonts daadwerkelijk geladen in preview en lokale export
 - [ ] 3D-WebGL globe daadwerkelijk afspelen en beoordelen in de Studio
 - [ ] Stilbeelden op 0, 4, 8, 13, 18, 22, 25 en 29,9 seconden controleren
 - [ ] Kaartlabels, leestijd, overgangen en typografische veilige marges controleren
