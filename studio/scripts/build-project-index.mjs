@@ -67,6 +67,44 @@ function validateProject(project, slug, context, directory) {
   }
 }
 
+
+const PREVIEW_EXTS = new Set(['.html','.css','.js','.mjs','.json','.png','.svg','.jpg','.jpeg','.webp','.avif','.gif','.woff','.woff2','.ttf','.glb','.gltf','.bin','.mp3','.wav','.mp4']);
+const PREVIEW_LIMIT = 48*1024*1024;
+const BRIDGE = await readFile(path.join(studioRoot,'src','preview','bridge.js'),'utf8');
+
+async function copySceneFiles(from,to,budget) {
+  if (!existsSync(from)) return;
+  for (const entry of await readdir(from,{withFileTypes:true})) {
+    requireCondition(!entry.isSymbolicLink(),from,'symlinks not allowed for published previews');
+    if (entry.name.startsWith('.') || ['node_modules','renders','qa','__pycache__'].includes(entry.name)) continue;
+    const src=path.join(from,entry.name), dst=path.join(to,entry.name);
+    if (entry.isDirectory()) await copySceneFiles(src,dst,budget);
+    else if (entry.isFile() && PREVIEW_EXTS.has(path.extname(entry.name).toLowerCase())) {
+      const info=await stat(src);
+      requireCondition(info.size<=12*1024*1024,src,'preview asset exceeds 12 MB');
+      budget.total+=info.size;
+      requireCondition(budget.total<=PREVIEW_LIMIT,src,'preview exceeds 48 MB limit');
+      await mkdir(path.dirname(dst),{recursive:true});
+      await copyFile(src,dst);
+    }
+  }
+}
+
+async function ensureHyperFramesAssets(target) {
+  const base=path.join(path.dirname(target),'assets');
+  for (const [name,from] of [
+    ['base.css',path.join(repoRoot,'engines/hyperframes/base.css')],
+    ['mf-runtime.js',path.join(repoRoot,'engines/hyperframes/mf-runtime.js')],
+    ['vendor/gsap.min.js',path.join(studioRoot,'node_modules/gsap/dist/gsap.min.js')]
+  ]) {
+    const dst=path.join(base,name);
+    if (!existsSync(dst) && existsSync(from)) {
+      await mkdir(path.dirname(dst),{recursive:true});
+      await copyFile(from,dst);
+    }
+  }
+}
+
 async function build() {
   const index = [];
   // Clean only generated data. Do not touch the source videos/ folders.
@@ -95,7 +133,23 @@ async function build() {
       await copyFile(source, target);
       coverUrl = 'projects/' + slug + '/' + project.cover;
     }
-    await writeFile(path.join(targetDir, 'project.json'), JSON.stringify(project, null, 2) + '\n');
+    const supported=project.scenes.filter(scene=>['canvas','hyperframes'].includes(scene.engine));
+    const previewSources={};
+    if (supported.length) {
+      const budget={total:0};
+      await copySceneFiles(path.join(projectDir,'scenes'),path.join(targetDir,'scenes'),budget);
+      await copySceneFiles(path.join(projectDir,'assets'),path.join(targetDir,'assets'),budget);
+      for (const scene of supported) {
+        const dst=path.join(targetDir,scene.source);
+        requireCondition(existsSync(dst),scene.source,'scene unavailable for preview');
+        if (scene.engine==='hyperframes') await ensureHyperFramesAssets(dst);
+        const html=await readFile(dst,'utf8');
+        requireCondition(/<\/body>/i.test(html),scene.source,'HTML missing closing body tag');
+        await writeFile(dst,html.replace(/<\/body>/i,'<script>\n'+BRIDGE.replace(/<\/script/gi,'<\\/script')+'\n</script></body>'));
+        previewSources[scene.id]='projects/'+slug+'/'+scene.source;
+      }
+    }
+    await writeFile(path.join(targetDir, 'project.json'), JSON.stringify({...project,previewSources}, null, 2) + '\n');
     index.push({
       id: project.id,
       title: project.title,
@@ -106,7 +160,7 @@ async function build() {
       engine: project.engine,
       durationSeconds: project.durationSeconds,
       fps: project.fps,
-      sceneCount: project.scenes.length,
+      sceneCount: project.scenes.length, previewCount: supported.length,
       tags: project.tags,
       coverUrl,
     });

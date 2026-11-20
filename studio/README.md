@@ -43,3 +43,7 @@ The source project structure follows skills/motion-director/SKILL.md; this avoid
 - MF-03: search, tags and project detail.
 - MF-04: live preview and timeline.
 - MF-05+: ChatGPT workflow, rendering and export.
+
+
+## Interactive preview (MF-04)
+Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. This does not create an MP4; exporting follows in MF-06.

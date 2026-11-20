@@ -66,3 +66,11 @@ The browser fetches projects/index.json under its Vite base URL. No personal tok
 ## Scope limits for MF-02
 
 The library lists metadata and a cover. It does not execute scene code or render MP4. Those features belong to MF-04 and MF-06/07. Add project source data only to the repository: do not embed paid API keys or personal credentials in manifests or HTML.
+
+
+## Browser previews (MF-04)
+After indexing, the studio copies supported Canvas and HyperFrames scene folders and approved assets into its generated static public/projects tree. The original videos/ sources are unchanged. A small seek bridge is injected in each generated HTML scene. The parent controls it with postMessage inside a sandboxed iframe without allow-same-origin.
+
+Canvas uses window.render(t), HyperFrames uses window.__timelines[id].seek(t). The studio offers play/pause, scrubbing, project-time scene switching, a seconds readout and responsive aspect ratios.
+
+Only selected file extensions are published. No symlinks, no files above 12 MB, and no more than 48 MB of preview assets per project. The builder supplies missing HyperFrames base.css, mf-runtime.js, and npm GSAP when available. Audio mix, Remotion, some 3D module scenes, and MP4 export are excluded from this initial preview.
