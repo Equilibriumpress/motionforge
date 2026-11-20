@@ -254,3 +254,6 @@ h1 em{font-style:normal;color:#a9f0ad}
 @media(max-width:920px){.topbar-inner{gap:18px}.navigation{gap:15px}}
 @media(max-width:740px){.catalog-entry{flex-direction:column;align-items:flex-start}.nav-about{display:none}}
 @media(max-width:430px){.brand-name{font-size:13px}.navigation{gap:8px}.nav-item{font-size:11px}}
+
+.footer-about{border:0;background:none;color:#a2b5c4;font-size:12px;padding:0;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.footer-about:hover{color:#e7f4ec}
