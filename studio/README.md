@@ -96,3 +96,12 @@ Run locally:
     npm run build
 
 Style and template catalogue updates also trigger the Pages build.
+
+
+## MF-10: original MotionForge production method
+
+The Studio now distinguishes original 16 HyperFrames templates from its four own experimental Canvas concepts. Catalogue cards show native dimensions, and the ChatGPT prompt follows original MotionForge G1–G7. A size mismatch warns instead of silently converting or replacing a selected original scene.
+
+A safe source-preserving scaffold is available with npm run new:upstream -- --template kinetic-title --style route-journey --slug demo --title "DEMO" --format 9:16 --duration 4 --dry-run. Remove --dry-run on a local checkout with dependencies to invoke the original new-scene.sh.
+
+Read docs/STUDIO_ORIGINAL_PRODUCTION.md. Existing projects remain unchanged and do not automatically inherit the new production record.

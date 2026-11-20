@@ -25,6 +25,8 @@ function CatalogCard({item,selected,onPick,type}){
         <h3>{item.title}</h3>
         <p>{description}</p>
         {type==='style'&&item.bestFor&&<p className="catalog-uses"><span>Geschikt voor: </span>{item.bestFor}</p>}
+        {type==='scene'&&<p className="catalog-native-spec">Origineel: {item.nativeFormat||'formaat onbekend'} · {item.nativeSize?.join(' × ')||'zie params.json'} · {item.engine||'HyperFrames'}</p>}
+        {type==='scene'&&item.supportsDuration===false&&<p className="catalog-native-spec">Statisch covertemplate, geen bewegende videoscène</p>}
         <div className="catalog-card-actions">
           <button type="button" className={selected?'catalog-pick selected':'catalog-pick'}
             onClick={()=>onPick(item.id)} aria-pressed={selected}>
@@ -41,7 +43,7 @@ function OwnCard({item,name,selected,onPick}){
     <article className={'catalog-card own-card'+(selected?' picked':'')}>
       <div className="catalog-own-preview" aria-hidden="true"><span>{item.name}</span><span className="catalog-own-line"/></div>
       <div className="catalog-card-body">
-        <div className="catalog-card-type">MotionForge Studio</div>
+        <div className="catalog-card-type">Eigen Studio-format · niet origineel</div>
         <h3>{item.name}</h3>
         <p>{item.description}</p>
         <div className="catalog-card-actions">
@@ -54,25 +56,42 @@ function OwnCard({item,name,selected,onPick}){
   );
 }
 function makePrompt({style,scenes,own,title,aspect,length}){
-  const chosenTitle=title.trim()||'[vul onderwerp of titel in]';
-  const sceneNames=scenes.map(item=>item.id);
-  const renderMode=own?'Eigen Studio-template: '+own:sceneNames.length?'Originele MotionForge-scènes: '+sceneNames.join(', '):'Kies passende scènes op basis van de stijl';
-  const templateInstruction=own?'Gebruik studio/project-templates/library.mjs en het Studio-projectprotocol.':
-    'Gebruik de originele scènes uit templates/ als bron en neem hun params.json en rendertechniek over.';
+  if(!style)return 'Kies eerst één MotionForge-stijl. De originele productie begint met een expliciete stijlkeuze (G4).';
+  if(!own&&!scenes.length)return 'Kies minstens één originele scène of een apart Studio-format.';
+  const subject=title.trim()||'[onderwerp invullen]';
+  const sources=scenes.map(scene=>'templates/'+scene.id+
+    ' · '+(scene.engine||'hyperframes')+
+    ' · origineel '+(scene.nativeFormat||'onbekend formaat')+
+    ' ('+(scene.nativeSize?.join('×')||'zie params.json')+')');
+  const incompatible=scenes.filter(scene=>scene.nativeFormat&&scene.nativeFormat!==aspect);
+  const formatStep=incompatible.length?
+    'FORMAATCONFLICT: '+incompatible.map(scene=>scene.id+' is '+scene.nativeFormat).join(', ')+
+    '. Maak vóór productie een nieuwe layout/hero-still voor '+aspect+
+    ' vanuit de ECHTE broncode, toon die ter goedkeuring (G5) en controleer de render. Rek of crop de verticale preview niet en vervang het originele template niet door een willekeurige Canvas-animatie.':
+    'Gebruik het oorspronkelijke formaat van de template(s); controleer native resolutie en veilige marges.';
   return [
-    'Maak een volledig nieuw videoproject in de GitHub-repository Equilibriumpress/motionforge.',
-    'Onderwerp/titel: '+chosenTitle+'.',
-    'Duur: '+length+' seconden. Beeldformaat: '+aspect+'. Taal: Nederlands.',
-    'Geselecteerde MotionForge-stijl: '+(style?.id||'[nog geen stijl geselecteerd]')+'.',
-    'Lees de volledige stijlregels in skills/style-library/styles/'+(style?.id||'[stijl]')+'/STYLE.md.',
-    renderMode+'.',
-    templateInstruction,
-    'Gebruik de bestaande MotionForge-engines en herbruikbare bronbestanden. Schrijf een origineel script en storyboard. Leg feiten, echte kaartinformatie en bronrechten vast.',
-    'Maak één videos/<slug>/ map met project.json, brief, script, brand, direction, scènes, media en cover.',
-    'Zorg dat de preview via de Studio-bibliotheek werkt. Draai de relevante project-QA en bouwcontrole.',
-    'Sla alles op via een featurebranch en maak een pull request. Niet mergen zonder mijn opdracht.',
-    'Geen betaalde calls of externe media zonder voorafgaande toestemming. Genereer geen MP4 in GitHub Actions.'
-  ].join('\n');
+    'PRODUCTIEVERZOEK · ORIGINELE MOTIONFORGE-METHODE',
+    'Repository: Equilibriumpress/motionforge.',
+    'Onderwerp/titel: '+subject+'. Taal: Nederlands. Totale lengte: '+length+' seconden. Gewenst formaat: '+aspect+'.',
+    'Geselecteerde stijl: '+style.id+'. Lees de VOLLEDIGE skills/style-library/styles/'+style.id+'/STYLE.md en sla een projectkopie op onder style/STYLE.md.',
+    own?'Eigen experimenteel Studio-format: '+own+' (NIET één van de oorspronkelijke 16 MotionForge-templates).':
+      'Originele bron-scènes:\n'+sources.map(x=>'- '+x).join('\n'),
+    'Lees AGENTS.md, skills/motion-director/SKILL.md, references/building-scenes.md, direction-json.md, de script-/voice-/brand-/qa-skills en het productieprotocol in docs/STUDIO_ORIGINAL_PRODUCTION.md.',
+    'G1: maak de vijfregelige briefing. Bepaal het verhaal en geef de keuze en aannames aan.',
+    'G2: schrijf hookopties, script, storyboardtekst en controleerbare claimlijst. Laat de tekst goedkeuren voor definitieve productie.',
+    'G3: vraag toestemming VOOR elke betaalde dienst. Als er geen audio of voice-over is, maak een stille conceptversie en claim geen gesproken timing.',
+    'G4: gebruik de gekozen stijl, met palette, typografie, kadrering, overgangen en beweging. Leg expliciete overrides vast.',
+    own?'Voor het eigen Studio-format: gebruik de eigen bron in studio/project-templates, vermeld dat dit geen upstream-template is.':
+      'Gebruik voor ELKE gekozen scène de ORIGINELE code, parameters en rendertechniek. Lees templates/<id>/index.html en params.json, vul projectspecifieke parameters in en gebruik engines/hyperframes/scripts/new-scene.sh --template <id> --params <values.json>. Gebruik studio/scripts/new-from-upstream.mjs als veilige startsjabloon voor één bron-scène. Behoud de echte 3D/WebGL-, GSAP- en assetlogica; geen zelfbedachte imitatie of stilzwijgende vervanging.',
+    formatStep,
+    'G5: maak echte storyboardstills uit de ingerichte scènes, toon ze voor akkoord. Gebruik echte locaties/beelden alleen met gecontroleerde bronnen en rechten.',
+    'G6: voer HyperFrames lint, textcheck, readcheck, preview, contact sheet en relevante frame-/audio-/duurcontroles uit. Alleen geldige JSON en broncode zijn NIET voldoende.',
+    'G7: onafhankelijke critic op de daadwerkelijke beelden. Fix alle FAIL-punten vóór status ready.',
+    'Sla project.json, vijfregelige brief.md, script.md, direction.json volgens de originele specificatie, brand.json, style/STYLE.md, originele scènes, bronvermelding, parameters en QA-evidence onder één videos/<slug>/ op.',
+    'Statische templates zoals cover-still zijn alleen een cover, geen tijdgestuurde scene. Voor een videoproject moet minimaal één originele bewegende scène aanwezig zijn.',
+    'Maak alleen een featurebranch en een PR, niet mergen zonder mijn toestemming. Rapportage: noem expliciet wat wel en niet is gerenderd of beoordeeld.',
+    'Geen GitHub Actions-video-render, geen ongeautoriseerde kosten en geen ongecontroleerde externe assets.'
+  ].join('\n\n');
 }
 
 export default function MotionCatalog(){
@@ -125,8 +144,9 @@ export default function MotionCatalog(){
   const shown=tab==='own'?ownList.slice(0,limit):list.slice(0,limit);
   const total=tab==='own'?ownList.length:list.length;
   const categories=tab==='styles'?data?.categories||[]:tab==='scenes'?[...new Set(data?.scenes.map(item=>item.category)||[])]:[];
+  const formatConflicts=selectedScenes.filter(item=>item.nativeFormat&&item.nativeFormat!==aspect);
   const prompt=makePrompt({style:selectedStyle,scenes:selectedScenes,own:ownId,title,aspect,length});
-  const ready=Boolean(styleId&&(ownId||sceneIds.length));
+  const ready=Boolean(styleId&&(ownId||selectedScenes.some(scene=>scene.supportsDuration!==false)));
 
   function chooseStyle(id){
     setStyleId(old=>old===id?'':id);
@@ -150,7 +170,7 @@ export default function MotionCatalog(){
     setTab(next);setCategory('all');setTerm('');setLimit(PER_PAGE);
   }
   async function copyPrompt(){
-    if(!ready){setNotice('Kies eerst één stijl en minimaal één scène of eigen format.');return;}
+    if(!ready){setNotice('Kies een stijl en minimaal één bewegende scène, of een eigen Studio-format.');return;}
     try{
       await navigator.clipboard.writeText(prompt);
       setNotice('Opdracht gekopieerd. Plak deze in een ChatGPT-gesprek met toegang tot je GitHub-repository.');
@@ -165,7 +185,7 @@ export default function MotionCatalog(){
         <div><span className="section-kicker">MOTIONFORGE · OORSPRONKELIJKE BIBLIOTHEEK</span><h2 id="motion-catalog-heading">Animaties en videostijlen</h2></div>
         <span className="counter">{state.loading?'Laden…':(data?.styles.length||0)+' stijlen · '+(data?.scenes.length||0)+' scènes'}</span>
       </div>
-      <p className="catalog-lead">Kies een stijl, voeg bestaande MotionForge-scènes toe en stel daarna één opdracht voor ChatGPT samen. De bestaande GIF-voorbeelden tonen de animaties.</p>
+      <p className="catalog-lead">Kies een stijl en een origineel MotionForge-template. De GIF toont alleen een voorbeeld. Voor een echte video gebruikt de productieworkflow het originele scene-script, parameters, renderengine en de G1–G7 kwaliteitsstappen.</p>
       {state.error&&<div className="empty-library" role="alert"><h3>Catalogus niet geladen</h3><p>{state.error}</p></div>}
       {state.loading&&<div className="empty-library" role="status"><p>MotionForge-catalogus wordt geladen…</p></div>}
       {data&&<>
@@ -203,6 +223,16 @@ export default function MotionCatalog(){
             <div><span>Gekozen stijl</span><strong>{selectedStyle?.title||'Kies een animatiestijl'}</strong></div>
             <div><span>Gekozen scènes of format</span><strong>{ownId?ownTemplates[ownId].name:selectedScenes.length?selectedScenes.map(item=>item.title).join(', '):'Kies minstens één scène'}</strong></div>
           </div>
+          {formatConflicts.length>0&&<p className="catalog-format-warning" role="status">
+            Deze oorspronkelijke templates zijn {formatConflicts.map(item=>item.nativeFormat).join(', ')}:
+            {' '}{formatConflicts.map(item=>item.title).join(', ')}.
+            Voor {aspect} is een nieuwe opmaak vanuit de originele code en een goedgekeurde storyboardstill nodig.
+            Studio maakt geen automatische vervanging.
+          </p>}
+          <div className="catalog-pipeline-info">
+            <strong>Origineel MotionForge-proces</strong>
+            <span>Brief (G1) → script (G2) → kosten (G3) → stijl (G4) → echte storyboardstills (G5) → render-QA (G6) → onafhankelijke beoordeling (G7)</span>
+          </div>
           <div className="catalog-composer-actions">
             <button type="button" onClick={()=>changeTab('styles')} className="catalog-subnav">1 · Stijlen kiezen</button>
             <button type="button" onClick={()=>changeTab('scenes')} className="catalog-subnav">2 · Scènes kiezen</button>
@@ -224,7 +254,7 @@ export default function MotionCatalog(){
           <div className="catalog-composer-footer">
             <button type="button" className="button button-primary" onClick={copyPrompt}
               disabled={!ready}>Kopieer ChatGPT-opdracht</button>
-            <p>{ready?'Gereed om als GitHub-project uit te werken.':'Selecteer een stijl en minimaal één scène of eigen format.'}</p>
+            <p>{ready?'Gereed om als GitHub-project uit te werken.':'Selecteer een stijl en een bewegende scène. Een cover-still is geen video.'}</p>
           </div>
           {notice&&<p className="catalog-message" role="status">{notice}</p>}
         </div>

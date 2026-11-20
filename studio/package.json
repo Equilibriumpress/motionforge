@@ -1,6 +1,6 @@
 {
   "name": "@equilibriumpress/motionforge-studio",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,9 @@
     "new:template": "node scripts/new-from-template.mjs",
     "qa:projects": "node ../tools/studio-qa.mjs --all",
     "test:studio": "node --test project-templates/library.test.mjs ../tools/studio-qa.test.mjs",
-    "test:catalog": "node --test scripts/build-motion-catalog.test.mjs"
+    "test:catalog": "node --test scripts/build-motion-catalog.test.mjs",
+    "new:upstream": "node scripts/new-from-upstream.mjs",
+    "test:upstream": "node --test scripts/new-from-upstream.test.mjs scripts/validate-native-production.test.mjs scripts/build-motion-catalog.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -29,7 +31,10 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",
     "vite": "^7.0.0",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "@fontsource/inter": "^5.2.0",
+    "@fontsource/instrument-serif": "^5.2.0",
+    "@fontsource/jetbrains-mono": "^5.2.0"
   },
   "engines": {
     "node": ">=20.19.0"

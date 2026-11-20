@@ -68,3 +68,8 @@ For a Studio prompt with a chosen style, read the complete original specificatio
 Keep the chosen style consistent across scenes. Use one brand kit, project timeline, fps and aspect ratio. Check sources of claims, maps, statistics, screenshots, music and footage before publication. Read 3D engine requirements for any 3D scene.
 
 The static Studio site copies a prompt, but does not submit GitHub commits or start video renders. Complete the work via the GitHub connector, create a PR, run the relevant QA and preserve the existing approval gates.
+
+
+## MF-10: original method has priority
+
+For an original selected MotionForge scene, follow docs/STUDIO_ORIGINAL_PRODUCTION.md. Read skills/motion-director/SKILL.md and preserve its G1–G7 gates. Use the selected source templates and their own params.json through the original new-scene.sh. The four custom Studio Canvas formats are not replacements for these 16 original templates. Native aspect mismatches must be redesigned from the original code with actual visual review, never silently substituted.

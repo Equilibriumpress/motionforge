@@ -2,6 +2,7 @@
 // Builds the static GitHub Pages project registry from videos/<slug>/project.json.
 // Generated files live only in studio/public/projects/ and are never committed.
 import path from 'node:path';
+import {checkOriginalProject} from './validate-native-production.mjs';
 import {prepareGlobeScene} from './prepare-globe-scene.mjs';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
@@ -131,6 +132,12 @@ async function build() {
     if (!existsSync(manifestFile)) continue;
     const project = JSON.parse(await readFile(manifestFile, 'utf8'));
     validateProject(project, slug, manifestFile, projectDir);
+    // Original-template projects must retain source provenance. READY requires
+    // recorded approvals and evidence from the original G1–G7 process.
+    const originalFindings=await checkOriginalProject(projectDir);
+    const blockers=originalFindings.filter(item=>item.level==='FAIL');
+    requireCondition(blockers.length===0,manifestFile,
+      'original MotionForge production gates: '+blockers.map(item=>item.code+': '+item.reason).join('; '));
 
     const targetDir = path.join(publicRoot, slug);
     await mkdir(targetDir, { recursive: true });

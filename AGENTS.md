@@ -48,3 +48,8 @@ When a Studio video fits a book trailer, walking route, infographic or app-previ
 ## Original MotionForge style/scene selection (MF-09)
 
 When a Studio project uses chosen style and scene IDs, read docs/STUDIO_UPSTREAM_CATALOG.md and the exact STYLE.md and template source files before authoring. A style is a design specification; a GIF is only an animated preview. Existing motion-director approvals, asset rights, project manifests and QA still apply.
+
+
+## MF-10: mandatory original video workflow
+
+For original template-based video requests, first read docs/STUDIO_ORIGINAL_PRODUCTION.md and skills/motion-director/SKILL.md. Keep original HTML/Three.js/GSAP code, parameter contract, engine and approvals. Use studio/scripts/new-from-upstream.mjs for native scaffolds and the original new-scene.sh. Never substitute generic Canvas for a chosen original template. READY requires the original G1–G7 approval evidence.

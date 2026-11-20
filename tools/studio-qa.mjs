@@ -94,6 +94,11 @@ export async function auditProject(slug) {
         }
         if(/<script[^>]*src\s*=\s*["']https?:/i.test(html))push('WARN','CDN','Externally loaded script: '+scene.id);
       }
+      if(existsSync(path.join(folder,'production.json'))){
+        const {checkOriginalProject}=await import('../studio/scripts/validate-native-production.mjs');
+        for(const item of await checkOriginalProject(folder))push(item.level,item.code,item.reason);
+        if(project.status!=='ready')push('WARN','APPROVALS','Original workflow approvals and rendered storyboard/video QA are pending.');
+      }
       if(project.status==='ready')push('WARN','VISUAL','Source QA does not replace contact-sheet review, audio checks or final video validation');
     }
   }
