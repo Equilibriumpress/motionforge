@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "project": "peak-district-weekend-kit-unboxing",
+  "checkedAt": "2026-11-20",
+  "method": "github-source-preflight-and-local-runtime-inspection",
+  "mainCommit": "6b9ff2f307fedbcb6cc4e1cff673e68a3e59f096",
+  "sourceFieldsFixed": 15,
+  "plannedDurationSeconds": 30,
+  "plannedFps": 30,
+  "plannedFrames": 900,
+  "originalRendererAvailable": false,
+  "renderedMp4": false,
+  "renderedStoryboardStills": false,
+  "qaReviewCompleted": false,
+  "independentCriticCompleted": false,
+  "G5": "pending",
+  "G6": "pending",
+  "G7": "pending",
+  "note": "Counts and source schema fields were verified. Actual stage rendering, visual QA and independent critique have not occurred."
+}
