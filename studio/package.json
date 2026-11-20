@@ -27,7 +27,7 @@
     "qa:critic": "node ../tools/studio-qa-critic.mjs",
     "qa:annotations": "node ../tools/studio-qa-annotations.mjs",
     "test:qa-original": "node --test ../tools/studio-qa-policy.test.mjs ../tools/studio-qa-review.test.mjs ../tools/studio-qa-critic.test.mjs",
-    "test:browser-original": "node --test src/export/hyperframes-plan.test.mjs"
+    "test:browser-original": "node --test src/export/hyperframes-plan.test.mjs src/preview/stage-fill.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
