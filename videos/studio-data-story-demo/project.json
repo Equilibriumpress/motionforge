@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "studio-data-story-demo",
+  "title": "CALIFORNIA MAPS · CONCEPT",
+  "description": "Infographic-proef met fictieve demonstratiecijfers, geen echte statistieken.",
+  "status": "concept",
+  "language": "nl",
+  "format": "16:9",
+  "engine": "canvas",
+  "durationSeconds": 15,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": [
+    "infographic",
+    "data"
+  ],
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Opening",
+      "startSeconds": 0,
+      "durationSeconds": 4.5,
+      "engine": "canvas",
+      "source": "scenes/intro/index.html"
+    },
+    {
+      "id": "feature",
+      "title": "Hoofdscène",
+      "startSeconds": 4.5,
+      "durationSeconds": 6.766666666666667,
+      "engine": "canvas",
+      "source": "scenes/feature/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "Afsluiting",
+      "startSeconds": 11.266666666666667,
+      "durationSeconds": 3.7333333333333334,
+      "engine": "canvas",
+      "source": "scenes/outro/index.html"
+    }
+  ]
+}

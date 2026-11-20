@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;padding:0;background:#0d1822;width:100%;height:100%;overflow:hidden}canvas{display:block;width:100%;height:100%}</style>
+</head><body><canvas id="frame"></canvas>
+<script>
+const SCENE_SPEC={"phase":"outro","template":"data-story","feature":"data","title":"CALIFORNIA MAPS","subtitle":"INFOGRAPHIC CONCEPT","accent":"#88c9f1","width":1920,"height":1080,"duration":3.7333333333333334};
+const canvas=document.querySelector('#frame');
+const W=SCENE_SPEC.width,H=SCENE_SPEC.height;
+canvas.width=W;canvas.height=H;
+const ctx=canvas.getContext('2d');
+const clamp=n=>Math.max(0,Math.min(1,n));
+const smooth=n=>{const x=clamp(n);return x*x*(3-2*x)};
+const unit=Math.min(W/1280,H/720);
+const left=W*.075,right=W*.925;
+const duration=SCENE_SPEC.duration;
+window.DUR=duration;
+window.SIZE=[W,H];
+function text(str,x,y,size,color,weight,maxWidth){
+  ctx.save();ctx.fillStyle=color;ctx.textBaseline='alphabetic';
+  const max=maxWidth||W*.85;
+  let fontSize=size;
+  do {ctx.font=(weight||600)+' '+Math.round(fontSize)+'px Arial, Helvetica, sans-serif';fontSize*=.94;}
+  while(ctx.measureText(str).width>max&&fontSize>16);
+  ctx.fillText(str,x,y);
+  ctx.restore();
+}
+function route(p){
+  ctx.save();
+  ctx.lineWidth=Math.max(4,9*unit);ctx.lineCap='round';ctx.strokeStyle=SCENE_SPEC.accent;
+  const a={x:W*.12,y:H*.68},b={x:W*.35,y:H*.41},c={x:W*.64,y:H*.62},d={x:W*.88,y:H*.27};
+  ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.bezierCurveTo(b.x,b.y,c.x,c.y,d.x,d.y);
+  ctx.setLineDash([Math.max(W,H)*2,Math.max(W,H)*2]);
+  ctx.lineDashOffset=(1-smooth(p))*Math.max(W,H)*2;
+  ctx.stroke();ctx.setLineDash([]);
+  if(p>.3){ctx.fillStyle=SCENE_SPEC.accent;for(const pt of [a,d]){ctx.beginPath();ctx.arc(pt.x,pt.y,Math.max(7,13*unit),0,Math.PI*2);ctx.fill();}}
+  ctx.restore();
+}
+function book(p){
+  const x=W*.55,y=H*.20,w=W*.29,h=H*.56;
+  ctx.save();ctx.globalAlpha=smooth(p);ctx.translate(0,(1-smooth(p))*H*.07);
+  ctx.fillStyle='#f5f0e5';ctx.fillRect(x+W*.022,y-H*.018,w,h);
+  ctx.fillStyle='#263a44';ctx.fillRect(x,y,w,h);ctx.strokeStyle=SCENE_SPEC.accent;ctx.lineWidth=6*unit;ctx.strokeRect(x,y,w,h);
+  text('FIELD GUIDE',x+W*.025,y+H*.16,38*unit,'#e8eee9',750,w*.88);
+  text('CITY WALKS',x+W*.025,y+H*.32,29*unit,SCENE_SPEC.accent,700,w*.88);
+  ctx.restore();
+}
+function data(p){
+  ctx.save();const values=[.34,.67,.48,.83];
+  const baseline=H*.78,maxHeight=H*.40;
+  values.forEach((value,i)=>{
+    const x=W*(.16+i*.18),w=W*.10,h=maxHeight*value*smooth((p-i*.09)/.8);
+    ctx.fillStyle=i===3?SCENE_SPEC.accent:'#426673';
+    ctx.fillRect(x,baseline-h,w,h);
+    text(String(i+1),x+w*.36,baseline+34*unit,20*unit,'#f4f5f6',600,w);
+  });
+  ctx.restore();
+  text('DEMONSTRATIE · GEEN ECHTE DATA',left,H*.90,20*unit,'#c2d1dc',500,W*.85);
+}
+function app(p){
+  const w=Math.min(W*.40,350*unit),h=Math.min(H*.76,600*unit);
+  const x=W*.53-w*.5,y=H*.12+(1-smooth(p))*H*.06;
+  ctx.save();ctx.globalAlpha=smooth(p);ctx.fillStyle='#273f4a';
+  ctx.beginPath();ctx.roundRect(x,y,w,h,34*unit);ctx.fill();
+  ctx.fillStyle='#101d28';ctx.beginPath();ctx.roundRect(x+12*unit,y+12*unit,w-24*unit,h-24*unit,23*unit);ctx.fill();
+  text('APP CONCEPT',x+26*unit,y+83*unit,25*unit,SCENE_SPEC.accent,700,w-50*unit);
+  for(let i=0;i<3;i++){ctx.fillStyle=i===1?'#37565b':'#24404a';ctx.beginPath();ctx.roundRect(x+24*unit,y+120*unit+i*85*unit,w-48*unit,67*unit,12*unit);ctx.fill();}
+  ctx.restore();
+}
+window.TEXTS=t=>t<.2?[]:[{id:'title',text:SCENE_SPEC.title,x0:left,y0:H*.16,x1:right,y1:H*.52}];
+window.render=(t)=>{
+  const p=clamp(t/duration),fade=smooth(p*4);
+  ctx.fillStyle='#0d1822';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#263d49';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=W/10){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  ctx.save();ctx.globalAlpha=fade;
+  text(SCENE_SPEC.template.toUpperCase().replaceAll('-',' '),left,H*.12,18*unit,SCENE_SPEC.accent,750,W*.8);
+  if(SCENE_SPEC.phase==='intro'){
+    route(p);
+    text(SCENE_SPEC.title,left,H*.44,85*unit,'#f5f3ea',750,W*.85);
+    text(SCENE_SPEC.subtitle,left,H*.56,30*unit,SCENE_SPEC.accent,600,W*.82);
+  }else if(SCENE_SPEC.phase==='feature'){
+    text(SCENE_SPEC.title,left,H*.25,54*unit,'#f5f3ea',750,W*.45);
+    if(SCENE_SPEC.feature==='book')book(p);
+    if(SCENE_SPEC.feature==='route'){route(p);text('SCHEMATISCHE ROUTE',left,H*.87,24*unit,'#b7c9d4',600,W*.8);}
+    if(SCENE_SPEC.feature==='data')data(p);
+    if(SCENE_SPEC.feature==='app')app(p);
+  }else{
+    route(p);
+    text('BEKIJK HET PROJECT',left,H*.44,74*unit,'#f5f3ea',750,W*.86);
+    text(SCENE_SPEC.title,left,H*.56,30*unit,SCENE_SPEC.accent,600,W*.84);
+  }
+  ctx.restore();
+};
+window.READY=false;
+document.fonts.ready.then(()=>{window.READY=true;window.render(0);});
+</script></body></html>

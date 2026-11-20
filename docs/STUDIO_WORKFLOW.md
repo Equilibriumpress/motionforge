@@ -50,3 +50,12 @@ videos/<slug>/
 "Maak LONDON ON FOOT als 15 seconden boektrailer in Equilibriumpress/motionforge, 16:9. Maak één project en een PR."
 "Wijzig scène twee van london-on-foot-demo, houd dezelfde slug, werk het manifest bij, maak een PR zonder te mergen."
 "Maak een originele Remotion titelvideo als Studio-project dat geschikt is voor browser-MP4-export."
+
+
+## MF-08: templates and quick QA
+
+When creating a book trailer, walking route, data story or app preview, use the corresponding built-in template rather than inventing a new HTML scene. Run the local generator with --template, --slug and --title or create the equivalent source files via the GitHub connector. Do not copy false geographic facts, figures or screenshots from demo scenes.
+
+The generated three-scene storyboard is an editable starter, not completed editorial content. Replace placeholder titles, sample data and mock UI with approved content. For real route animations use verified GPX/GeoJSON and a documented, properly projected map.
+
+Before opening a PR, run node tools/studio-qa.mjs <slug>. A full media review is still required before a project is marked ready. QA must flag missing files, overlaps, frame timing problems, non-deterministic code and incomplete credits.

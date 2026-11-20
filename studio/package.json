@@ -1,6 +1,6 @@
 {
   "name": "@equilibriumpress/motionforge-studio",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,10 @@
     "prebuild": "node scripts/build-project-index.mjs",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "new:project": "node scripts/new-project.mjs"
+    "new:project": "node scripts/new-project.mjs",
+    "new:template": "node scripts/new-from-template.mjs",
+    "qa:projects": "node ../tools/studio-qa.mjs --all",
+    "test:studio": "node --test project-templates/library.test.mjs ../tools/studio-qa.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

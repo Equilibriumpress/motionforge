@@ -26,6 +26,10 @@ Describe the video. Your agent writes the hook and script, times every word to t
 | **Script to delivery** | Hooks and scripts with banned-phrase lists in 10 languages, word-level timing, captions, loudness, contact sheets and an independent critic before anything is delivered. |
 | **Nothing paid without your yes** | Every paid call (voice, video, lip-sync) shows what it will generate and the estimated cost first, then waits. Keys come only from your environment. |
 
+## Equilibriumpress Studio extension
+
+This fork adds a GitHub Pages video project library, Canvas/HyperFrames scene previews, a local MP4 render CLI, four project templates and fast source QA. See studio/README.md and docs/STUDIO_TEMPLATES.md. Pages is read-only. Video render jobs are not run through GitHub Actions.
+
 ## How it works
 
 You type something like:

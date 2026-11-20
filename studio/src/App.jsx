@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProjectLibrary from './library/ProjectLibrary.jsx';
+import TemplateGallery from './library/TemplateGallery.jsx';
 
 const features = [
   { number: '01', title: 'Projectbibliotheek', description: 'Projecten zoeken, filteren en openen vanuit de studio.', stage: 'MF-03' },
@@ -39,6 +40,7 @@ export default function App() {
               <p className="lead">Maak videoprojecten met ChatGPT en bekijk de resultaten in jouw MotionForge-bibliotheek.</p>
             </section>
             <ProjectLibrary />
+            <TemplateGallery />
             <div className="section-heading workflow-heading"><div><span className="section-kicker">ROADMAP</span><h2>Van idee naar video</h2></div></div>
             <section className="feature-grid" aria-label="Mogelijkheden">
               {features.map((feature) => (
