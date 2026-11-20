@@ -47,3 +47,7 @@ The source project structure follows skills/motion-director/SKILL.md; this avoid
 
 ## Interactive preview (MF-04)
 Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. This does not create an MP4; exporting follows in MF-06.
+
+## ChatGPT project workflow (MF-05)
+
+Read docs/STUDIO_WORKFLOW.md. To create a local starter: node studio/scripts/new-project.mjs --slug my-video --title "My video" --duration 8 --format 16:9. This does not replace writing the finished scene content. GitHub remains the project storage, and Pages remains a read-only viewer.
