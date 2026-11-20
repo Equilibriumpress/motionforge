@@ -116,6 +116,22 @@ async function ensureHyperFramesAssets(target) {
       await copyFile(from,dst);
     }
   }
+  // Original HyperFrames CSS references Fontsource faces. Publish them from
+  // npm during Pages build, not as committed binary assets in each video.
+  const fontCss=await readFile(path.join(base,'base.css'),'utf8');
+  const fontNames=[...new Set([...fontCss.matchAll(/fonts\/([a-z0-9-]+\.woff2)/g)]
+    .map(m=>m[1]))];
+  for(const filename of fontNames){
+    const pack=filename.startsWith('inter-')?'inter':
+      filename.startsWith('instrument-serif-')?'instrument-serif':
+      filename.startsWith('jetbrains-mono-')?'jetbrains-mono':null;
+    requireCondition(!!pack,target,'Unsupported HyperFrames font: '+filename);
+    const from=path.join(studioRoot,'node_modules','@fontsource',pack,'files',filename);
+    requireCondition(existsSync(from),target,'Missing original Fontsource file: '+from);
+    const dst=path.join(base,'fonts',filename);
+    await mkdir(path.dirname(dst),{recursive:true});
+    if(!existsSync(dst))await copyFile(from,dst);
+  }
   // Native Route Journey typography from licensed npm packages.
   // Keep font binaries out of committed source.
   const html=await readFile(target,'utf8');

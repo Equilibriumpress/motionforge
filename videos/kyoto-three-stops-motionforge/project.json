@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "kyoto-three-stops-motionforge",
+  "title": "KYOTO · 3 PLEKKEN",
+  "description": "30 seconden Kyoto, gemaakt uit vier verschillende originele MotionForge-templates: Kinetic Title, Globe Arcs 3D, Checklist Reveal en Stat Counter. De wereldbol toont schematische verbindingen, geen reisroute.",
+  "status": "concept",
+  "language": "nl",
+  "format": "9:16",
+  "engine": "hyperframes",
+  "durationSeconds": 30,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": [
+    "kyoto",
+    "japan",
+    "travel",
+    "route-journey",
+    "original-motionforge",
+    "kinetic-title",
+    "globe-arcs-3d",
+    "checklist-reveal",
+    "stat-counter"
+  ],
+  "styleId": "route-journey",
+  "templateId": "kinetic-title",
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Kyoto in drie plekken",
+      "startSeconds": 0,
+      "durationSeconds": 5,
+      "engine": "hyperframes",
+      "source": "scenes/hook/index.html"
+    },
+    {
+      "id": "orientation",
+      "title": "Waar ligt Kyoto?",
+      "startSeconds": 5,
+      "durationSeconds": 10,
+      "engine": "hyperframes",
+      "source": "scenes/orientation/index.html"
+    },
+    {
+      "id": "stops",
+      "title": "Drie plekken in Kyoto",
+      "startSeconds": 15,
+      "durationSeconds": 10,
+      "engine": "hyperframes",
+      "source": "scenes/stops/index.html"
+    },
+    {
+      "id": "recap",
+      "title": "Kies je volgende stop",
+      "startSeconds": 25,
+      "durationSeconds": 5,
+      "engine": "hyperframes",
+      "source": "scenes/recap/index.html"
+    }
+  ]
+}

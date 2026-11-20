@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+<rect width="1080" height="1920" fill="#1D2326"/><rect x="56" y="64" width="968" height="1790" rx="18" fill="none" stroke="#627873" stroke-width="3"/>
+<text x="96" y="184" fill="#CFDCC0" font-family="sans-serif" font-size="30" letter-spacing="8">JAPAN  /  CITY GUIDE</text>
+<circle cx="912" cy="163" r="22" fill="#E23D6F"/><text x="94" y="530" fill="#F4F3EB" font-family="sans-serif" font-weight="900" font-size="211" letter-spacing="-12">KYOTO</text>
+<text x="97" y="635" fill="#E23D6F" font-family="sans-serif" font-weight="800" font-size="70">3 PLEKKEN</text>
+<text x="100" y="697" fill="#CFDCC0" font-family="sans-serif" font-size="30" letter-spacing="5">OM TE VERKENNEN</text>
+<rect x="94" y="804" width="892" height="755" rx="20" fill="#283E3F"/>
+<path d="M225 1164 H856 M287 1118 H796 M317 1144 V1450 M761 1144 V1450 M285 1450 H794" fill="none" stroke="#E23D6F" stroke-width="37"/>
+<path d="M224 1100 Q536 980 855 1100" fill="none" stroke="#CFDCC0" stroke-width="19"/>
+<text x="98" y="1706" fill="#F4F3EB" font-family="sans-serif" font-weight="600" font-size="37">Fushimi Inari · Kiyomizu-dera · Arashiyama</text>
+<text x="98" y="1807" fill="#AFC0BA" font-family="monospace" font-size="25">MOTIONFORGE · CONCEPT / QA OPEN</text></svg>

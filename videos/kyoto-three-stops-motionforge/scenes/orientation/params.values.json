@@ -1,0 +1,31 @@
+{
+  "eyebrow": "01 · ORIËNTATIE",
+  "title": "Waar ligt {Kyoto}?",
+  "cities": [
+    {
+      "name": "Kyoto",
+      "lat": 35.0116,
+      "lon": 135.7681
+    },
+    {
+      "name": "Osaka",
+      "lat": 34.6937,
+      "lon": 135.5023
+    },
+    {
+      "name": "Tokyo",
+      "lat": 35.6762,
+      "lon": 139.6503
+    }
+  ],
+  "arcs": "hub",
+  "focus": 0,
+  "spinFrom": 40,
+  "pinStart": 1.35,
+  "arcStart": 2.5,
+  "route": "JAPAN · SCHEMATISCH",
+  "landColor": "#CFDCC0",
+  "oceanColor": "#1D2326",
+  "lang": "nl",
+  "duration": 10
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Drie <span class=\"serif accent\">plekken</span>",
+  "items": [
+    "Fushimi Inari",
+    "Kiyomizu-dera",
+    "Arashiyama"
+  ],
+  "times": [
+    1.2,
+    3.65,
+    6.1
+  ],
+  "start": 0.9,
+  "gap": 0.9,
+  "checkDelay": 0.37,
+  "numbered": true,
+  "theme": "dark",
+  "lang": "nl",
+  "duration": 10
+}
