@@ -24,8 +24,8 @@ export async function prepareHyperFramesSceneAssets(folder){
   await mkdir(vendor,{recursive:true});
   const required=[
     ['GSAP','gsap/dist/gsap.min.js','vendor/gsap.min.js'],
-    ['original HyperFrames CSS','../../engines/hyperframes/base.css','base.css'],
-    ['original HyperFrames runtime','../../engines/hyperframes/mf-runtime.js','mf-runtime.js'],
+    ['original HyperFrames CSS','../engines/hyperframes/base.css','base.css'],
+    ['original HyperFrames runtime','../engines/hyperframes/mf-runtime.js','mf-runtime.js'],
   ];
   for(const [name,sourceRel,relative] of required){
     const from=sourceRel.startsWith('../')?path.resolve(studio,sourceRel):path.join(mods,sourceRel);
