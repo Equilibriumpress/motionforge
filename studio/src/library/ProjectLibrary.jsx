@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import PreviewPlayer from '../preview/PreviewPlayer.jsx';
 import { loadProjectIndex, projectCoverUrl } from '../lib/projects.js';
 
 const SOURCE = 'https://github.com/Equilibriumpress/motionforge/tree/main/videos/';
@@ -37,6 +38,12 @@ function ProjectDetails({ project, onClose }) {
     closeButton.current?.focus();
     function onKey(event) {
       if (event.key === 'Escape') onClose();
+      if (event.key === 'Tab') {
+        const items=Array.from(document.querySelectorAll('.detail-panel button:not([disabled]),.detail-panel a[href],.detail-panel input:not([disabled])'));
+        if (!items.length) return;
+        if (event.shiftKey && document.activeElement === items[0]) {event.preventDefault();items[items.length-1].focus();}
+        else if (!event.shiftKey && document.activeElement === items[items.length-1]) {event.preventDefault();items[0].focus();}
+      }
     }
     document.addEventListener('keydown', onKey);
     return () => {
@@ -53,7 +60,7 @@ function ProjectDetails({ project, onClose }) {
         </header>
         <div className="detail-layout">
           <div className="detail-hero">
-            {projectCoverUrl(project) ? <img src={projectCoverUrl(project)} alt={'Cover ' + project.title} /> : <div className="detail-empty">▶</div>}
+            <PreviewPlayer key={project.id} project={project} coverUrl={projectCoverUrl(project)} />
           </div>
           <div className="detail-info">
             <div className="project-meta"><span className="project-status">{statusLabel[project.status] || project.status}</span><span>{project.language.toUpperCase()}</span></div>
@@ -68,7 +75,7 @@ function ProjectDetails({ project, onClose }) {
             </dl>
             <div className="detail-tags">{project.tags.map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}</div>
             <a className="button button-primary" href={SOURCE + encodeURIComponent(project.id)} target="_blank" rel="noreferrer">Open project op GitHub ↗</a>
-            <p className="detail-next">Live scènepreview volgt in MF-04.</p>
+            <p className="detail-next">Bekijk de animatie via de tijdlijn. MP4-export volgt later.</p>
           </div>
         </div>
       </section>
@@ -84,6 +91,7 @@ export default function ProjectLibrary() {
   const [tag, setTag] = useState('all');
   const [sort, setSort] = useState('title');
   const [selected, setSelected] = useState(null);
+  const closeSelected = useCallback(() => setSelected(null), []);
 
   useEffect(() => {
     let active = true;
@@ -143,7 +151,7 @@ export default function ProjectLibrary() {
       {!state.loading && !state.error && filtered.length > 0 && (
         <div className="project-grid">{filtered.map((project) => <ProjectCard key={project.id} project={project} onOpen={setSelected} />)}</div>
       )}
-      {selected && <ProjectDetails project={selected} onClose={() => setSelected(null)} />}
+      {selected && <ProjectDetails project={selected} onClose={closeSelected} />}
     </section>
   );
 }
