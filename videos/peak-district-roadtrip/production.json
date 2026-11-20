@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "sourceMethod": "original-motionforge",
+  "selectedStyle": "route-journey",
+  "templateSource": "templates/globe-arcs-3d/index.html",
+  "parameterContract": "templates/globe-arcs-3d/params.json",
+  "parameterValues": "scenes/globe/params-values.json",
+  "sourceScene": "scenes/globe/index.html",
+  "originalFormat": "9:16",
+  "adaptedFormat": "16:9",
+  "engine": "hyperframes",
+  "adaptation": {
+    "targetFormat": "16:9",
+    "status": "draft",
+    "notes": "Alle vier de originele 1080×1920 HyperFrames-scènes zijn op basis van oorspronkelijke HTML/CSS/GSAP/Three.js heringericht voor 1920×1080. Een gerenderde storyboardstill en menselijke goedkeuring ontbreken nog.",
+    "evidence": null
+  },
+  "sceneTemplates": [
+    {
+      "id": "globe",
+      "template": "globe-arcs-3d",
+      "originalSource": "templates/globe-arcs-3d/index.html",
+      "source": "scenes/globe/index.html",
+      "parameters": "scenes/globe/params-values.json",
+      "nativeFormat": "9:16",
+      "layout": "source-derived landscape 3D globe"
+    },
+    {
+      "id": "route",
+      "template": "checklist-reveal",
+      "originalSource": "templates/checklist-reveal/index.html",
+      "source": "scenes/route/index.html",
+      "parameters": "scenes/route/params.values.json",
+      "nativeFormat": "9:16",
+      "layout": "16:9 checklist left, coordinate overview right; schematic connections"
+    },
+    {
+      "id": "highlights",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/highlights/index.html",
+      "parameters": "scenes/highlights/params.values.json",
+      "nativeFormat": "9:16",
+      "layout": "16:9 kinetic title with decorative hills and location ribbon"
+    },
+    {
+      "id": "outro",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/outro/index.html",
+      "parameters": "scenes/outro/params.values.json",
+      "nativeFormat": "9:16",
+      "layout": "16:9 full-width route-title CTA"
+    }
+  ],
+  "gates": {
+    "G1": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G2": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G3": {
+      "status": "not_applicable",
+      "evidence": null,
+      "reason": "Geen betaalde media, TTS, beeldgeneratie, muziek of renderdiensten gebruikt"
+    },
+    "G4": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G5": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G6": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G7": {
+      "status": "pending",
+      "evidence": null
+    }
+  }
+}

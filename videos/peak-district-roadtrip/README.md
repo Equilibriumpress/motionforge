@@ -1,19 +1,26 @@
 # PEAK DISTRICT · ROADTRIP
 
-Original Dutch 30-second MotionForge Studio project in 16:9 (1920×1080, 30 fps).
+30 seconden / Nederlands / 1920×1080 / 30 fps / 4 originele HyperFrames-scènes.
 
-Timeline: 0–8s original HyperFrames globe-arcs-3d scene, 8–18s geographic point route diagram, 18–25s original vector illustrations, 25–30s outro. Selected style: route-journey.
+Herzien volgens het oorspronkelijke MotionForge-protocol:
+- 0–8s: `globe-arcs-3d` (Three.js + GSAP)
+- 8–18s: `checklist-reveal` (GSAP + kaart met echte coördinaten)
+- 18–25s: `kinetic-title` (GSAP)
+- 25–30s: `kinetic-title` (GSAP)
 
-The map's four points have real approximate coordinates. Connecting lines are schematic, not a routable road network. Sources: data/SOURCES.md. No paid media, external photos or audio are included.
+Alle scènes zijn landschapsaanpassingen van oorspronkelijke MotionForge-broncode, niet generiek vervangen door Canvas.
 
-## Develop and preview
+## Productie
 
-    cd studio && npm install && npm run build
-    cd .. && node studio/scripts/prepare-globe-scene.mjs videos/peak-district-roadtrip/scenes/globe
+Lees `style/STYLE.md`, `direction.json`, `script.md`, `production.json` en `qa/QA.md`. De originele templates blijven te vinden onder `templates/`; de projectwaarden staan in `scenes/<id>/params.values.json` of `params-values.json`.
+
+Voor de lokale Studio-build:
+
+    cd studio && npm install && npm run test:upstream && npm run build
+    cd ..
     node tools/studio-qa.mjs peak-district-roadtrip
-    node --test videos/peak-district-roadtrip/project.test.mjs
-    node tools/studio-render.mjs peak-district-roadtrip --dry-run
+    node studio/scripts/validate-native-production.mjs peak-district-roadtrip
 
-The original Globe Arcs 3D template uses GSAP, Three.js, world-atlas and topojson-client. The Studio builds an isolated browser-preview bundle while preserving the authored scene source.
+Op een computer met HyperFrames, Chromium/WebGL en FFmpeg volgt de daadwerkelijke video-render. Bekijk de contact sheet en raadpleeg `skills/qa-review/SKILL.md`. Het dossier en de scènes blijven draft tot de goedkeuringsstappen zijn uitgevoerd.
 
-Full local MP4 rendering needs Chromium/Playwright and FFmpeg. Review actual stills and timing before claiming a finished video. Script and storyboard are drafts awaiting approval. Source-level QA is distinct from final audiovisual QA.
+Geen actuele OSM-wegen, echte routeberekening of externe beelden opgenomen; verbindingen zijn schematisch en dus geen routeadvies.

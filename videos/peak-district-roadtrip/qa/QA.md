@@ -1,20 +1,20 @@
-# Peak District roadtrip · QA log
+# QA · MF-11 / Peak District Roadtrip
 
-Source goals:
-- 30 seconds / 900 frames / 16:9 / Dutch / four contiguous scenes.
-- Globe scene derived from original MotionForge globe-arcs-3d source and params.
-- Route-journey styling and accurate place names.
-- Real point coordinates; no invented navigable road or driving time.
-- Original procedurally drawn cover and scene images, no stock media.
-- Zero paid generation or media requests.
+## Structurele controles
+- [x] Zelfde projectslug, vier scènes, totaal 30 seconden, 1920×1080 / 30 fps / Nederlands
+- [x] Originele template-source `globe-arcs-3d`, `checklist-reveal` en `kinetic-title` gebruikt
+- [x] Originele parameterschemas en projectspecifieke parameters voor elke scène
+- [x] Kaart bevat alleen geografische punten en een schematische verbinding
+- [x] Geen nepautoroute, verzonnen reistijd, betaalde calls, muziek of stockvideo
+- [x] Projectstatus `draft` met expliciete G1–G7-toestemmingsregistratie
 
-To run after checkout:
-    node tools/studio-qa.mjs peak-district-roadtrip
-    node --test videos/peak-district-roadtrip/project.test.mjs
-    cd studio && npm install && npm run build
+## Nog nodig vóór publicatie als definitieve video
+- [ ] Node.js-installatie, Vite-build en originele HyperFrames-lints
+- [ ] 3D-WebGL globe daadwerkelijk afspelen en beoordelen in de Studio
+- [ ] Stilbeelden op 0, 4, 8, 13, 18, 22, 25 en 29,9 seconden controleren
+- [ ] Kaartlabels, leestijd, overgangen en typografische veilige marges controleren
+- [ ] MP4 render met framecontrole en ffprobe (30 seconden, H.264)
+- [ ] Goedkeuring van script en nieuwe storyboardbeelden (G2/G5)
+- [ ] Onafhankelijke kwaliteitscontrole op werkelijk gerenderde frames (G7)
 
-Pending for final release:
-- Build in a runtime with npm dependencies.
-- Headless Chromium/WebGL scene preview and contact sheet.
-- MP4 render, 00/08/18/25s transition check, 30.00s duration ffprobe validation.
-- Narration approval (G2), storyboard approval (G5), independent review (G7).
+De oorspronkelijke MotionForge-workflow laat geen `ready` toe zonder deze bewijsstukken.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "peak-district-roadtrip",
   "title": "PEAK DISTRICT · ROADTRIP",
-  "description": "30 seconden originele reisanimatie met de Globe Arcs 3D-template, vier geografisch gecontroleerde haltes en schematische route. Nederlandstalig.",
+  "description": "Herwerkte 30-secondenreisvideo volgens de originele MotionForge HyperFrames-methodiek: Globe Arcs 3D, Checklist Reveal en Kinetic Title, met vier geografische haltes.",
   "status": "draft",
   "language": "nl",
   "format": "16:9",
@@ -13,9 +13,13 @@
   "tags": [
     "peak-district",
     "roadtrip",
-    "reisvideo",
     "route-journey",
-    "globe-arcs-3d"
+    "globe-arcs-3d",
+    "original-motionforge",
+    "hyperframes",
+    "checklist-reveal",
+    "kinetic-title",
+    "roadtrip-concept"
   ],
   "styleId": "route-journey",
   "templateId": "globe-arcs-3d",
@@ -23,7 +27,7 @@
   "scenes": [
     {
       "id": "globe",
-      "title": "Engeland op de wereldbol",
+      "title": "Waar ligt de Peak District?",
       "startSeconds": 0,
       "durationSeconds": 8,
       "engine": "hyperframes",
@@ -31,26 +35,26 @@
     },
     {
       "id": "route",
-      "title": "Vier haltes op de kaart",
+      "title": "Vier roadtriphaltes",
       "startSeconds": 8,
       "durationSeconds": 10,
-      "engine": "canvas",
+      "engine": "hyperframes",
       "source": "scenes/route/index.html"
     },
     {
       "id": "highlights",
-      "title": "Heuvels, water en dorpen",
+      "title": "Heuvels, vergezichten en dorpen",
       "startSeconds": 18,
       "durationSeconds": 7,
-      "engine": "canvas",
+      "engine": "hyperframes",
       "source": "scenes/highlights/index.html"
     },
     {
       "id": "outro",
-      "title": "Plan de roadtrip",
+      "title": "Jouw volgende roadtrip",
       "startSeconds": 25,
       "durationSeconds": 5,
-      "engine": "canvas",
+      "engine": "hyperframes",
       "source": "scenes/outro/index.html"
     }
   ]
