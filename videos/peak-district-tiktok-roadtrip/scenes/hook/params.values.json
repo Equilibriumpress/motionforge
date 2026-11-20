@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "PEAK DISTRICT",
+    "IN 4 STOPS"
+  ],
+  "accentWord": "DISTRICT",
+  "eyebrow": "ROADTRIP · ENGELAND",
+  "fontSize": 102,
+  "theme": "dark",
+  "lang": "nl",
+  "start": 0.15,
+  "stagger": 0.11,
+  "underline": true,
+  "exit": true,
+  "duration": 4
+}

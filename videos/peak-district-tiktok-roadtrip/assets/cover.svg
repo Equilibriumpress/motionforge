@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+<rect width="1080" height="1920" fill="#1D2326"/>
+<path d="M120 1160 C270 1070 130 940 335 835 S640 695 790 570 S760 415 930 290" fill="none" stroke="#4A6466" stroke-width="32" stroke-linecap="round"/>
+<path d="M120 1160 C270 1070 130 940 335 835 S640 695 790 570 S760 415 930 290" fill="none" stroke="#E23D6F" stroke-width="12" stroke-linecap="round" stroke-dasharray="18 24"/>
+<g fill="#E23D6F" stroke="#1D2326" stroke-width="14"><circle cx="120" cy="1160" r="35"/><circle cx="335" cy="835" r="35"/><circle cx="790" cy="570" r="35"/><circle cx="930" cy="290" r="35"/></g>
+<text x="94" y="270" font-family="Arial,sans-serif" font-size="42" font-weight="700" letter-spacing="10" fill="#CFDCC0">ENGELAND · ROADTRIP</text>
+<text x="86" y="1380" font-family="Arial,sans-serif" font-size="116" font-weight="900" fill="#F4F3EB">PEAK</text>
+<text x="86" y="1500" font-family="Arial,sans-serif" font-size="110" font-weight="900" fill="#F4F3EB">DISTRICT</text>
+<text x="92" y="1605" font-family="Arial,sans-serif" font-size="64" font-weight="700" fill="#E23D6F">IN 4 STOPS</text>
+<text x="92" y="1740" font-family="Arial,sans-serif" font-size="26" fill="#CFDCC0">SCHEMATISCHE ILLUSTRATIE · GEEN ROUTEKAART</text>
+</svg>

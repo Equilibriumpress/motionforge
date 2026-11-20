@@ -1,0 +1,74 @@
+{
+  "type": "FeatureCollection",
+  "name": "Peak District points for a video concept, not a routing line",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "castleton",
+        "name": "Castleton",
+        "type": "village",
+        "order": 1,
+        "accuracy": "approximate landmark location, not a parking or navigation point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.7764,
+          53.3431
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mam-tor",
+        "name": "Mam Tor",
+        "type": "summit",
+        "order": 2,
+        "accuracy": "approximate landmark location, not a parking or navigation point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.80942,
+          53.34999
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ladybower",
+        "name": "Ladybower Reservoir",
+        "type": "reservoir",
+        "order": 3,
+        "accuracy": "approximate landmark location, not a parking or navigation point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.72306,
+          53.39278
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "monsal-head",
+        "name": "Monsal Head",
+        "type": "viewpoint",
+        "order": 4,
+        "accuracy": "approximate landmark location, not a parking or navigation point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.72666,
+          53.2406
+        ]
+      }
+    }
+  ]
+}

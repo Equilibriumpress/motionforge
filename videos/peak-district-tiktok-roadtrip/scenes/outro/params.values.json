@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "BEWAAR DEZE",
+    "ROADTRIP"
+  ],
+  "accentWord": "ROADTRIP",
+  "eyebrow": "PEAK DISTRICT · ENGELAND",
+  "fontSize": 100,
+  "theme": "dark",
+  "lang": "nl",
+  "start": 0.1,
+  "stagger": 0.09,
+  "underline": true,
+  "exit": false,
+  "duration": 4
+}
