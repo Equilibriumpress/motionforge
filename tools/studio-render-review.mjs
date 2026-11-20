@@ -43,7 +43,7 @@ export function reviewFrames(project){
     time:Math.min(project.durationSeconds-.05,s.startSeconds+s.durationSeconds*part)
   })));
 }
-export async function reviewRenderedVideo(projectSlug,{mp4=null}={}){
+export async function reviewRenderedVideo(projectSlug,{mp4=null,expectAudio=false}={}){
   if(!slug.test(projectSlug||''))throw Error('Invalid project slug.');
   const dir=path.join(root,'videos',projectSlug);
   const project=JSON.parse(await readFile(path.join(dir,'project.json'),'utf8'));
@@ -53,6 +53,8 @@ export async function reviewRenderedVideo(projectSlug,{mp4=null}={}){
     'format=duration:stream=index,codec_type,codec_name,width,height,avg_frame_rate,nb_read_frames,nb_frames',
     '-of','json',video]));
   const measured=checkVideoProbe(result,project);
+  if(expectAudio&&!measured.audioPresent)
+    throw Error('Voice was requested but the rendered MP4 contains no audio stream.');
   const frames=reviewFrames(project);
   const board=path.join(dir,'qa','board');
   await mkdir(board,{recursive:true});
@@ -69,7 +71,7 @@ export async function reviewRenderedVideo(projectSlug,{mp4=null}={}){
   const sheet=path.join(dir,'qa','contact-sheet.png');
   run('ffmpeg',['-y','-hide_banner','-loglevel','error','-framerate','1',
     '-pattern_type','glob','-i',path.join(board,'*.png'),
-    '-vf','tile=4x3','-frames:v','1',sheet]);
+    '-vf','tile=4x'+Math.ceil(frames.length/4),'-frames:v','1',sheet]);
   if(!existsSync(sheet))throw Error('Could not produce contact sheet.');
   const report={source:'actual-rendered-mp4',mp4:path.relative(dir,video),
     measured,stills,contactSheet:'qa/contact-sheet.png',

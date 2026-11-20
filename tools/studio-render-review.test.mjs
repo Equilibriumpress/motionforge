@@ -29,3 +29,9 @@ test('three real video stills per scene at non-empty positions',()=>{
  assert.ok(frames.every(x=>x.time>=0&&x.time<14));
  assert.deepEqual(frames.filter(x=>x.scene==='route').map(x=>x.kind),['start','middle','end']);
 });
+
+test('long films sample every scene, not just the first four',()=>{
+ const many={...project,durationSeconds:30,scenes:Array.from({length:10},(_,i)=>({
+   id:'scene-'+i,startSeconds:i*3,durationSeconds:3}))};
+ assert.equal(reviewFrames(many).length,30);
+});

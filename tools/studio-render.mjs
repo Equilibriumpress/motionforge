@@ -177,7 +177,7 @@ try{
       '--formats',extra.join(','),'--mode','fill','--out',outputDir]);
   }
   if(!flags.has('no-review')){
-    const review=await reviewRenderedVideo(slug,{mp4:master});
+    const review=await reviewRenderedVideo(slug,{mp4:master,expectAudio:!!audio});
     console.log('Review board: '+review.contactSheet+' (G5–G7 not approved)');
   }
   console.log('Saved '+master);
