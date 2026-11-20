@@ -46,7 +46,7 @@ The source project structure follows skills/motion-director/SKILL.md; this avoid
 
 
 ## Interactive preview (MF-04)
-Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. This does not create an MP4; exporting follows in MF-06.
+Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. The scene player itself is a preview. MF-12F adds local browser H.264 MP4 export for original HyperFrames timelines.
 
 ## ChatGPT project workflow (MF-05)
 
@@ -55,7 +55,7 @@ Read docs/STUDIO_WORKFLOW.md. To create a local starter: node studio/scripts/new
 
 ## Browser MP4 export (MF-06)
 
-Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Canvas / HyperFrames remain preview-only in this production round. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.
+Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Original HyperFrames multi-scene projects now have a separate MF-12F browser tab-capture MP4 export. Canvas remains on the local render workflow. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.
 
 
 ## MF-07: Local Canvas/HyperFrames MP4 workflow
