@@ -68,6 +68,12 @@ const xml=s=>s.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&
 const sha=s=>createHash('sha256').update(s).digest('hex');
 
 export async function scaffold(argv){
+  // A source-faithful multi-scene project uses the same CLI entry point.
+  // The stage plan is validated in full before any project directory is created.
+  if(argv.includes('--plan')){
+    const {scaffoldMultiScene}=await import('./new-multi-scene.mjs');
+    return scaffoldMultiScene(argv);
+  }
   const opt=options(argv);
   const template=opt.get('template'),style=opt.get('style'),slug=opt.get('slug');
   const title=opt.get('title'),lang=opt.get('language')||'nl';

@@ -59,3 +59,5 @@ Check with:
     node studio/scripts/validate-native-production.mjs <slug>
 
 The existing Peak District roadtrip project predates this source-preserving workflow. The integration does not silently rework that project. A separate content and render revision is needed.
+
+See also **docs/STUDIO_AGENT_WORKFLOW.md** for the ChatGPT execution entrypoint, multiple original scenes and G1–G7 approval records.

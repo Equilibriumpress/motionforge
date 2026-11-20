@@ -53,3 +53,7 @@ When a Studio project uses chosen style and scene IDs, read docs/STUDIO_UPSTREAM
 ## MF-10: mandatory original video workflow
 
 For original template-based video requests, first read docs/STUDIO_ORIGINAL_PRODUCTION.md and skills/motion-director/SKILL.md. Keep original HTML/Three.js/GSAP code, parameter contract, engine and approvals. Use studio/scripts/new-from-upstream.mjs for native scaffolds and the original new-scene.sh. Never substitute generic Canvas for a chosen original template. READY requires the original G1–G7 approval evidence.
+
+## MF-12A/B · ChatGPT is Motion Director
+
+For every new or revised Studio video, read `docs/STUDIO_AGENT_WORKFLOW.md` immediately after the original `skills/motion-director/SKILL.md`. The original upstream skills are authoritative: do not write an alternative simplified skill. The companion CLI `studio/scripts/motion-director-workflow.mjs` lists original files needed per G1–G7 gate and records user-approved evidence/decisions without inventing approvals. Multiple original templates are authored through `studio/scripts/new-from-upstream.mjs --plan <video-plan.json>`, which invokes the original `new-scene.sh` for every scene. A storyboard project is a concept until actual rendered frames and QA have passed. Never claim an MP4 exists merely because a PR merged.

@@ -73,3 +73,9 @@ The static Studio site copies a prompt, but does not submit GitHub commits or st
 ## MF-10: original method has priority
 
 For an original selected MotionForge scene, follow docs/STUDIO_ORIGINAL_PRODUCTION.md. Read skills/motion-director/SKILL.md and preserve its G1–G7 gates. Use the selected source templates and their own params.json through the original new-scene.sh. The four custom Studio Canvas formats are not replacements for these 16 original templates. Native aspect mismatches must be redesigned from the original code with actual visual review, never silently substituted.
+
+## MF-12A/B: Original ChatGPT agent + multi-scene plan
+
+Read `docs/STUDIO_AGENT_WORKFLOW.md` as the gateway to the original `AGENTS.md`, `skills/motion-director/SKILL.md` and individual sibling skills. G1–G7 are explicit records, never automatically advanced. Use `node studio/scripts/motion-director-workflow.mjs --project <slug>` to list the next stage's source skills.
+
+For 3 or more original HyperFrames templates, author one scene plan and invoke `node studio/scripts/new-from-upstream.mjs --plan <file.json> --dry-run`, then (after approvals and available dependencies) omit `--dry-run`. All scene durations must align exactly to FPS, the story motif must appear in three scenes and neighbouring layouts/entrances must differ. A non-native aspect ratio requires an explicit source-based HTML adaptation, not a generic substitute. See `studio/scripts/fixtures/multiscene-native.json` for the plan structure. Do not treat scaffold success as rendered-video QA.

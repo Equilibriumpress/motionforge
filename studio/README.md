@@ -105,3 +105,11 @@ The Studio now distinguishes original 16 HyperFrames templates from its four own
 A safe source-preserving scaffold is available with npm run new:upstream -- --template kinetic-title --style route-journey --slug demo --title "DEMO" --format 9:16 --duration 4 --dry-run. Remove --dry-run on a local checkout with dependencies to invoke the original new-scene.sh.
 
 Read docs/STUDIO_ORIGINAL_PRODUCTION.md. Existing projects remain unchanged and do not automatically inherit the new production record.
+
+## MF-12A/B: ChatGPT-directed original production
+
+`AGENTS.md` and `skills/motion-director/SKILL.md` remain the source of truth. See `docs/STUDIO_AGENT_WORKFLOW.md` for the complete gate-based ChatGPT procedure. Stage-specific original skill references and approval-state recording: `npm run director -- --project <slug> [--gate G5]`.
+
+Build a project from three or more original HyperFrames templates with `npm run new:upstream -- --plan scripts/fixtures/multiscene-native.json --dry-run`. The JSON plan defines original template IDs and parameters, frame-precise durations, original direction fields, narrative motif and language. Remove `--dry-run` only for a new project slug on a checkout with required dependencies. This is an original source scaffold, not an MP4 export or automatic skill runner.
+
+For unsupported aspect ratios, provide independently authored 16:9 adaptations of original HTML and verify real rendered stills before approval. Source files, GitHub merges, or static example GIFs do not establish final visual QA.
