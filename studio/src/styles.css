@@ -130,7 +130,7 @@ h1 em{font-style:normal;color:#a9f0ad}
 .scene-chip.active{border-color:#a9f0ad;background:#284239;color:#effff0}
 .player-hint{font-size:11px;color:#98aabd;margin:12px 1px 0;line-height:1.6}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}
-@media(max-width:850px){.detail-layout{grid-template-columns:1fr}.detail-panel{max-height:94vh}.player-stage.ratio-9-16,.player-stage.ratio-1-1,.player-stage.ratio-4-5{max-height:48vh}}
+@media(max-width:850px){.detail-layout{grid-template-columns:1fr}.detail-panel{max-height:94vh}}
 @media(max-width:520px){.player-controls-top{flex-wrap:wrap}.player-engine{flex-basis:100%;margin-left:0}.detail-layout{padding:13px}}
 
 /* MF-06 · Remotion in-browser MP4 output */
