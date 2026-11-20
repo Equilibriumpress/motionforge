@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "london-on-foot-demo",
+  "title": "LONDON ON FOOT · Opening",
+  "description": "Eerste MotionForge Studio-proef met een geanimeerde opening voor een wandelgids.",
+  "status": "concept",
+  "language": "nl",
+  "format": "16:9",
+  "engine": "canvas",
+  "durationSeconds": 8,
+  "fps": 30,
+  "cover": "assets/cover.svg",
+  "tags": ["reisgids", "wandelen", "boektrailer"],
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "London opening",
+      "startSeconds": 0,
+      "durationSeconds": 8,
+      "engine": "canvas",
+      "source": "scenes/intro/index.html"
+    }
+  ]
+}

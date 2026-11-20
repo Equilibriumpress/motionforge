@@ -1,0 +1,10 @@
+{
+  "name": "MotionForge Studio Demo",
+  "colors": {
+    "background": "#0d1822",
+    "foreground": "#f5f1e8",
+    "accent": "#ace6ad"
+  },
+  "fontFamily": "system-ui",
+  "watermark": null
+}

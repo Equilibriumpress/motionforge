@@ -56,6 +56,19 @@ h1 em{font-style:normal;color:#a9f0ad}
 .about-panel .button{margin-top:32px}
 .footer{border-top:1px solid #283542;color:#7f90a3;font-size:12px}
 .footer-inner{padding-top:23px;padding-bottom:23px;display:flex;justify-content:space-between;gap:20px}
-@media(max-width:700px){.topbar-inner{padding:0 20px;min-height:68px;gap:16px}.brand-name{font-size:17px}.brand-mark{width:30px;height:30px}.navigation{gap:12px}.nav-item{font-size:12px;padding:24px 0}.github-link{display:none}.container{padding-left:20px;padding-right:20px}.intro{padding:65px 0}.lead{font-size:16px}.intro-actions{align-items:flex-start;flex-direction:column}.feature-grid{grid-template-columns:1fr}.section-heading h2{font-size:23px}.footer-inner{flex-direction:column}.empty-library{min-height:290px}}
+.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.project-card{border:1px solid #2a3948;background:#121c28;border-radius:15px;overflow:hidden;min-width:0}
+.project-cover{aspect-ratio:16/9;position:relative;display:grid;place-items:center;background:#1d3140;color:#a9f0ad;font-size:40px}
+.project-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.project-duration{position:absolute;bottom:11px;right:12px;color:white;background:#0b1019cc;border:1px solid #ffffff25;padding:5px 9px;border-radius:6px;font-size:11px}
+.project-body{padding:22px}
+.project-meta{display:flex;align-items:center;justify-content:space-between;gap:9px;color:#8fa1b5;font-size:11px}
+.project-status{display:inline-block;border-radius:5px;background:#284238;color:#b8f3bc;padding:5px 8px;text-transform:capitalize}
+.project-body h3{font-size:19px;letter-spacing:-.03em;margin:17px 0 9px}
+.project-body p{color:#9bacc0;font-size:13px;line-height:1.6;min-height:42px}
+.project-source{display:inline-block;color:#b3efb6;font-size:12px;font-weight:700;margin-top:20px}
+.project-source:hover{text-decoration:underline}
+@media(max-width:900px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.topbar-inner{padding:0 20px;min-height:68px;gap:16px}.brand-name{font-size:17px}.brand-mark{width:30px;height:30px}.navigation{gap:12px}.nav-item{font-size:12px;padding:24px 0}.github-link{display:none}.container{padding-left:20px;padding-right:20px}.intro{padding:65px 0}.lead{font-size:16px}.intro-actions{align-items:flex-start;flex-direction:column}.feature-grid,.project-grid{grid-template-columns:1fr}.section-heading h2{font-size:23px}.footer-inner{flex-direction:column}.empty-library{min-height:290px}}
 @media(max-width:420px){.brand-name{font-size:15px}.brand{gap:8px}.topbar-inner{padding:0 13px}.navigation{gap:10px}.nav-item{font-size:11px}h1{font-size:44px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

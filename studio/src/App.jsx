@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { loadProjectIndex, projectCoverUrl } from './lib/projects.js';
 
 const features = [
-  { number: '01', title: 'Projectbibliotheek', description: 'Videoprojecten uit GitHub komen hier samen.', stage: 'MF-02 & MF-03' },
+  { number: '01', title: 'Projectbibliotheek', description: 'Videoprojecten worden vanuit GitHub geïndexeerd.', stage: 'MF-02 · BASIS' },
   { number: '02', title: 'Live preview', description: 'Bekijk scènes en een tijdlijn in de browser.', stage: 'MF-04' },
   { number: '03', title: 'Video export', description: 'Download ondersteunde composities als MP4.', stage: 'MF-06 & MF-07' },
 ];
@@ -12,6 +13,56 @@ function Brand() {
       <span className="brand-mark" aria-hidden="true"><span className="brand-play" /></span>
       <span className="brand-name">motionforge <b>studio</b></span>
     </div>
+  );
+}
+
+function ProjectLibrary() {
+  const [state, setState] = useState({ loading: true, projects: [], error: null });
+  useEffect(() => {
+    let active = true;
+    loadProjectIndex().then(
+      (projects) => { if (active) setState({ loading: false, projects, error: null }); },
+      (error) => { if (active) setState({ loading: false, projects: [], error: error.message }); },
+    );
+    return () => { active = false; };
+  }, []);
+
+  return (
+    <>
+      <div className="section-heading">
+        <div><span className="section-kicker">STUDIO</span><h2>Projectbibliotheek</h2></div>
+        <span className="counter">{state.loading ? 'Laden…' : state.projects.length + ' projecten'}</span>
+      </div>
+      {state.loading ? <div className="empty-library" role="status"><p>Projecten laden…</p></div> : null}
+      {state.error ? (
+        <section className="empty-library" role="alert"><h3>Projectindex niet beschikbaar</h3><p>{state.error}</p></section>
+      ) : null}
+      {!state.loading && !state.error && state.projects.length === 0 ? (
+        <section className="empty-library">
+          <div className="empty-mark" aria-hidden="true">▶</div>
+          <h3>Nog geen videoprojecten</h3>
+          <p>Voeg een map toe in videos/ met een project.json. De index wordt bij de volgende Pages-build vernieuwd.</p>
+        </section>
+      ) : null}
+      {!state.loading && !state.error && state.projects.length > 0 ? (
+        <section className="project-grid" aria-label="Videoprojecten">
+          {state.projects.map((project) => (
+            <article className="project-card" key={project.id}>
+              <div className="project-cover">
+                {projectCoverUrl(project) ? <img src={projectCoverUrl(project)} alt={'Cover van ' + project.title} loading="lazy" /> : <span aria-hidden="true">▶</span>}
+                <span className="project-duration">{project.durationSeconds}s · {project.format}</span>
+              </div>
+              <div className="project-body">
+                <div className="project-meta"><span className="project-status">{project.status}</span><span>{project.engine} · {project.sceneCount} scènes</span></div>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <a className="project-source" href={'https://github.com/Equilibriumpress/motionforge/tree/main/videos/' + encodeURIComponent(project.id)} target="_blank" rel="noreferrer">Bekijk bronbestanden <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : null}
+    </>
   );
 }
 
@@ -29,7 +80,6 @@ export default function App() {
           <a className="github-link" href="https://github.com/Equilibriumpress/motionforge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </header>
-
       <main className="container">
         {view === 'library' ? (
           <>
@@ -39,18 +89,12 @@ export default function App() {
               <p className="lead">Maak videoprojecten met ChatGPT, bewaar de bronbestanden in GitHub en bekijk het resultaat in MotionForge Studio.</p>
               <div className="intro-actions">
                 <a className="button button-primary" href="https://github.com/Equilibriumpress/motionforge/tree/main" target="_blank" rel="noreferrer">Open repository <span aria-hidden="true">↗</span></a>
-                <span className="status-label"><span className="status-dot" /> Studio in ontwikkeling</span>
+                <span className="status-label"><span className="status-dot" /> Projectregister actief na MF-02</span>
               </div>
             </section>
-
-            <div className="section-heading"><div><span className="section-kicker">STUDIO</span><h2>Projectbibliotheek</h2></div><span className="counter">0 projecten</span></div>
-            <section className="empty-library" aria-label="Lege projectbibliotheek">
-              <div className="empty-mark" aria-hidden="true">▶</div>
-              <h3>Je videoprojecten verschijnen hier</h3>
-              <p>In MF-02 voegen we GitHub-projectopslag en een automatische index toe. De bibliotheek toont daarna echte projectgegevens.</p>
-            </section>
+            <ProjectLibrary />
             <div className="section-heading workflow-heading"><div><span className="section-kicker">ROADMAP</span><h2>Van idee naar video</h2></div></div>
-            <section className="feature-grid" aria-label="Geplande mogelijkheden">
+            <section className="feature-grid" aria-label="Mogelijkheden">
               {features.map((feature) => (
                 <article className="feature" key={feature.number}>
                   <div className="feature-top"><span className="feature-number">{feature.number}</span><span className="feature-stage">{feature.stage}</span></div>
