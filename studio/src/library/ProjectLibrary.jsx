@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PreviewPlayer from '../preview/PreviewPlayer.jsx';
+import ProjectMedia from '../renderer/ProjectMedia.jsx';
 import { loadProjectIndex, projectCoverUrl } from '../lib/projects.js';
 
 const SOURCE = 'https://github.com/Equilibriumpress/motionforge/tree/main/videos/';
@@ -60,7 +60,7 @@ function ProjectDetails({ project, onClose }) {
         </header>
         <div className="detail-layout">
           <div className="detail-hero">
-            <PreviewPlayer key={project.id} project={project} coverUrl={projectCoverUrl(project)} />
+            <ProjectMedia key={project.id} project={project} coverUrl={projectCoverUrl(project)} />
           </div>
           <div className="detail-info">
             <div className="project-meta"><span className="project-status">{statusLabel[project.status] || project.status}</span><span>{project.language.toUpperCase()}</span></div>

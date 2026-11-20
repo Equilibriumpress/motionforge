@@ -47,6 +47,16 @@ function validateProject(project, slug, context, directory) {
   requireCondition(Number.isInteger(project.fps) && project.fps >= 12 && project.fps <= 120, context, 'fps must be 12–120');
   requireCondition(Array.isArray(project.scenes), context, 'scenes must be an array');
   requireCondition(Array.isArray(project.tags) && project.tags.every(textValue), context, 'tags must be a string array');
+  if (project.browserRender !== undefined) {
+    const r = project.browserRender;
+    requireCondition(project.engine === 'remotion', context, 'browserRender requires engine remotion');
+    requireCondition(r && r.template === 'title-card-v1', context, 'unsupported browserRender template');
+    requireCondition(textValue(r.title) && r.title.length <= 80, context, 'browserRender.title required, max 80 characters');
+    requireCondition(typeof r.subtitle === 'string' && r.subtitle.length <= 110, context, 'browserRender.subtitle must be <= 110 characters');
+    requireCondition(/^#[0-9a-fA-F]{6}$/.test(r.background) && /^#[0-9a-fA-F]{6}$/.test(r.accent),
+      context, 'browserRender colors must be #RRGGBB');
+  }
+
   if (project.cover !== undefined) {
     requireCondition(safeLocalPath(project.cover, 'assets/'), context, 'cover must be a local assets/ path');
     requireCondition(IMAGE_EXTS.has(path.extname(project.cover).toLowerCase()), context, 'unsupported cover extension');

@@ -1,0 +1,12 @@
+{
+  "concept": "Studio browser MP4 proof",
+  "visualRule": "Native SVG title and route stroke",
+  "scenes": [
+    {
+      "id": "intro",
+      "startSeconds": 0,
+      "durationSeconds": 6,
+      "engine": "remotion"
+    }
+  ]
+}

@@ -74,3 +74,27 @@ After indexing, the studio copies supported Canvas and HyperFrames scene folders
 Canvas uses window.render(t), HyperFrames uses window.__timelines[id].seek(t). The studio offers play/pause, scrubbing, project-time scene switching, a seconds readout and responsive aspect ratios.
 
 Only selected file extensions are published. No symlinks, no files above 12 MB, and no more than 48 MB of preview assets per project. The builder supplies missing HyperFrames base.css, mf-runtime.js, and npm GSAP when available. Audio mix, Remotion, some 3D module scenes, and MP4 export are excluded from this initial preview.
+
+
+## MF-06 · Browser MP4 export (limited Remotion templates)
+
+For projects using the Remotion engine, define a browserRender block. This studio release supports only an explicit safe template identifier, title-card-v1, with short text and hex colors:
+
+~~~json
+{
+  "engine": "remotion",
+  "browserRender": {
+    "template": "title-card-v1",
+    "title": "MOTIONFORGE STUDIO",
+    "subtitle": "VAN PROJECT NAAR MP4",
+    "background": "#0d1822",
+    "accent": "#a9f0ad"
+  }
+}
+~~~
+
+The other normal schema-v1 fields, scenes and cover remain mandatory. The project stores editable data. The rendering component code is a reviewed template in studio/src/renderer/TitleSequence.jsx. Arbitrary project JavaScript is never evaluated in the Studio application origin.
+
+The Remotion Player previews supported template projects. RenderMp4 checks H.264 support with canRenderMediaOnWeb before enabling the button, calls renderMediaOnWeb with an AbortSignal and progress callback, then downloads the resulting MP4. Video is intentionally muted: no audio mix in MF-06. Browser support requires WebCodecs, sufficient local resources and the applicable Remotion licence. Browser errors are shown explicitly.
+
+Canvas and HyperFrames projects remain seekable in the existing scene player. They are NOT automatically compatible with Remotion browser export. Their MP4 export remains planned for MF-07. There is no server renderer and no video-render step in GitHub Actions.
