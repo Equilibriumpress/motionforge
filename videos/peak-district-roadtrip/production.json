@@ -23,7 +23,13 @@
       "source": "scenes/globe/index.html",
       "parameters": "scenes/globe/params-values.json",
       "nativeFormat": "9:16",
-      "layout": "source-derived landscape 3D globe"
+      "layout": "source-derived landscape 3D globe",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Project-specifieke brongetrouwe 1920×1080-bewerking van het originele globe-arcs-3d-template: source-derived landscape 3D globe. Werkelijke storyboard- en visuele goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "route",
@@ -32,7 +38,13 @@
       "source": "scenes/route/index.html",
       "parameters": "scenes/route/params.values.json",
       "nativeFormat": "9:16",
-      "layout": "16:9 checklist left, coordinate overview right; schematic connections"
+      "layout": "16:9 checklist left, coordinate overview right; schematic connections",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Project-specifieke brongetrouwe 1920×1080-bewerking van het originele checklist-reveal-template: 16:9 checklist left, coordinate overview right; schematic connections. Werkelijke storyboard- en visuele goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "highlights",
@@ -41,7 +53,13 @@
       "source": "scenes/highlights/index.html",
       "parameters": "scenes/highlights/params.values.json",
       "nativeFormat": "9:16",
-      "layout": "16:9 kinetic title with decorative hills and location ribbon"
+      "layout": "16:9 kinetic title with decorative hills and location ribbon",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Project-specifieke brongetrouwe 1920×1080-bewerking van het originele kinetic-title-template: 16:9 kinetic title with decorative hills and location ribbon. Werkelijke storyboard- en visuele goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "outro",
@@ -50,7 +68,13 @@
       "source": "scenes/outro/index.html",
       "parameters": "scenes/outro/params.values.json",
       "nativeFormat": "9:16",
-      "layout": "16:9 full-width route-title CTA"
+      "layout": "16:9 full-width route-title CTA",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Project-specifieke brongetrouwe 1920×1080-bewerking van het originele kinetic-title-template: 16:9 full-width route-title CTA. Werkelijke storyboard- en visuele goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     }
   ],
   "gates": {
