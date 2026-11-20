@@ -6,6 +6,8 @@ on:
     paths:
       - "studio/**"
       - "videos/**"
+      - "skills/style-library/styles/**"
+      - "templates/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
