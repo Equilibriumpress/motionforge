@@ -1,0 +1,33 @@
+{
+  "concept": "Infographic concept",
+  "visualRule": "Demonstration only, not factual data",
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Opening",
+      "phase": "intro",
+      "startSeconds": 0,
+      "durationSeconds": 4.5,
+      "engine": "canvas",
+      "source": "scenes/intro/index.html"
+    },
+    {
+      "id": "feature",
+      "title": "Hoofdscène",
+      "phase": "feature",
+      "startSeconds": 4.5,
+      "durationSeconds": 6.766666666666667,
+      "engine": "canvas",
+      "source": "scenes/feature/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "Afsluiting",
+      "phase": "outro",
+      "startSeconds": 11.266666666666667,
+      "durationSeconds": 3.7333333333333334,
+      "engine": "canvas",
+      "source": "scenes/outro/index.html"
+    }
+  ]
+}

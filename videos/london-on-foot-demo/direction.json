@@ -1,16 +1,30 @@
 {
-  "concept": "A route appears before the title LONDON ON FOOT.",
-  "visualRule": "High-contrast editorial typography and one continuous line.",
-  "motif": "A walking line across the city.",
+  "concept": "LONDON ON FOOT concept book trailer",
+  "visualRule": "Editorial type and schematic motion without real location claims",
   "scenes": [
     {
       "id": "intro",
+      "title": "London opening",
       "startSeconds": 0,
       "durationSeconds": 8,
-      "layout": "16:9 editorial title",
       "engine": "canvas",
-      "hero": "LONDON ON FOOT",
-      "entrance": "Route draws first, title fades in."
+      "source": "scenes/intro/index.html"
+    },
+    {
+      "id": "feature",
+      "title": "Boekpresentatie",
+      "startSeconds": 8,
+      "durationSeconds": 6,
+      "engine": "canvas",
+      "source": "scenes/feature/index.html"
+    },
+    {
+      "id": "outro",
+      "title": "Afsluiting",
+      "startSeconds": 14,
+      "durationSeconds": 4,
+      "engine": "canvas",
+      "source": "scenes/outro/index.html"
     }
   ]
 }
