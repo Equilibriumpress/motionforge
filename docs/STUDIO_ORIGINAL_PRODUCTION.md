@@ -61,3 +61,6 @@ Check with:
 Older video projects are not silently upgraded by the MF-12A/B generator. Existing project approvals and render evidence remain project-specific. A source-only revision does not replace G5–G7 QA.
 
 See also **docs/STUDIO_AGENT_WORKFLOW.md** for the ChatGPT execution entrypoint, multiple original scenes and G1–G7 approval records.
+
+
+MF-12E adds the original full QA review. See docs/STUDIO_QA_REVIEW.md. Each QA result is bound to one rendered MP4 hash and requires actual visual/audio evidence and a different-context critic before READY.

@@ -64,3 +64,8 @@ After G2, original skills/voice-and-timing/SKILL.md governs recording/TTS, word-
 Audio integration: node tools/studio-render.mjs <slug> --audio auto --quality draft. This requires G2/G3 approval and actual words/cues, and rejects speech longer than the video.
 
 MF-12D uses the pinned original HyperFrames CLI installed locally in render-worker/, with Node 22, FFmpeg, FFprobe and Chromium. A staged scene copy keeps original source untouched, including bundled Three.js for globes. After rendering, tools/studio-render-review.mjs verifies dimensions/FPS/duration/frame count and generates actual frame stills plus a contact sheet. The results remain REVIEW EVIDENCE, not G5/G6/G7 approval. The Pages workflow never renders MP4. See render-worker/README.md and docs/STUDIO_VOICE_AND_TIMING.md.
+
+
+## MF-12E · Original render-bound QA review
+
+The original skills/qa-review/SKILL.md governs QA and its independent critic protocol. After a real local MP4, invoke tools/studio-qa-review.mjs; the local renderer does this by default. Review all real stills, contact sheets and phone-scale frames, resolve FAILs, then pass ONLY the images and a factual brief to a separate fresh-context critic. Record its external JSON response with studio-qa-critic.mjs. User observations are recorded with studio-qa-annotations.mjs and genuine references. The MP4 SHA-256 invalidates stale reports. READY requires a matching qa/report.json, completed checks and documented critic with no open FIX; original G5/G6/G7 approvals remain separate. See docs/STUDIO_QA_REVIEW.md.
