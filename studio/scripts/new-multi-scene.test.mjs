@@ -52,7 +52,8 @@ test('duplicate IDs, non-original parameters and inconsistent durations fail bef
 });
 test('native portrait template cannot silently produce a 16:9 video',async()=>{
   const p=await load();p.format='16:9';
-  assert.throws(()=>validateVideoPlan(p,await specs()),/authored 16:9 HTML adaptation/);
+  const contracts=await specs();
+  assert.throws(()=>validateVideoPlan(p,contracts),/authored 16:9 HTML adaptation/);
 });
 test('storyboard must follow upstream layout, cue and motif rules',async()=>{
   const p=await load(),spec=await specs();
