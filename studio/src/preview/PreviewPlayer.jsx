@@ -63,7 +63,9 @@ export default function PreviewPlayer({ project, coverUrl }) {
     const handle = (event) => {
       if (event.source !== iframe.current?.contentWindow || event.data?.type !== protocol) return;
       if (event.data.kind === 'ready') {
-        const fill=validateStageFill(event.data.stage);
+        // Canvas previews use their own viewport drawing; the native stage
+        // geometry contract applies only to original HyperFrames scenes.
+        const fill=scene?.engine==='hyperframes'?validateStageFill(event.data.stage):{ok:true};
         if(!fill.ok){setReady(false);setFrameError(fill.reason);setPlaying(false);return;}
         setReady(true);
         setFrameError(null);
