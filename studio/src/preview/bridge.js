@@ -23,8 +23,8 @@
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
   }
-  async function draw(t) {
-    pending = {seconds:Math.max(0,Number(t)||0),requestId:arguments[1]??null};
+  async function draw(t,requestId=null) {
+    pending = {seconds:Math.max(0,Number(t)||0),requestId};
     if (!ready || busy) return;
     busy = true;
     while (pending !== null) {

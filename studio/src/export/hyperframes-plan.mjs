@@ -22,8 +22,8 @@ export function exportPlan(manifest,{quality='final'}={}){
   const frames=manifest.durationSeconds*manifest.fps;
   if(!Number.isInteger(frames))throw Error('Duration must align to an exact frame.');
   if(!Array.isArray(manifest.scenes)||!manifest.scenes.length||
-    !manifest.scenes.every(s=>['hyperframes','canvas'].includes(s.engine)))
-    throw Error('Browserexport requires original seekable HyperFrames or Canvas scenes.');
+    !manifest.scenes.every(s=>s.engine==='hyperframes'))
+    throw Error('Browserexport supports only original seekable HyperFrames scenes; Canvas uses the existing local exporter.');
   const scenes=[...manifest.scenes].sort((a,b)=>a.startSeconds-b.startSeconds);
   let at=0;
   const slots=scenes.map(s=>{

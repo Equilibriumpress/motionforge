@@ -21,9 +21,27 @@ export default function BrowserOriginalExport({manifest}){
  const [sheetUrl,setSheetUrl]=useState('');
  const controller=useRef(null);
  useEffect(()=>{
-  setSupport(browserExportSupport());
-  return()=>{controller.current?.abort()};
- },[]);
+  let active=true;
+  const basic=browserExportSupport();
+  if(!basic.ok){setSupport(basic);return()=>{controller.current?.abort()};}
+  const check=async()=>{
+   try{
+    const [w,h]=[1920,1080];
+    const [width,height]=manifest.format==='9:16'?[1080,1920]:
+      manifest.format==='1:1'?[1080,1080]:
+      manifest.format==='4:5'?[1080,1350]:[w,h];
+    const result=await VideoEncoder.isConfigSupported({
+     codec:'avc1.42E028',width,height,framerate:manifest.fps,bitrate:8000000
+    });
+    if(active)setSupport(result.supported?basic:{ok:false,
+      message:'H.264-encoder ondersteunt deze resolutie niet. Probeer een kleinere render of de lokale render-worker.'});
+   }catch(error){
+    if(active)setSupport({ok:false,message:'Browserencoder kon niet worden gecontroleerd: '+error.message});
+   }
+  };
+  check();
+  return()=>{active=false;controller.current?.abort()};
+ },[manifest.fps,manifest.format]);
  useEffect(()=>{
   if(!result?.sheet){setSheetUrl('');return}
   const url=URL.createObjectURL(result.sheet);

@@ -35,7 +35,7 @@ test('no synthetic gap/overlap, missing scene URLs or unsafe source injection',(
  f=fixture();f.previewSources.route='projects/peak-district-roadtrip/../evil.html';
  assert.throws(()=>exportPlan(f),/Missing original scene/);
  f=fixture();f.scenes[0].engine='remotion';
- assert.throws(()=>exportPlan(f),/seekable/);
+ assert.throws(()=>exportPlan(f),/only original seekable HyperFrames/);
 });
 test('sampling and source viewport crop preserve expected aspect and timeline',()=>{
  const p=exportPlan(fixture());
