@@ -58,6 +58,6 @@ Check with:
     cd .. && node tools/studio-qa.mjs <slug>
     node studio/scripts/validate-native-production.mjs <slug>
 
-The existing Peak District roadtrip project predates this source-preserving workflow. The integration does not silently rework that project. A separate content and render revision is needed.
+Older video projects are not silently upgraded by the MF-12A/B generator. Existing project approvals and render evidence remain project-specific. A source-only revision does not replace G5–G7 QA.
 
 See also **docs/STUDIO_AGENT_WORKFLOW.md** for the ChatGPT execution entrypoint, multiple original scenes and G1–G7 approval records.
