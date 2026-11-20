@@ -65,6 +65,7 @@ export async function auditProject(slug) {
     let project;
     try{project=JSON.parse(await readFile(manifestPath,'utf8'));}
     catch(error){push('FAIL','JSON','Invalid project.json: '+error.message);}
+    if(project===null){push('FAIL','SCHEMA','Project must be a JSON object');}
     if(project){
       report.engine=project.engine;
       report.checks.push(...validateManifest(project,slug));
