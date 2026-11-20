@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "sourceMethod": "original-motionforge",
+  "workflow": {
+    "agent": "ChatGPT",
+    "entrypoint": "skills/motion-director/SKILL.md",
+    "protocol": "docs/STUDIO_AGENT_WORKFLOW.md",
+    "state": "awaiting-G1"
+  },
+  "selectedStyle": "route-journey",
+  "templateSource": "templates/kinetic-title/index.html",
+  "parameterContract": "templates/kinetic-title/params.json",
+  "parameterValues": "scenes/hook/params.values.json",
+  "sourceScene": "scenes/hook/index.html",
+  "originalFormat": "9:16",
+  "engine": "hyperframes",
+  "sceneTemplates": [
+    {
+      "id": "hook",
+      "template": "kinetic-title",
+      "originalSource": "templates/kinetic-title/index.html",
+      "source": "scenes/hook/index.html",
+      "parameters": "scenes/hook/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4"
+    },
+    {
+      "id": "orientation",
+      "template": "globe-arcs-3d",
+      "originalSource": "templates/globe-arcs-3d/index.html",
+      "source": "scenes/orientation/index.html",
+      "parameters": "scenes/orientation/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "c97f8241b1c3b52f9e540411b68f0047ca9929df"
+    },
+    {
+      "id": "stops",
+      "template": "checklist-reveal",
+      "originalSource": "templates/checklist-reveal/index.html",
+      "source": "scenes/stops/index.html",
+      "parameters": "scenes/stops/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166"
+    },
+    {
+      "id": "recap",
+      "template": "stat-counter",
+      "originalSource": "templates/stat-counter/index.html",
+      "source": "scenes/recap/index.html",
+      "parameters": "scenes/recap/params.values.json",
+      "nativeFormat": "9:16",
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "githubSourceBlobSha": "63929c693121b0abf876182a50ec458635cb23d4"
+    }
+  ],
+  "paidServicesUsed": false,
+  "gates": {
+    "G1": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G2": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G3": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G4": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G5": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G6": {
+      "status": "pending",
+      "evidence": null
+    },
+    "G7": {
+      "status": "pending",
+      "evidence": null
+    }
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "slug": "kyoto-three-stops-motionforge",
+  "title": "KYOTO · 3 PLEKKEN",
+  "description": "30 seconden Kyoto, gemaakt uit vier verschillende originele MotionForge-templates: Kinetic Title, Globe Arcs 3D, Checklist Reveal en Stat Counter. De wereldbol toont schematische verbindingen, geen reisroute.",
+  "language": "nl",
+  "format": "9:16",
+  "fps": 30,
+  "durationSeconds": 30,
+  "style": "route-journey",
+  "storyFormat": 3,
+  "brief": {
+    "goal": "Maak een compacte kennismaking met drie plekken in Kyoto.",
+    "audience": "Nederlandstalige toekomstige Kyoto-bezoekers",
+    "platform": "Mobiele verticale reisvideo",
+    "tone": "Rustig, overzichtelijk en informatief"
+  },
+  "direction": {
+    "concept": "Een introductie van Kyoto via een titel, geografische oriëntatie, drie locaties en een afsluitende selectie.",
+    "visualRule": "Donkerblauwe groene basis met één roze focusaccent.",
+    "motif": "Roze focusmarkering verschuift van titel naar pin, vinkjes en teller."
+  },
+  "hooks": [
+    {
+      "type": "N",
+      "text": "Kyoto in drie plekken."
+    },
+    {
+      "type": "C",
+      "text": "Waar begin je in Kyoto?"
+    },
+    {
+      "type": "P",
+      "text": "Drie plekken voor je eerste bezoek aan Kyoto."
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Fushimi Inari ligt in Kyoto",
+      "source": "https://kyoto.travel/en/areas/fushimi/"
+    },
+    {
+      "claim": "Kiyomizu-dera ligt in het Kiyomizu-/Higashiyama-gebied van Kyoto",
+      "source": "https://kyoto.travel/en/areas/gion-kiyomizu/"
+    },
+    {
+      "claim": "Arashiyama ligt in het westen van Kyoto",
+      "source": "https://www.japan.travel/en/spot/ma_129/"
+    },
+    {
+      "claim": "Kyoto, Osaka en Tokyo liggen in Japan",
+      "source": "https://www.japan.travel/en/destinations/kansai/kyoto/"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "title": "Kyoto in drie plekken",
+      "template": "kinetic-title",
+      "durationSeconds": 5,
+      "params": {
+        "lines": [
+          "KYOTO",
+          "IN 3 PLEKKEN"
+        ],
+        "accentWord": "KYOTO",
+        "eyebrow": "JAPAN · CITY GUIDE",
+        "fontSize": 106,
+        "theme": "dark",
+        "lang": "nl",
+        "start": 0.2,
+        "stagger": 0.12,
+        "underline": true,
+        "exit": true,
+        "duration": 5
+      },
+      "direction": {
+        "cue": "Kyoto",
+        "layout": "Centrale titel",
+        "entrance": "Woord-voor-woord blur-rise",
+        "hero": "Kyoto in drie plekken",
+        "onScreenText": "KYOTO / IN 3 PLEKKEN",
+        "motifRole": "Roze titelaccent",
+        "narration": "Kyoto in drie plekken."
+      }
+    },
+    {
+      "id": "orientation",
+      "title": "Waar ligt Kyoto?",
+      "template": "globe-arcs-3d",
+      "durationSeconds": 10,
+      "params": {
+        "eyebrow": "01 · ORIËNTATIE",
+        "title": "Waar ligt {Kyoto}?",
+        "cities": [
+          {
+            "name": "Kyoto",
+            "lat": 35.0116,
+            "lon": 135.7681
+          },
+          {
+            "name": "Osaka",
+            "lat": 34.6937,
+            "lon": 135.5023
+          },
+          {
+            "name": "Tokyo",
+            "lat": 35.6762,
+            "lon": 139.6503
+          }
+        ],
+        "arcs": "hub",
+        "focus": 0,
+        "spinFrom": 40,
+        "pinStart": 1.35,
+        "arcStart": 2.5,
+        "route": "JAPAN · SCHEMATISCH",
+        "landColor": "#CFDCC0",
+        "oceanColor": "#1D2326",
+        "lang": "nl",
+        "duration": 10
+      },
+      "direction": {
+        "cue": "Waar",
+        "layout": "3D-globe met plaatsnamen",
+        "entrance": "Globe roteert en pinnen verschijnen",
+        "hero": "Waar ligt Kyoto?",
+        "onScreenText": "Waar ligt Kyoto? / JAPAN · SCHEMATISCH",
+        "motifRole": "Roze locatiepin",
+        "narration": "Waar ligt Kyoto? Je ziet ook Osaka en Tokyo als oriëntatie."
+      }
+    },
+    {
+      "id": "stops",
+      "title": "Drie plekken in Kyoto",
+      "template": "checklist-reveal",
+      "durationSeconds": 10,
+      "params": {
+        "title": "Drie <span class=\"serif accent\">plekken</span>",
+        "items": [
+          "Fushimi Inari",
+          "Kiyomizu-dera",
+          "Arashiyama"
+        ],
+        "times": [
+          1.2,
+          3.65,
+          6.1
+        ],
+        "checkDelay": 0.37,
+        "numbered": true,
+        "theme": "dark",
+        "lang": "nl",
+        "duration": 10
+      },
+      "direction": {
+        "cue": "Drie",
+        "layout": "Drie grote tekstkaarten",
+        "entrance": "Checklist verschijnt na elkaar",
+        "hero": "Drie plekken in Kyoto",
+        "onScreenText": "Fushimi Inari / Kiyomizu-dera / Arashiyama",
+        "motifRole": "Roze selectie-vinkjes",
+        "narration": "Drie plekken: Fushimi Inari, Kiyomizu-dera en Arashiyama."
+      }
+    },
+    {
+      "id": "recap",
+      "title": "Kies je volgende stop",
+      "template": "stat-counter",
+      "durationSeconds": 5,
+      "params": {
+        "value": 3,
+        "from": 0,
+        "decimals": 0,
+        "prefix": "",
+        "suffix": "",
+        "locale": "nl-NL",
+        "label": "PLEKKEN OM TE VERKENNEN",
+        "eyebrow": "JOUW START IN KYOTO",
+        "source": "Redactionele selectie · Kyoto Travel",
+        "ringPercent": 0,
+        "start": 0.35,
+        "countDuration": 1.5,
+        "theme": "dark",
+        "lang": "nl",
+        "duration": 5
+      },
+      "direction": {
+        "cue": "Kies",
+        "layout": "Centrale cijferring",
+        "entrance": "Teller loopt naar 3",
+        "hero": "Kies je volgende stop",
+        "onScreenText": "3 / PLEKKEN OM TE VERKENNEN",
+        "motifRole": "Roze telleraccent",
+        "narration": "Kies je eerste stop."
+      }
+    }
+  ]
+}

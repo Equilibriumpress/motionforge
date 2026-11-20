@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "KYOTO",
+    "IN 3 PLEKKEN"
+  ],
+  "accentWord": "KYOTO",
+  "eyebrow": "JAPAN · CITY GUIDE",
+  "theme": "dark",
+  "lang": "nl",
+  "fontSize": 106,
+  "start": 0.2,
+  "stagger": 0.12,
+  "underline": true,
+  "exit": true,
+  "duration": 5
+}

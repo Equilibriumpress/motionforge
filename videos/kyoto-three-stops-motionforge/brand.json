@@ -1,0 +1,12 @@
+{
+  "sourceStyle": "style/STYLE.md",
+  "brand": null,
+  "logo": null,
+  "palette": {
+    "background": "#1D2326",
+    "ink": "#F4F3EB",
+    "accent": "#E23D6F",
+    "support": "#CFDCC0"
+  },
+  "overrides": []
+}
