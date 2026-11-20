@@ -113,3 +113,14 @@ Read docs/STUDIO_ORIGINAL_PRODUCTION.md. Existing projects remain unchanged and 
 Build a project from three or more original HyperFrames templates with `npm run new:upstream -- --plan scripts/fixtures/multiscene-native.json --dry-run`. The JSON plan defines original template IDs and parameters, frame-precise durations, original direction fields, narrative motif and language. Remove `--dry-run` only for a new project slug on a checkout with required dependencies. This is an original source scaffold, not an MP4 export or automatic skill runner.
 
 For unsupported aspect ratios, provide independently authored 16:9 adaptations of original HTML and verify real rendered stills before approval. Source files, GitHub merges, or static example GIFs do not establish final visual QA.
+
+
+## MF-12C / MF-12D · Voice/timing and offline rendering
+
+Original voice-and-timing skill: docs/STUDIO_VOICE_AND_TIMING.md. Local preparation command from repository root: node tools/studio-voice.mjs --project <slug> --mode none (or recorded, local-tts, paid-plan, paid-import with explicit G3).
+
+A separate pinned render-worker/ environment runs original HyperFrames 0.8.92 using the local CLI. It does not use GitHub Actions or download media in the renderer. See render-worker/README.md and render-worker/Dockerfile.
+
+From studio/: npm run render:doctor, npm run render:video -- <slug> --dry-run, npm run render:video -- <slug> --quality draft, npm run test:voice-render.
+
+Measured frames, ffprobe checks and contact sheet are created for review. The workflow does not automatically approve G5/G6/G7.

@@ -94,6 +94,41 @@ export async function auditProject(slug) {
         }
         if(/<script[^>]*src\s*=\s*["']https?:/i.test(html))push('WARN','CDN','Externally loaded script: '+scene.id);
       }
+      // MF-12C voice provenance. Private source audio is intentionally absent
+      // from Git; concepts WARN, while READY requires actual timing evidence.
+      const voicePlan=path.join(folder,'audio','voice-plan.json');
+      if(existsSync(voicePlan)){
+        try{
+          const v=JSON.parse(await readFile(voicePlan,'utf8'));
+          if(v.mode==='paid-plan'){
+            if(existsSync(path.join(folder,'audio','voice.wav')))
+              push('FAIL','PAID_VOICE','Paid proposal must not be presented as generated speech.');
+            push('WARN','PAID_APPROVAL','Paid voice is a cost proposal, not a rendered audio track.');
+          }else if(v.mode==='none'){
+            if(existsSync(path.join(folder,'audio','words.json')))
+              push('FAIL','SILENT_WORDS','Silent projects cannot claim word-synced audio.');
+          }else{
+            for(const rel of ['audio/voice.wav','audio/words.json','audio/scene-cues.json','audio/captions.srt']){
+              if(!existsSync(path.join(folder,rel)))
+                push(project.status==='ready'?'FAIL':'WARN','VOICE_MISSING','Voice evidence missing: '+rel);
+            }
+            if(v.wordTiming==='segment-estimates')
+              push('WARN','WORD_ESTIMATES','Estimated word timings require listening review; do not claim exact sync.');
+            const cuesPath=path.join(folder,'audio','scene-cues.json');
+            if(existsSync(cuesPath)){
+              const cues=JSON.parse(await readFile(cuesPath,'utf8'));
+              if(!Array.isArray(cues)||cues.length!==(project.scenes||[]).length)
+                push('FAIL','WORD_CUES','Scene cue count does not match project timeline.');
+              else for(const cue of cues){
+                const scene=project.scenes.find(s=>s.id===cue.id);
+                if(!scene||!Number.isFinite(cue.second)||cue.second<scene.startSeconds-.01||
+                    cue.second>=scene.startSeconds+scene.durationSeconds)
+                  push('FAIL','WORD_CUE_WINDOW','Spoken cue outside its scene: '+cue.id);
+              }
+            }
+          }
+        }catch(error){push('FAIL','VOICE_PLAN','Invalid voice/timing evidence: '+error.message);}
+      }
       if(existsSync(path.join(folder,'production.json'))){
         const {checkOriginalProject}=await import('../studio/scripts/validate-native-production.mjs');
         for(const item of await checkOriginalProject(folder))push(item.level,item.code,item.reason);

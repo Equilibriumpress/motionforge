@@ -17,7 +17,12 @@
     "new:upstream": "node scripts/new-from-upstream.mjs",
     "test:upstream": "node --test scripts/new-from-upstream.test.mjs scripts/new-multi-scene.test.mjs scripts/motion-director-workflow.test.mjs scripts/validate-native-production.test.mjs scripts/build-motion-catalog.test.mjs",
     "director": "node scripts/motion-director-workflow.mjs",
-    "new:video": "node scripts/new-multi-scene.mjs"
+    "new:video": "node scripts/new-multi-scene.mjs",
+    "voice:prepare": "node ../tools/studio-voice.mjs",
+    "render:doctor": "node ../tools/studio-render-doctor.mjs",
+    "render:video": "node ../tools/studio-render.mjs",
+    "render:review": "node ../tools/studio-render-review.mjs",
+    "test:voice-render": "node --test ../tools/studio-voice.test.mjs ../tools/studio-render-doctor.test.mjs ../tools/studio-render-review.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
