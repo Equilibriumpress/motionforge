@@ -18,7 +18,7 @@
   "paidServicesUsed": false,
   "generatedMediaUsed": false,
   "voiceMode": "none",
-  "projectStage": "source-authored-requires-upstream-scaffold-and-G5",
+  "projectStage": "render-blocked-dependencies-unavailable",
   "formatFidelity": {
     "nativeWidth": 1080,
     "nativeHeight": 1920,
@@ -149,20 +149,28 @@
     "realVideoQARun": false,
     "independentCriticRun": false,
     "sourceAdaptationsAuthored": true,
-    "originalGeneratorExecuted": false
+    "originalGeneratorExecuted": false,
+    "renderPrerequisitesVerified": {
+      "node22": true,
+      "chromium": true,
+      "ffmpeg": true,
+      "repoCheckoutAccessible": false,
+      "originalHyperframesInstalled": false,
+      "gsapInstalled": false,
+      "threeInstalled": false,
+      "rubikBundled": false,
+      "verifiedIn": "container shell and GitHub source, 2026-11-20"
+    },
+    "localOriginalRenderAttempt": "Cannot start pinned original runtime without a local repo checkout and dependency packages; GitHub is not resolvable by this runtime",
+    "sourceValidatorFixPrepared": true
   },
   "outstanding": [
-    "Run original new-from-upstream.mjs --plan in a clean project target with npm GSAP, Three.js, Fontsource Rubik and pinned HyperFrames installed",
-    "G5 actual scene stills and human approval",
-    "G6 render-based full original QA",
-    "G7 independent fresh-context critic",
-    "No MP4 exported or tested",
-    "Originele new-from-upstream.mjs CLI uitvoeren met geldige aangepaste scènebronnen",
-    "G5: echte storyboardstills renderen en door gebruiker goedkeuren",
-    "G6: echte HyperFrames MP4 en volledige QA",
-    "G7: critic in onafhankelijke context",
-    "MP4 en Pages Studio zichtbaarheid pas na goedgekeurde broncode en merge",
-    "Requires real browser-rendered G5 storyboard and user approval"
+    "Render-blocker: lokale HyperFrames 0.8.92, GSAP, Three.js en Fontsource Rubik vereisen originele npm-installatie.",
+    "Originele scene assets door scene generator bundelen; project bevat nog geen geslaagde vendor-check.",
+    "Render echte 16:9 storyboardstills met HyperFrames en vraag G5 gebruikersakkoord.",
+    "Voer na G5 echte volledige MP4-render, originele QA-review en herhaalrender voor T5 uit.",
+    "Laat onafhankelijke critic in nieuwe context de werkelijke frames beoordelen, G7 open tot er bewijs is.",
+    "Project blijft concept totdat origineel projectvalidatie, G5–G7 en werkelijke MP4-artefacten zijn afgerond."
   ],
   "decisions": [
     {
@@ -196,9 +204,9 @@
   ],
   "adaptation": {
     "targetFormat": "16:9",
-    "status": "source_authored_unrendered",
-    "notes": "Three.js/GSAP source 1920x1080, original template marker and contracts retained, original product speaker geometry replaced with hinged cardboard box and fictional products",
-    "evidence": "qa/source-adaptation.md"
+    "status": "draft",
+    "notes": "Werkelijke originele Three.js- en GSAP-code is voor 16:9 aangepast. Geen echte storyboard- of MP4-framecontrole voltooid, dus status blijft draft.",
+    "evidence": null
   },
   "sceneTemplates": [
     {
@@ -217,7 +225,14 @@
         1080
       ],
       "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
-      "renderVerified": false
+      "renderVerified": false,
+      "nativeFormat": "9:16",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Originele 1080×1920 MotionForge HyperFrames-bron is aangepast naar 1920×1080 met behoud van GSAP en voor 3D Three.js/hf-seek. Render, kadercontrole en G5-goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "box-open",
@@ -235,7 +250,14 @@
         1080
       ],
       "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
-      "renderVerified": false
+      "renderVerified": false,
+      "nativeFormat": "9:16",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Originele 1080×1920 MotionForge HyperFrames-bron is aangepast naar 1920×1080 met behoud van GSAP en voor 3D Three.js/hf-seek. Render, kadercontrole en G5-goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "item-reveal",
@@ -253,7 +275,14 @@
         1080
       ],
       "sourceBlobSha": "acb809dfd20ae85f171011c9dc5a82f756151396",
-      "renderVerified": false
+      "renderVerified": false,
+      "nativeFormat": "9:16",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Originele 1080×1920 MotionForge HyperFrames-bron is aangepast naar 1920×1080 met behoud van GSAP en voor 3D Three.js/hf-seek. Render, kadercontrole en G5-goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "contents",
@@ -271,7 +300,14 @@
         1080
       ],
       "sourceBlobSha": "75ec8b347acd6a1800966114db24d06ffa4c1166",
-      "renderVerified": false
+      "renderVerified": false,
+      "nativeFormat": "9:16",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Originele 1080×1920 MotionForge HyperFrames-bron is aangepast naar 1920×1080 met behoud van GSAP en voor 3D Three.js/hf-seek. Render, kadercontrole en G5-goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     },
     {
       "id": "outro",
@@ -289,7 +325,18 @@
         1080
       ],
       "sourceBlobSha": "9eb608403443653fe38ee37e569d55f4aeebaca4",
-      "renderVerified": false
+      "renderVerified": false,
+      "nativeFormat": "9:16",
+      "adaptation": {
+        "targetFormat": "16:9",
+        "status": "draft",
+        "notes": "Originele 1080×1920 MotionForge HyperFrames-bron is aangepast naar 1920×1080 met behoud van GSAP en voor 3D Three.js/hf-seek. Render, kadercontrole en G5-goedkeuring ontbreken nog.",
+        "evidence": null
+      }
     }
-  ]
+  ],
+  "templateSource": "templates/product-turntable-3d/index.html",
+  "parameterContract": "templates/product-turntable-3d/params.json",
+  "parameterValues": "scenes/box-open/params.values.json",
+  "sourceScene": "scenes/box-open/index.html"
 }
