@@ -71,5 +71,8 @@ test('original source evidence is recorded, and READY is not falsely claimed',as
   assert.equal(prod.adaptation.targetFormat,'16:9');
   assert.equal(prod.adaptation.status,'draft');
   assert.equal(prod.gates.G5.status,'pending');
+  assert.ok(prod.sceneTemplates.every(s=>s.adaptation?.targetFormat==='16:9'));
+  assert.ok(prod.sceneTemplates.every(s=>s.adaptation?.status==='draft'&&!s.adaptation.evidence));
+  assert.equal(prod.sceneTemplates.length,p.scenes.length);
   assert.deepEqual(originalProductionFindings(p,prod,()=>true),[]);
 });

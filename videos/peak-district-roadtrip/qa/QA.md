@@ -19,3 +19,10 @@
 - [ ] Onafhankelijke kwaliteitscontrole op werkelijk gerenderde frames (G7)
 
 De oorspronkelijke MotionForge-workflow laat geen `ready` toe zonder deze bewijsstukken.
+
+## Praktijkcontrole MF-12E (broncode, 20 november 2026)
+
+- De oorspronkelijke vier scènes blijven ongewijzigd en het project telt 900 frames (30 s op 30 fps).
+- De huidige oorspronkelijke-productievalidator vereist per scène een vastgelegde omzetting van het originele 9:16-template naar het 16:9-project. Deze registratie is toegevoegd met status `draft`, zonder goedkeuring of renderbewijs te suggereren.
+- De werkelijke WebGL/HyperFrames-uitvoer, storyboardstills en onafhankelijke critic zijn nog niet gevalideerd. De repository bevat geen MP4- of `qa/report.json`-eindbewijs voor Peak District.
+- De G1–G7-statussen blijven intact en `project.status` blijft `draft`.
