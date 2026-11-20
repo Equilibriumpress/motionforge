@@ -26,6 +26,7 @@ function CatalogCard({item,selected,onPick,type}){
         <p>{description}</p>
         {type==='style'&&item.bestFor&&<p className="catalog-uses"><span>Geschikt voor: </span>{item.bestFor}</p>}
         {type==='scene'&&<p className="catalog-native-spec">Origineel: {item.nativeFormat||'formaat onbekend'} · {item.nativeSize?.join(' × ')||'zie params.json'} · {item.engine||'HyperFrames'}</p>}
+        {type==='scene'&&item.supportsDuration===false&&<p className="catalog-native-spec">Statisch covertemplate, geen bewegende videoscène</p>}
         <div className="catalog-card-actions">
           <button type="button" className={selected?'catalog-pick selected':'catalog-pick'}
             onClick={()=>onPick(item.id)} aria-pressed={selected}>
@@ -87,6 +88,7 @@ function makePrompt({style,scenes,own,title,aspect,length}){
     'G6: voer HyperFrames lint, textcheck, readcheck, preview, contact sheet en relevante frame-/audio-/duurcontroles uit. Alleen geldige JSON en broncode zijn NIET voldoende.',
     'G7: onafhankelijke critic op de daadwerkelijke beelden. Fix alle FAIL-punten vóór status ready.',
     'Sla project.json, vijfregelige brief.md, script.md, direction.json volgens de originele specificatie, brand.json, style/STYLE.md, originele scènes, bronvermelding, parameters en QA-evidence onder één videos/<slug>/ op.',
+    'Statische templates zoals cover-still zijn alleen een cover, geen tijdgestuurde scene. Voor een videoproject moet minimaal één originele bewegende scène aanwezig zijn.',
     'Maak alleen een featurebranch en een PR, niet mergen zonder mijn toestemming. Rapportage: noem expliciet wat wel en niet is gerenderd of beoordeeld.',
     'Geen GitHub Actions-video-render, geen ongeautoriseerde kosten en geen ongecontroleerde externe assets.'
   ].join('\n\n');
@@ -144,7 +146,7 @@ export default function MotionCatalog(){
   const categories=tab==='styles'?data?.categories||[]:tab==='scenes'?[...new Set(data?.scenes.map(item=>item.category)||[])]:[];
   const formatConflicts=selectedScenes.filter(item=>item.nativeFormat&&item.nativeFormat!==aspect);
   const prompt=makePrompt({style:selectedStyle,scenes:selectedScenes,own:ownId,title,aspect,length});
-  const ready=Boolean(styleId&&(ownId||sceneIds.length));
+  const ready=Boolean(styleId&&(ownId||selectedScenes.some(scene=>scene.supportsDuration!==false)));
 
   function chooseStyle(id){
     setStyleId(old=>old===id?'':id);
@@ -168,7 +170,7 @@ export default function MotionCatalog(){
     setTab(next);setCategory('all');setTerm('');setLimit(PER_PAGE);
   }
   async function copyPrompt(){
-    if(!ready){setNotice('Kies eerst één stijl en minimaal één scène of eigen format.');return;}
+    if(!ready){setNotice('Kies een stijl en minimaal één bewegende scène, of een eigen Studio-format.');return;}
     try{
       await navigator.clipboard.writeText(prompt);
       setNotice('Opdracht gekopieerd. Plak deze in een ChatGPT-gesprek met toegang tot je GitHub-repository.');
@@ -252,7 +254,7 @@ export default function MotionCatalog(){
           <div className="catalog-composer-footer">
             <button type="button" className="button button-primary" onClick={copyPrompt}
               disabled={!ready}>Kopieer ChatGPT-opdracht</button>
-            <p>{ready?'Gereed om als GitHub-project uit te werken.':'Selecteer een stijl en minimaal één scène of eigen format.'}</p>
+            <p>{ready?'Gereed om als GitHub-project uit te werken.':'Selecteer een stijl en een bewegende scène. Een cover-still is geen video.'}</p>
           </div>
           {notice&&<p className="catalog-message" role="status">{notice}</p>}
         </div>
