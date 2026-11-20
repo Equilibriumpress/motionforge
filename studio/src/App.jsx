@@ -42,7 +42,7 @@ export default function App() {
             </section>
             <ProjectLibrary />
             <section className="catalog-entry" aria-label="Animatiestijlen en scènes">
-              <div><span className="section-kicker">116 ORIGINELE VOORBEELDEN</span><h2>Van stijl naar video</h2><p>Bekijk de 100 MotionForge-stijlen en 16 originele animatiescènes, met bewegende voorbeelden en ChatGPT-opdrachten.</p></div>
+              <div><span className="section-kicker">STIJLEN EN ANIMATIES</span><h2>Van stijl naar video</h2><p>Bekijk de oorspronkelijke MotionForge-stijlen en animatiescènes, met bewegende voorbeelden en ChatGPT-opdrachten.</p></div>
               <button type="button" className="button button-primary" onClick={() => {setView("catalog"); window.scrollTo({top:0,behavior:"smooth"});}}>Bekijk de catalogus</button>
             </section>
             <div className="section-heading workflow-heading"><div><span className="section-kicker">ROADMAP</span><h2>Van idee naar video</h2></div></div>
@@ -68,7 +68,7 @@ export default function App() {
           </section>
         )}
       </main>
-      <footer className="footer"><div className="container footer-inner"><span>MotionForge Studio · Equilibriumpress</span><span>Projecten in GitHub · Preview via Pages</span></div></footer>
+      <footer className="footer"><div className="container footer-inner"><span>MotionForge Studio · Equilibriumpress</span><span>Projecten in GitHub · Preview via Pages</span><button type="button" className="footer-about" onClick={() => {setView("about");window.scrollTo({top:0,behavior:"smooth"});}}>Over de studio</button></div></footer>
     </div>
   );
 }
