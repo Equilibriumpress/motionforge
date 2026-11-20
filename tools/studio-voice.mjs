@@ -13,7 +13,7 @@ import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const SLUG=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const optionsAllowed=new Set(['mode','project','input','script','engine','language','model','license','provider','voice','cost','currency','price-source','rights']);
+const optionsAllowed=new Set(['mode','project','input','script','engine','language','model','asr-model','license','provider','voice','cost','currency','price-source','rights']);
 const assert=(x,m)=>{if(!x)throw Error(m);};
 const json=o=>JSON.stringify(o,null,2)+'\n';
 const safe=v=>typeof v==='string'&&/^[\w./-]+$/.test(v)&&!v.startsWith('/')&&!v.split('/').includes('..');
@@ -122,15 +122,27 @@ function options(argv){
 export async function prepareVoice(argv){
   const o=options(argv);
   assert(SLUG.test(o.project||''),'Supply --project <slug>.');
-  assert(['none','recorded','local-tts','paid-plan'].includes(o.mode),'Choose --mode none|recorded|local-tts|paid-plan.');
+  assert(['none','recorded','local-tts','paid-plan','paid-import'].includes(o.mode),'Choose --mode none|recorded|local-tts|paid-plan|paid-import.');
   const folder=path.join(root,'videos',o.project);
   const project=JSON.parse(await readFile(path.join(folder,'project.json'),'utf8'));
   const production=JSON.parse(await readFile(path.join(folder,'production.json'),'utf8'));
   const existing=path.join(folder,'audio','voice-plan.json');
-  assert(!existsSync(existing),'Voice plan already exists. Preserve the previous audio decision and use a revision.');
+  const previous=existsSync(existing)?JSON.parse(await readFile(existing,'utf8')):null;
+  if(o.mode==='paid-import'){
+    assert(previous?.mode==='paid-plan'&&previous.status==='awaiting-G3-user-approval',
+      'Importing paid audio needs a previously recorded paid-plan.');
+    assert(production.gates?.G3?.status==='passed'&&production.gates.G3.actor==='user',
+      'G3 must contain explicit user approval before importing paid audio.');
+  }else assert(!previous,
+    'Voice decision already exists. Preserve it; paid-plan converts to paid-import after G3.');
   const info={schemaVersion:1,mode:o.mode,engine:null,source:null,
-    status:'selected',costApproved:false,wordTiming:'none',
-    scriptApproved:production.gates?.G2?.status==='passed'};
+    status:'selected',costApproved:o.mode==='paid-import',wordTiming:'none',
+    scriptApproved:production.gates?.G2?.status==='passed',
+    ...(o.mode==='paid-import'?{
+      provider:previous.provider,voice:previous.voice,
+      estimatedCost:previous.estimatedCost,currency:previous.currency,
+      priceSource:previous.priceSource,characters:previous.characters
+    }:{})};
   if(o.mode==='paid-plan'){
     assert(production.gates?.G2?.status==='passed',
       'An approved G2 script is required before quoting any paid voice plan.');
@@ -171,8 +183,8 @@ export async function prepareVoice(argv){
   assert(['words','segments'].includes(engine),'Choose words (real Whisper timings) or explicit segments (estimated).');
   // faster-whisper auto-downloads model names such as "small": never do that
   // without permission. Require a previously installed local ASR model.
-  if(engine==='words')assert(o.model&&existsSync(path.resolve(o.model)),
-    'Word-accurate ASR requires --model /existing/local/faster-whisper-model. No automatic model downloads.');
+  if(engine==='words')assert(o['asr-model']&&existsSync(path.resolve(o['asr-model'])),
+    'Word-accurate ASR requires --asr-model /existing/local/faster-whisper-model. No automatic model downloads.');
   const stage=await mkdtemp(path.join(os.tmpdir(),'mf-voice-'));
   try{
     const text=await readFile(path.resolve(o.script),'utf8');
@@ -190,7 +202,7 @@ export async function prepareVoice(argv){
     run('python3',[path.join(root,'tools/word_timings.py'),path.join(stage,'voice.wav'),
       '--out',path.join(stage,'words-raw.json'),'--segments-out',path.join(stage,'segments.json'),
       '--text',path.join(stage,'tts.txt'),'--language',language,'--engine',engine,
-      ...(engine==='words'?['--model',path.resolve(o.model)]:[])]);
+      ...(engine==='words'?['--model',path.resolve(o['asr-model'])]:[])]);
     const raw=JSON.parse(await readFile(path.join(stage,'words-raw.json'),'utf8'));
     const words=alignWords(validateWords(raw,duration),text);
     const captions=createCaptionChunks(words,project.format,duration);
@@ -200,7 +212,8 @@ export async function prepareVoice(argv){
     await writeFile(path.join(stage,'captions.srt'),captionsSrt(captions));
     await writeFile(path.join(stage,'scene-cues.json'),json(cues));
     Object.assign(info,{status:engine==='words'?'timed-review-required':'estimated-review-required',
-      engine,source:o.mode==='recorded'?'user-recording':'licensed-local-tts',
+      engine,source:o.mode==='recorded'?'user-recording':
+        o.mode==='paid-import'?'user-approved-paid-tts':'licensed-local-tts',
       durationSeconds:duration,language:lang,
       wordTiming:engine==='words'?'ASR-word':'segment-estimates',
       wordCount:words.length,captionCount:captions.length,
@@ -210,6 +223,11 @@ export async function prepareVoice(argv){
       await copyFile(path.join(stage,file),path.join(folder,'audio',file));
     if(o.mode==='local-tts')
       await copyFile(path.resolve(o.license),path.join(folder,'audio','local-tts-model-license.txt'));
+    if(o.mode==='paid-import'){
+      const archive=path.join(folder,'audio','approved-paid-plan.json');
+      assert(!existsSync(archive),'Paid-plan archive already exists; manual revision required.');
+      await copyFile(existing,archive);
+    }
     await writeFile(existing,json(info));
     return info;
   }finally{await rm(stage,{recursive:true,force:true});}
