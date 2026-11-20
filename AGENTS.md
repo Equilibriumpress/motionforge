@@ -69,3 +69,7 @@ For actual video frames, read render-worker/README.md and use the local worker. 
 ## MF-12E · Original qa-review is a mandatory gate
 
 Read skills/qa-review/SKILL.md and its original references/critic.md before delivery. After a REAL local MP4 render, use tools/studio-qa-review.mjs to run the original T1–T5, X1–X10, P1–P8, A1–A5 and H1–H3 checks. Inspect the actual contact sheets. Hand off qa/critic-request.md to a different fresh ChatGPT context and record the external review. Do not impersonate the critic. Resolve every FAIL and every critic FIX; accept a WARN only with a written reason. These artifacts belong to the exact MP4 SHA-256. A changed render invalidates old QA evidence. Native validation refuses READY without a matching MP4, QA report and independent critic. Do not mark G5/G6/G7 passed from source checks or automated report generation. Read docs/STUDIO_QA_REVIEW.md for commands, evidence format and how to record user observations.
+
+## MF-12F · Brongetrouwe browser-MP4 in Pages
+
+ChatGPT blijft Motion Director en gebruikt steeds de volledige oorspronkelijke skills en engine. GitHub bevat de source en Pages toont de oorspronkelijke scènes. Voor originele HyperFrames-projecten biedt Pages nu een tab-capture/WebCodecs-H264-renderer. Lees docs/STUDIO_BROWSER_EXPORT.md. Gebruik geen geïmproviseerde Canvas-versies als vervanging van gekozen originele templates. Browserexport is lokale uitvoer, geen geslaagde G5/G6/G7, en er is geen automatische upload van MP4 naar GitHub. Behoud de lokale render-worker als fallback.

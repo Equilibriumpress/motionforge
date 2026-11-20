@@ -26,7 +26,8 @@
     "qa:original": "node ../tools/studio-qa-review.mjs",
     "qa:critic": "node ../tools/studio-qa-critic.mjs",
     "qa:annotations": "node ../tools/studio-qa-annotations.mjs",
-    "test:qa-original": "node --test ../tools/studio-qa-policy.test.mjs ../tools/studio-qa-review.test.mjs ../tools/studio-qa-critic.test.mjs"
+    "test:qa-original": "node --test ../tools/studio-qa-policy.test.mjs ../tools/studio-qa-review.test.mjs ../tools/studio-qa-critic.test.mjs",
+    "test:browser-original": "node --test src/export/hyperframes-plan.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -37,7 +38,8 @@
     "@remotion/web-renderer": "4.0.545",
     "three": "0.170.0",
     "topojson-client": "3.1.0",
-    "world-atlas": "2.0.2"
+    "world-atlas": "2.0.2",
+    "mediabunny": "1.66.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",

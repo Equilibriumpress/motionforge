@@ -75,7 +75,7 @@ function ProjectDetails({ project, onClose }) {
             </dl>
             <div className="detail-tags">{project.tags.map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}</div>
             <a className="button button-primary" href={SOURCE + encodeURIComponent(project.id)} target="_blank" rel="noreferrer">Open project op GitHub ↗</a>
-            <p className="detail-next">Bekijk de animatie via de tijdlijn. MP4-export volgt later.</p>
+            <p className="detail-next">Bekijk de scènes op de tijdlijn. Originele HyperFrames-video's hebben nu browser-MP4-export, inclusief cover en contact sheet.</p>
           </div>
         </div>
       </section>

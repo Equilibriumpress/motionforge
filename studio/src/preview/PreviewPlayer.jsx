@@ -116,7 +116,7 @@ export default function PreviewPlayer({ project, coverUrl }) {
           ))}
         </div>
       </div>
-      <p className="player-hint">Interactief scènevoorbeeld. MP4-export en audio volgen in een volgende ronde.</p>
+      <p className="player-hint">Interactief scènevoorbeeld. Originele HyperFrames-projecten kunnen nu ook via de browser worden geëxporteerd.</p>
     </div>
   );
 }

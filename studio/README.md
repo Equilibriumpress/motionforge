@@ -46,7 +46,7 @@ The source project structure follows skills/motion-director/SKILL.md; this avoid
 
 
 ## Interactive preview (MF-04)
-Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. This does not create an MP4; exporting follows in MF-06.
+Open a project detail in the library to see the scene player. Canvas and HyperFrames HTML scenes are copied into the Pages output with an isolated postMessage bridge. Scrub the timeline or play the sample scene. The scene player itself is a preview. MF-12F adds local browser H.264 MP4 export for original HyperFrames timelines.
 
 ## ChatGPT project workflow (MF-05)
 
@@ -55,7 +55,7 @@ Read docs/STUDIO_WORKFLOW.md. To create a local starter: node studio/scripts/new
 
 ## Browser MP4 export (MF-06)
 
-Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Canvas / HyperFrames remain preview-only in this production round. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.
+Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Original HyperFrames multi-scene projects now have a separate MF-12F browser tab-capture MP4 export. Canvas remains on the local render workflow. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.
 
 
 ## MF-07: Local Canvas/HyperFrames MP4 workflow
@@ -129,3 +129,7 @@ Measured frames, ffprobe checks and contact sheet are created for review. The wo
 ## MF-12E · Original QA and independent critic
 
 The local renderer executes the original QA runner after writing a real MP4. See docs/STUDIO_QA_REVIEW.md and scripts qa:original, qa:critic and qa:annotations in studio/package.json. A report and contact sheet are only evidence, not an automatic G5–G7 signoff. Pending human review and critic tasks remain visible; READY is blocked until the MP4-bound checks and independent critic are complete.
+
+## MF-12F · Originele HyperFrames-scènes als MP4 op GitHub Pages
+
+De projectbibliotheek toont nu een browser-MP4-export voor volledige oorspronkelijke HyperFrames-tijdlijnen. Met tab-toestemming worden de originele HTML/GSAP/Three.js-scènes via de zoekbare tijdlijnbrug geframed en lokaal als H.264/MP4 gecodeerd. Proef- en native resolutie, eigen audio, losse SRT, cover, storyboard/contact sheet, browser-QA en video-terugkijken zijn ingebouwd. Andere engines blijven de bestaande export gebruiken. Zonder getDisplayMedia of H.264-ondersteuning blijft de lokale render-worker beschikbaar. Zie docs/STUDIO_BROWSER_EXPORT.md. G5–G7 vereisen altijd aparte echte goedkeuring.
