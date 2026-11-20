@@ -10,7 +10,7 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {prepareHyperFramesSceneAssets} from '../studio/scripts/prepare-video-scene-assets.mjs';
 import {prepareGlobeScene} from '../studio/scripts/prepare-globe-scene.mjs';
-import {checkVideoProbe} from './studio-render-review.mjs';
+import {checkVideoProbe,reviewRenderedVideo} from './studio-render-review.mjs';
 import {QA_IDS,makePendingChecks,checkRecord,parseBlackFreeze,parseLuminance,
 flashBursts,wordBoundaryFindings,wordsPerSecond,SPEECH_PACE,summarizeChecks} from './studio-qa-policy.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -126,6 +126,10 @@ export async function runQa(slug,{video=null,comparison=null,skipBrowser=false}=
      checks.every(x=>x.match)?'':'Repeat render frames differ or cannot be decoded.');
   }
  }else pending('T5','Compare a second separately rendered MP4; source-only seeking is not proof.');
+ try{
+   const board=await reviewRenderedVideo(slug,{mp4});
+   if(board.renderSha256!==sha)throw Error('MP4 changed during storyboard extraction.');
+ }catch(err){r.note+=' Per-scene storyboard not verified: '+err.message;}
  for(const [name,args] of [['sheet.png',['--every','0.5','--cols','6']],
    ['phone.png',['--every','1','--width','360','--cols','4']]]){
   const result=run('python3',[path.join(root,'tools/contact_sheet.py'),mp4,

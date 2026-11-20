@@ -4,11 +4,17 @@
  * Produces files for human review. Does not approve any gate.
  */
 import path from 'node:path';
-import {existsSync} from 'node:fs';
+import {existsSync,createReadStream} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const videoSha=filename=>new Promise((resolve,reject)=>{
+ const hash=createHash('sha256'),stream=createReadStream(filename);
+ stream.on('data',x=>hash.update(x));stream.on('error',reject);
+ stream.on('end',()=>resolve(hash.digest('hex')));
+});
 const sizes={'9:16':[1080,1920],'16:9':[1920,1080],'1:1':[1080,1080],'4:5':[1080,1350]};
 const slug=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function run(cmd,args){
@@ -73,7 +79,7 @@ export async function reviewRenderedVideo(projectSlug,{mp4=null,expectAudio=fals
     '-pattern_type','glob','-i',path.join(board,'*.png'),
     '-vf','tile=4x'+Math.ceil(frames.length/4),'-frames:v','1',sheet]);
   if(!existsSync(sheet))throw Error('Could not produce contact sheet.');
-  const report={source:'actual-rendered-mp4',mp4:path.relative(dir,video),
+  const report={source:'actual-rendered-mp4',mp4:path.relative(dir,video),renderSha256:await videoSha(video),
     measured,stills,contactSheet:'qa/contact-sheet.png',
     humanApproval:false,independentCritic:false,
     gates:['G5','G6','G7'],note:'Evidence for inspection, NOT an approved or QA-passed video.'};
