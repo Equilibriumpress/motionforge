@@ -26,7 +26,8 @@ export default function App() {
           <Brand />
           <nav className="navigation" aria-label="Hoofdnavigatie">
             <button type="button" className={view === 'library' ? 'nav-item selected' : 'nav-item'} aria-current={view === 'library' ? 'page' : undefined} onClick={() => setView('library')}>Bibliotheek</button>
-            <button type="button" className={view === 'about' ? 'nav-item selected' : 'nav-item'} aria-current={view === 'about' ? 'page' : undefined} onClick={() => setView('about')}>Over de studio</button>
+            <button type="button" className={view === 'catalog' ? 'nav-item selected' : 'nav-item'} aria-current={view === 'catalog' ? 'page' : undefined} onClick={() => setView('catalog')}>Stijlen &amp; scènes</button>
+            <button type="button" className={view === 'about' ? 'nav-item selected nav-about' : 'nav-item nav-about'} aria-current={view === 'about' ? 'page' : undefined} onClick={() => setView('about')}>Over de studio</button>
           </nav>
           <a className="github-link" href="https://github.com/Equilibriumpress/motionforge" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
@@ -40,7 +41,10 @@ export default function App() {
               <p className="lead">Maak videoprojecten met ChatGPT en bekijk de resultaten in jouw MotionForge-bibliotheek.</p>
             </section>
             <ProjectLibrary />
-            <MotionCatalog />
+            <section className="catalog-entry" aria-label="Animatiestijlen en scènes">
+              <div><span className="section-kicker">116 ORIGINELE VOORBEELDEN</span><h2>Van stijl naar video</h2><p>Bekijk de 100 MotionForge-stijlen en 16 originele animatiescènes, met bewegende voorbeelden en ChatGPT-opdrachten.</p></div>
+              <button type="button" className="button button-primary" onClick={() => {setView("catalog"); window.scrollTo({top:0,behavior:"smooth"});}}>Bekijk de catalogus</button>
+            </section>
             <div className="section-heading workflow-heading"><div><span className="section-kicker">ROADMAP</span><h2>Van idee naar video</h2></div></div>
             <section className="feature-grid" aria-label="Mogelijkheden">
               {features.map((feature) => (
@@ -51,6 +55,10 @@ export default function App() {
               ))}
             </section>
           </>
+        ) : view === "catalog" ? (
+          <div className="catalog-route">
+            <MotionCatalog />
+          </div>
         ) : (
           <section className="about-panel">
             <span className="section-kicker">OVER MOTIONFORGE STUDIO</span>
