@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
     "dev": "vite --host 0.0.0.0",
-    "prebuild": "node --test src/preview/stage-fill.test.mjs src/preview/viewport-preview.test.mjs && node --test src/lib/catalog-prompt.test.mjs && node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
+    "prebuild": "node --test src/preview/stage-fill.test.mjs src/preview/viewport-preview.test.mjs scripts/prepare-three-scene.test.mjs && node --test src/lib/catalog-prompt.test.mjs && node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "new:project": "node scripts/new-project.mjs",
@@ -27,7 +27,7 @@
     "qa:critic": "node ../tools/studio-qa-critic.mjs",
     "qa:annotations": "node ../tools/studio-qa-annotations.mjs",
     "test:qa-original": "node --test ../tools/studio-qa-policy.test.mjs ../tools/studio-qa-review.test.mjs ../tools/studio-qa-critic.test.mjs",
-    "test:browser-original": "node --test src/export/hyperframes-plan.test.mjs src/preview/stage-fill.test.mjs src/preview/viewport-preview.test.mjs"
+    "test:browser-original": "node --test src/export/hyperframes-plan.test.mjs src/preview/stage-fill.test.mjs src/preview/viewport-preview.test.mjs scripts/prepare-three-scene.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -49,7 +49,8 @@
     "@fontsource/instrument-serif": "^5.2.0",
     "@fontsource/jetbrains-mono": "^5.2.0",
     "@fontsource/outfit": "^5.2.0",
-    "@fontsource/overpass-mono": "^5.2.0"
+    "@fontsource/overpass-mono": "^5.2.0",
+    "@fontsource/rubik": "^5.2.0"
   },
   "engines": {
     "node": ">=20.19.0"

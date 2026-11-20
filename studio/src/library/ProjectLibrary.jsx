@@ -91,12 +91,28 @@ export default function ProjectLibrary() {
   const [tag, setTag] = useState('all');
   const [sort, setSort] = useState('title');
   const [selected, setSelected] = useState(null);
-  const closeSelected = useCallback(() => setSelected(null), []);
+  const openSelected=useCallback(project=>{
+    setSelected(project);
+    const url=new URL(window.location.href);
+    url.searchParams.set('project',project.id);
+    window.history.replaceState(null,'',url);
+  },[]);
+  const closeSelected=useCallback(()=>{
+    setSelected(null);
+    const url=new URL(window.location.href);
+    url.searchParams.delete('project');
+    window.history.replaceState(null,'',url);
+  },[]);
 
   useEffect(() => {
     let active = true;
     loadProjectIndex().then(
-      (projects) => { if (active) setState({ loading: false, projects, error: null }); },
+      (projects) => {
+        if(!active)return;
+        setState({loading:false,projects,error:null});
+        const requested=new URLSearchParams(window.location.search).get('project');
+        if(requested)setSelected(projects.find(p=>p.id===requested)||null);
+      },
       (error) => { if (active) setState({ loading: false, projects: [], error: error.message }); },
     );
     return () => { active = false; };
@@ -149,7 +165,7 @@ export default function ProjectLibrary() {
         <div className="empty-library"><h3>Geen projecten gevonden</h3><p>Pas je zoekopdracht of filters aan.</p><button type="button" className="button button-outline" onClick={clearFilters}>Filters wissen</button></div>
       )}
       {!state.loading && !state.error && filtered.length > 0 && (
-        <div className="project-grid">{filtered.map((project) => <ProjectCard key={project.id} project={project} onOpen={setSelected} />)}</div>
+        <div className="project-grid">{filtered.map((project) => <ProjectCard key={project.id} project={project} onOpen={openSelected} />)}</div>
       )}
       {selected && <ProjectDetails project={selected} onClose={closeSelected} />}
     </section>

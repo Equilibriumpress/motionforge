@@ -4,6 +4,7 @@
 import path from 'node:path';
 import {checkOriginalProject} from './validate-native-production.mjs';
 import {prepareGlobeScene} from './prepare-globe-scene.mjs';
+import {prepareThreeScene,isNativeThreeScene} from './prepare-three-scene.mjs';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
 import { copyFile, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
@@ -148,6 +149,33 @@ async function ensureHyperFramesAssets(target) {
       if(!existsSync(dst))await copyFile(src,dst);
     }
   }
+
+  // Unboxing Pop: publish the original Rubik font from licensed npm assets.
+  // Rendered previews share the font's latin and latin-ext glyphs.
+  const originalHtml=await readFile(target,'utf8');
+  if(originalHtml.includes('"Rubik"')||originalHtml.includes("'Rubik'")){
+    const weights=[500,600,700,900];
+    const subsets=['latin','latin-ext'];
+    const ranges={latin:'U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+20BA,U+2122,U+2190-2193,U+2212',
+      'latin-ext':'U+0100-0130,U+0132-0151,U+0154-024F,U+1E00-1EFF'};
+    const dstDir=path.join(base,'fonts');
+    await mkdir(dstDir,{recursive:true});
+    for(const weight of weights)for(const subset of subsets){
+      const filename='rubik-'+subset+'-'+weight+'-normal.woff2';
+      const from=path.join(studioRoot,'node_modules','@fontsource','rubik','files',filename);
+      requireCondition(existsSync(from),target,'Missing original Unboxing Pop font: '+filename);
+      await copyFile(from,path.join(dstDir,filename));
+    }
+    const css=weights.flatMap(weight=>subsets.map(subset=>
+      '@font-face{font-family:"Rubik";font-weight:'+weight+
+      ';font-style:normal;font-display:block;src:url("fonts/rubik-'+subset+'-'+weight+
+      '-normal.woff2") format("woff2");unicode-range:'+ranges[subset]+';}')).join('\n');
+    await writeFile(path.join(base,'unboxing-pop-fonts.css'),css+'\n','utf8');
+    requireCondition(originalHtml.includes('</head>'),target,'Missing head in Unboxing source');
+    await writeFile(target,originalHtml.replace('</head>',
+      '<link rel="stylesheet" href="assets/unboxing-pop-fonts.css" />\n</head>'),'utf8');
+  }
+
 }
 
 async function build() {
@@ -194,8 +222,12 @@ async function build() {
         const dst=path.join(targetDir,scene.source);
         requireCondition(existsSync(dst),scene.source,'scene unavailable for preview');
         if (scene.engine==='hyperframes') await ensureHyperFramesAssets(dst);
-        if (scene.engine==='hyperframes' && (await readFile(dst,'utf8')).includes('motionforge template: globe-arcs-3d')) {
-          await prepareGlobeScene(path.dirname(dst),{preview:true});
+        if(scene.engine==='hyperframes'){
+          const nativeHtml=await readFile(dst,'utf8');
+          if(nativeHtml.includes('motionforge template: globe-arcs-3d'))
+            await prepareGlobeScene(path.dirname(dst),{preview:true});
+          else if(isNativeThreeScene(nativeHtml))
+            await prepareThreeScene(path.dirname(dst),{preview:true});
         }
         const html=await readFile(dst,'utf8');
         requireCondition(/<\/body>/i.test(html),scene.source,'HTML missing closing body tag');
