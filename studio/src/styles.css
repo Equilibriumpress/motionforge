@@ -148,3 +148,13 @@ h1 em{font-style:normal;color:#a9f0ad}
 .export-done{color:#b8eebb}
 .export-error{color:#ffd1c8}
 @media(max-width:530px){.export-title{align-items:flex-start;flex-direction:column}}
+
+/* MF-07 · Copyable local-render setup */
+.local-export{border:1px solid #3a5062;background:#14232e;padding:16px;border-radius:12px;margin-top:13px}
+.local-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.local-options label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#b5c6d6}
+.local-options select{border:1px solid #43576a;background:#0d1822;color:#f6f8fc;border-radius:8px;padding:9px;font:inherit}
+.local-command{margin:13px 0;background:#09121b;border:1px solid #43576a;border-radius:9px;padding:11px;color:#c1ecc9;overflow-wrap:anywhere}
+.local-command code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+.local-export .button-outline{margin:0}
+@media(max-width:550px){.local-options{grid-template-columns:1fr}}

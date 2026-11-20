@@ -98,3 +98,22 @@ The other normal schema-v1 fields, scenes and cover remain mandatory. The projec
 The Remotion Player previews supported template projects. RenderMp4 checks H.264 support with canRenderMediaOnWeb before enabling the button, calls renderMediaOnWeb with an AbortSignal and progress callback, then downloads the resulting MP4. Video is intentionally muted: no audio mix in MF-06. Browser support requires WebCodecs, sufficient local resources and the applicable Remotion licence. Browser errors are shown explicitly.
 
 Canvas and HyperFrames projects remain seekable in the existing scene player. They are NOT automatically compatible with Remotion browser export. Their MP4 export remains planned for MF-07. There is no server renderer and no video-render step in GitHub Actions.
+
+
+## MF-07: Local Canvas/HyperFrames MP4 workflow
+
+Run these commands from a checked-out MotionForge repository using Node.js 22+, FFmpeg and a Chromium/Playwright installation as needed:
+
+    node tools/studio-render.mjs london-on-foot-demo --dry-run
+    node tools/studio-render.mjs london-on-foot-demo --quality draft
+    node tools/studio-render.mjs london-on-foot-demo --quality final --formats 9:16,1:1 --overwrite
+
+The renderer handles Canvas through engines/canvas/render.mjs, and HyperFrames through pinned npx hyperframes@0.8.92. Each scene is normalized to the project's fps and aspect ratio, gaps are filled, and overlapping scenes are rejected. It concatenates the segments using FFmpeg.
+
+Optional soundtrack: --audio audio/voice.wav (must be an owned local file). If audio/subtitles.srt exists, it is copied alongside the MP4. A copy of the original cover is saved. Output stays in videos/<slug>/renders/ and is ignored by Git.
+
+The optional --formats flag uses the existing tools/export.mjs with blurred fill. The extra proportions are quick conversions, not redesigned compositions.
+
+The GitHub Pages app displays a render command for Canvas/HyperFrames. It cannot run arbitrary HyperFrames HTML through FFmpeg inside the browser. Remotion template projects retain the browser renderer. Rendering does not run in GitHub Actions.
+
+Full 3D scenes, module imports, audio synchronization, cross-scene effects, layout overflow and visual quality still require a production preview and final QA review.

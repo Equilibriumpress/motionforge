@@ -56,3 +56,22 @@ Read docs/STUDIO_WORKFLOW.md. To create a local starter: node studio/scripts/new
 ## Browser MP4 export (MF-06)
 
 Supported Remotion title-card-v1 projects get a Remotion Player and a browser MP4 export button. See videos/studio-mp4-demo for an example. Browser compatibility is checked before rendering. Output uses H.264 MP4 and no audio. Canvas / HyperFrames remain preview-only in this production round. Remotion dependencies are pinned at 4.0.545. Consult https://www.remotion.dev/license before commercial usage.
+
+
+## MF-07: Local Canvas/HyperFrames MP4 workflow
+
+Run these commands from a checked-out MotionForge repository using Node.js 22+, FFmpeg and a Chromium/Playwright installation as needed:
+
+    node tools/studio-render.mjs london-on-foot-demo --dry-run
+    node tools/studio-render.mjs london-on-foot-demo --quality draft
+    node tools/studio-render.mjs london-on-foot-demo --quality final --formats 9:16,1:1 --overwrite
+
+The renderer handles Canvas through engines/canvas/render.mjs, and HyperFrames through pinned npx hyperframes@0.8.92. Each scene is normalized to the project's fps and aspect ratio, gaps are filled, and overlapping scenes are rejected. It concatenates the segments using FFmpeg.
+
+Optional soundtrack: --audio audio/voice.wav (must be an owned local file). If audio/subtitles.srt exists, it is copied alongside the MP4. A copy of the original cover is saved. Output stays in videos/<slug>/renders/ and is ignored by Git.
+
+The optional --formats flag uses the existing tools/export.mjs with blurred fill. The extra proportions are quick conversions, not redesigned compositions.
+
+The GitHub Pages app displays a render command for Canvas/HyperFrames. It cannot run arbitrary HyperFrames HTML through FFmpeg inside the browser. Remotion template projects retain the browser renderer. Rendering does not run in GitHub Actions.
+
+Full 3D scenes, module imports, audio synchronization, cross-scene effects, layout overflow and visual quality still require a production preview and final QA review.
