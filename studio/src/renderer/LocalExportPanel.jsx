@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import BrowserOriginalExport from './BrowserOriginalExport.jsx';
 
 export default function LocalExportPanel({manifest}) {
   const [quality,setQuality]=useState('final');
@@ -15,6 +16,8 @@ export default function LocalExportPanel({manifest}) {
     }
   };
   return (
+    <>
+    <BrowserOriginalExport manifest={manifest}/>
     <section className="local-export" aria-labelledby="local-export-heading">
       <div className="export-title"><strong id="local-export-heading">MP4 · Lokale export</strong><span>{manifest.engine}</span></div>
       <p className="export-note">Canvas- en HyperFrames-scènes renderen via je eigen computer. GitHub Pages voert geen video-render uit.</p>
@@ -37,5 +40,6 @@ export default function LocalExportPanel({manifest}) {
       {message && <p className="export-support" role="status">{message}</p>}
       <p className="export-note">Voer het commando uit vanuit je lokale MotionForge-repository met Node.js 22+, FFmpeg en de renderdependencies. De MP4 verschijnt in videos/{manifest.id}/renders/.</p>
     </section>
+    </>
   );
 }
