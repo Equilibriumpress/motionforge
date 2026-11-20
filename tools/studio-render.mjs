@@ -128,7 +128,8 @@ try{
     if(shot.type==='gap'){
       await run('ffmpeg',['-y','-hide_banner','-loglevel','error','-f','lavfi','-i',
         'color=c=0x0d1822:s='+w+'x'+h+':r='+fps,'-frames:v',String(shot.frames),'-c:v','libx264',
-        '-preset','veryfast','-crf',crf,'-pix_fmt','yuv420p',normalized]);
+        '-preset','veryfast','-crf',crf,'-pix_fmt','yuv420p',
+        '-color_primaries','bt709','-color_trc','bt709','-colorspace','bt709',normalized]);
     }else{
       const raw=path.join(temp,label+'-raw.mp4');
       if(shot.type==='canvas'){
@@ -152,7 +153,8 @@ try{
         ',trim=end_frame='+shot.frames+',setpts=PTS-STARTPTS';
       await run('ffmpeg',['-y','-hide_banner','-loglevel','error','-i',raw,'-vf',filter,
         '-an','-r',String(fps),'-c:v','libx264','-preset','veryfast','-crf',crf,
-        '-pix_fmt','yuv420p','-frames:v',String(shot.frames),normalized]);
+        '-pix_fmt','yuv420p','-color_primaries','bt709','-color_trc','bt709',
+        '-colorspace','bt709','-frames:v',String(shot.frames),normalized]);
     }
     segments.push(normalized);
   }
@@ -163,7 +165,7 @@ try{
     '-c','copy','-movflags','+faststart',silent]);
   if(audio){
     await run('ffmpeg',['-y','-hide_banner','-loglevel','error','-i',silent,'-i',path.join(root,audio),
-      '-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','aac','-b:a','192k','-af','apad',
+      '-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','aac','-b:a','192k','-ar','48000','-af','apad',
       '-t',String(total/fps),'-movflags','+faststart',master]);
   }else await copyFile(silent,master);
   if(validPath(project.cover)&&existsSync(path.join(root,project.cover))){
@@ -179,6 +181,11 @@ try{
   if(!flags.has('no-review')){
     const review=await reviewRenderedVideo(slug,{mp4:master,expectAudio:!!audio});
     console.log('Review board: '+review.contactSheet+' (G5–G7 not approved)');
+    const {runQa}=await import('./studio-qa-review.mjs');
+    const results=await runQa(slug,{video:master});
+    console.log('Original QA report: '+path.join(root,'qa/report.md'));
+    console.log('QA checks: '+JSON.stringify(results.summary));
+    if(results.summary.fail>0)process.exitCode=1;
   }
   console.log('Saved '+master);
 }finally{await rm(temp,{recursive:true,force:true});}
