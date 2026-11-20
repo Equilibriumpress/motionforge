@@ -4,6 +4,7 @@ import {loadProject} from '../lib/projects.js';
 import PreviewPlayer from '../preview/PreviewPlayer.jsx';
 import TitleSequence from './TitleSequence.jsx';
 import RenderMp4 from './RenderMp4.jsx';
+import LocalExportPanel from './LocalExportPanel.jsx';
 import {acceptsBrowserRender,browserComposition,renderProps} from './render-settings.js';
 
 export default function ProjectMedia({project,coverUrl}) {
@@ -19,7 +20,7 @@ export default function ProjectMedia({project,coverUrl}) {
   },[project.id]);
   if(state.loading) return <div className="media-loading" role="status">Project laden…</div>;
   if(state.error) return <div className="media-loading" role="alert">{state.error}</div>;
-  if (!acceptsBrowserRender(state.manifest)) return <PreviewPlayer project={project} coverUrl={coverUrl}/>;
+  if (!acceptsBrowserRender(state.manifest)) return <div className="project-media"><PreviewPlayer project={project} coverUrl={coverUrl}/>{['canvas','hyperframes'].includes(state.manifest.engine) && <LocalExportPanel manifest={state.manifest}/>}</div>;
   const composition=browserComposition(state.manifest,TitleSequence);
   return (
     <div className="project-media">
