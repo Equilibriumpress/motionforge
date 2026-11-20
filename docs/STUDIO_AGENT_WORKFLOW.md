@@ -55,3 +55,12 @@ The generator does **not** write finished scripts, create a voice, download thir
 The GitHub Pages site is a read-only catalogue, editor and preview, not a trusted render agent or a ChatGPT session. ChatGPT uses the connected GitHub repository to read/write source. A working Node + dependencies + Chromium/HyperFrames + FFmpeg execution environment is needed to render and validate actual video. GitHub Actions must not render MP4.
 
 The source registry and static builder read `project.json` and `production.json`, and `ready` must not be set until G1–G7 are properly evidenced. Mixed engines remain a later production concern; MF-12B specifically scaffolds **multiple original HyperFrames templates**.
+
+
+## MF-12C / MF-12D · Voice as clock and offline render worker
+
+After G2, original skills/voice-and-timing/SKILL.md governs recording/TTS, word-level timing, captions and audio cost approval. The local helper tools/studio-voice.mjs follows this original skill and records a selected voice path in audio/voice-plan.json. It accepts user-owned recordings or previously generated, licensed local/approved-paid audio; it never performs a paid call or invents word timestamps. With a local ASR model, the original tools/word_timings.py produces actual word times. Explicit segment fallback produces estimates requiring listening review. audio/scene-cues.json resolves spoken cues per direction scene.
+
+Audio integration: node tools/studio-render.mjs <slug> --audio auto --quality draft. This requires G2/G3 approval and actual words/cues, and rejects speech longer than the video.
+
+MF-12D uses the pinned original HyperFrames CLI installed locally in render-worker/, with Node 22, FFmpeg, FFprobe and Chromium. A staged scene copy keeps original source untouched, including bundled Three.js for globes. After rendering, tools/studio-render-review.mjs verifies dimensions/FPS/duration/frame count and generates actual frame stills plus a contact sheet. The results remain REVIEW EVIDENCE, not G5/G6/G7 approval. The Pages workflow never renders MP4. See render-worker/README.md and docs/STUDIO_VOICE_AND_TIMING.md.

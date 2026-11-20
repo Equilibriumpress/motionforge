@@ -1,0 +1,13 @@
+.git/
+**/node_modules/
+**/.env
+**/.env.*
+**/__pycache__/
+**/.DS_Store
+videos/*/renders/
+videos/*/qa/board/
+videos/*/audio/
+*.mp4
+*.wav
+*.mp3
+*.mov

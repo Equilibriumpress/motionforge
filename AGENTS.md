@@ -57,3 +57,10 @@ For original template-based video requests, first read docs/STUDIO_ORIGINAL_PROD
 ## MF-12A/B · ChatGPT is Motion Director
 
 For every new or revised Studio video, read `docs/STUDIO_AGENT_WORKFLOW.md` immediately after the original `skills/motion-director/SKILL.md`. The original upstream skills are authoritative: do not write an alternative simplified skill. The companion CLI `studio/scripts/motion-director-workflow.mjs` lists original files needed per G1–G7 gate and records user-approved evidence/decisions without inventing approvals. Multiple original templates are authored through `studio/scripts/new-from-upstream.mjs --plan <video-plan.json>`, which invokes the original `new-scene.sh` for every scene. A storyboard project is a concept until actual rendered frames and QA have passed. Never claim an MP4 exists merely because a PR merged.
+
+
+## MF-12C / MF-12D · Original voice, timing and local rendering
+
+After G2, read the COMPLETE original skills/voice-and-timing/SKILL.md and docs/STUDIO_VOICE_AND_TIMING.md. Use tools/studio-voice.mjs to select silent/user-recording/local-TTS or to document paid voice cost. Never call paid TTS without explicit G3 user approval. The local helper imports a recorded voice with real or explicitly estimated word timings, captions, and spoken-word scene cues. ChatGPT must incorporate the measured cues into original seekable HyperFrames scenes before G5; writing a JSON file alone does not make the animation word-synced.
+
+For actual video frames, read render-worker/README.md and use the local worker. Run node tools/studio-render-doctor.mjs and node tools/studio-render.mjs <slug> --quality draft. HyperFrames remains the original pinned engine, the 3D scene is bundled in a staging copy, and FFmpeg/FFprobe produce actual frame evidence and contact sheets. No MP4 in GitHub Actions. Do NOT mark G5–G7 passed without a human storyboard approval, real QA and a fresh-context critic.
