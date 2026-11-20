@@ -51,6 +51,19 @@ export function originalProductionFindings(project,production,exists=()=>true){
         fail('SCENE_PROVENANCE','Invalid original MotionForge source for scene: '+item.id);
       if(!exists(item.source)||!exists(item.parameters))
         fail('SCENE_FILES','Scene source or original parameter values missing: '+item.id);
+      // An original 9:16 scene cannot silently become a 16:9 project scene.
+      // Different templates in one film may have different native formats.
+      if(item.nativeFormat && item.nativeFormat!==project.format){
+        const adapted=item.adaptation;
+        if(!adapted||adapted.targetFormat!==project.format||
+          !['draft','review','approved'].includes(adapted.status)||!adapted.notes?.trim())
+          fail('SCENE_FORMAT','Scene '+item.id+' lacks a documented original source-based '+project.format+' adaptation.');
+        else if(project.status==='ready' &&
+          (adapted.status!=='approved'||!adapted.evidence||!exists(adapted.evidence)))
+          fail('SCENE_APPROVAL','Scene '+item.id+' needs approved rendered adaptation evidence before READY.');
+      }
+      if(item.sourceSha256 && !/^[0-9a-f]{64}$/.test(item.sourceSha256))
+        fail('SOURCE_HASH','Invalid original template source hash for '+item.id);
     }
   }
   const gates=production.gates||{};
@@ -93,6 +106,10 @@ export async function checkOriginalProject(folder){
       const match=html.match(/motionforge template:\s*([a-z0-9-]+)/);
       if(match?.[1]!==item.template)findings.push({level:'FAIL',code:'REAL_SOURCE',
         reason:'Scene '+item.id+' does not contain original template source '+item.template});
+      if(prod.workflow?.agent==='ChatGPT' &&
+        (!html.includes('MF.timeline(')||!html.includes('data-composition-id')))
+        findings.push({level:'FAIL',code:'SOURCE_ENGINE',
+          reason:'Original HyperFrames timeline/stage missing: '+item.id});
       const schemaFile=path.join(path.dirname(path.join(folder,where)),'params.json');
       const schema=JSON.parse(await readFile(schemaFile,'utf8'));
       if(schema.id!==item.template)findings.push({level:'FAIL',code:'REAL_PARAMS',
