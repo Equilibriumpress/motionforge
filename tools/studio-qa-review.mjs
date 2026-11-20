@@ -100,9 +100,27 @@ export async function runQa(slug,{video=null,comparison=null,skipBrowser=false}=
  const be=await save('black-freeze.log',black.output);
  const events=parseBlackFreeze(black.output);
  if(!black.ok)pending('T3','FFmpeg black/freeze analysis unavailable.',be);
- else set('T3',events.black.length+events.freeze.length?'fail':'pass',be,
-   events.black.length+events.freeze.length?
-    'Black or frozen frame stretches need correction or documented acceptance: '+JSON.stringify(events):'');
+ else if(!events.black.length&&!events.freeze.length)set('T3','pass',be);
+ else{
+   // Original QA permits a frozen/black artistic hold only with a written reason.
+   // Explicit exceptions are tied to this render and the exact event timestamps.
+   const override=path.join(qa,'accepted-holds.json');
+   let acceptance=null;
+   if(existsSync(override)){
+     try{acceptance=JSON.parse(await readFile(override,'utf8'))}
+     catch(err){r.note+=' Invalid accepted-holds JSON: '+err.message}
+   }
+   const accepted=e=>acceptance?.renderSha256===sha&&
+     (acceptance.events||[]).some(x=>Math.abs(x.start-e.start)<.1&&
+       typeof x.reason==='string'&&x.reason.trim().length>=8);
+   const all=[...events.black,...events.freeze];
+   const reason=all.map(e=>acceptance?.events?.find(x=>
+     Math.abs(x.start-e.start)<.1)?.reason).filter(Boolean).join('; ');
+   set('T3',all.every(accepted)?'warn':'fail',
+     all.every(accepted)?'qa/accepted-holds.json':be,
+     all.every(accepted)?'Intentional holds reviewed: '+reason:
+       'Unexplained black or frozen stretches: '+JSON.stringify(events));
+ }
  const signal=run('ffmpeg',['-hide_banner','-nostats','-i',mp4,
    '-vf','signalstats,metadata=print:key=lavfi.signalstats.YAVG','-an','-f','null','-']);
  const se=await save('luminance.log',signal.output),luma=parseLuminance(signal.output),bursts=flashBursts(luma);
