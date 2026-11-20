@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 // MF-10 source provenance and original production approval gates.
 // This is a source gate, NOT a substitute for rendered-frame or audio QA.
-import {existsSync} from 'node:fs';
+import {existsSync,createReadStream} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import path from 'node:path';
+import {renderGate} from '../../tools/studio-qa-policy.mjs';
 import {fileURLToPath} from 'node:url';
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..','..');
 const slugPattern=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -117,6 +119,30 @@ export async function checkOriginalProject(folder){
     }catch(error){
       findings.push({level:'FAIL',code:'SOURCE_INSPECTION',
         reason:'Cannot verify original source and parameters for '+item.id+': '+error.message});
+    }
+  }
+  // MF-12E: a READY flag and G1–G7 evidence files do not themselves prove
+  // QA. Bind original qa-review results to the exact current rendered MP4.
+  if(manifest.status==='ready'){
+    const mp4=path.join(folder,'renders',manifest.id+'.mp4');
+    const reportFile=path.join(folder,'qa','report.json');
+    if(!existsSync(mp4)||!existsSync(reportFile)){
+      findings.push({level:'FAIL',code:'QA_RENDER',
+        reason:'READY requires a real rendered MP4 and the original qa-review report.'});
+    }else{
+      try{
+        const sha=await new Promise((resolve,reject)=>{
+          const hash=createHash('sha256'),stream=createReadStream(mp4);
+          stream.on('data',x=>hash.update(x));stream.on('error',reject);
+          stream.on('end',()=>resolve(hash.digest('hex')));
+        });
+        const report=JSON.parse(await readFile(reportFile,'utf8'));
+        const gate=renderGate(report,sha);
+        for(const reason of gate.problems)
+          findings.push({level:'FAIL',code:'QA_GATE',reason});
+      }catch(error){
+        findings.push({level:'FAIL',code:'QA_GATE',reason:'Unable to verify MP4-bound QA: '+error.message});
+      }
     }
   }
   return findings;
