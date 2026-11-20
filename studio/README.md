@@ -129,3 +129,7 @@ Measured frames, ffprobe checks and contact sheet are created for review. The wo
 ## MF-12E · Original QA and independent critic
 
 The local renderer executes the original QA runner after writing a real MP4. See docs/STUDIO_QA_REVIEW.md and scripts qa:original, qa:critic and qa:annotations in studio/package.json. A report and contact sheet are only evidence, not an automatic G5–G7 signoff. Pending human review and critic tasks remain visible; READY is blocked until the MP4-bound checks and independent critic are complete.
+
+## MF-12F · Originele HyperFrames-scènes als MP4 op GitHub Pages
+
+De projectbibliotheek toont nu een browser-MP4-export voor volledige oorspronkelijke HyperFrames-tijdlijnen. Met tab-toestemming worden de originele HTML/GSAP/Three.js-scènes via de zoekbare tijdlijnbrug geframed en lokaal als H.264/MP4 gecodeerd. Proef- en native resolutie, eigen audio, losse SRT, cover, storyboard/contact sheet, browser-QA en video-terugkijken zijn ingebouwd. Andere engines blijven de bestaande export gebruiken. Zonder getDisplayMedia of H.264-ondersteuning blijft de lokale render-worker beschikbaar. Zie docs/STUDIO_BROWSER_EXPORT.md. G5–G7 vereisen altijd aparte echte goedkeuring.
