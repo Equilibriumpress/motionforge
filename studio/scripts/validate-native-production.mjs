@@ -24,13 +24,35 @@ export function originalProductionFindings(project,production,exists=()=>true){
     fail('TEMPLATE_PARAMS','Original params.json contract not recorded.');
   if(production.selectedStyle!==style)fail('STYLE','Project style and approved source style differ.');
   if(project?.engine!==production.engine)fail('ENGINE','Production engine and project engine differ.');
-  if(project?.format!==production.originalFormat)
-    fail('FORMAT','Original template size differs from the project format. A new approved layout is required.');
+  if(project?.format!==production.originalFormat){
+    const adaptation=production.adaptation;
+    if(adaptation?.targetFormat!==project?.format||
+       !['draft','review','approved'].includes(adaptation?.status)||
+       !adaptation?.notes?.trim())
+      fail('FORMAT','Original template size differs and no documented source-based adaptation exists.');
+    else if(project?.status==='ready'&&
+      (adaptation.status!=='approved'||!adaptation.evidence||!exists(adaptation.evidence)))
+      fail('FORMAT_APPROVAL','A landscape adaptation requires approved rendered storyboard evidence before READY.');
+  }
   if(!exists('style/STYLE.md'))fail('STYLE_FILE','Project copy of the selected STYLE.md missing.');
   if(!exists(production.parameterValues))fail('PARAMETER_VALUES','Edited original parameter file missing.');
+  const sourceScene=production.sourceScene||'scenes/intro/index.html';
   if(!Array.isArray(project?.scenes)||!project.scenes.some(scene=>
-    scene.engine===production.engine&&scene.source==='scenes/intro/index.html'))
-    fail('SOURCE_SCENE','Original source scene missing from the project. Do not replace with generic Canvas.');
+    scene.engine===production.engine&&scene.source===sourceScene))
+    fail('SOURCE_SCENE','Registered original source scene missing from the project: '+sourceScene);
+  if(production.sceneTemplates!==undefined){
+    if(!Array.isArray(production.sceneTemplates)||production.sceneTemplates.length!==project?.scenes?.length)
+      fail('SCENE_PROVENANCE','Every selected original scene must have its own original template record.');
+    else for(const item of production.sceneTemplates){
+      const scene=project.scenes.find(s=>s.id===item.id);
+      if(!scene||scene.engine!=='hyperframes'||
+        scene.source!==item.source||!slugPattern.test(item.template||'')||
+        item.originalSource!=='templates/'+item.template+'/index.html')
+        fail('SCENE_PROVENANCE','Invalid original MotionForge source for scene: '+item.id);
+      if(!exists(item.source)||!exists(item.parameters))
+        fail('SCENE_FILES','Scene source or original parameter values missing: '+item.id);
+    }
+  }
   const gates=production.gates||{};
   const required=['G1','G2','G3','G4','G5','G6','G7'];
   for(const gate of required){

@@ -32,3 +32,21 @@ test('changing scene engine breaks source provenance',()=>{
   const p=project();p.scenes=[{engine:'canvas',source:'scenes/intro/index.html'}];
   assert.ok(originalProductionFindings(p,prod()).some(f=>f.code==='SOURCE_SCENE'));
 });
+
+test('16:9 adaptation is allowed only as draft with source-based design notes',()=>{
+  const p=project();p.format='16:9';
+  const d=prod();d.originalFormat='9:16';d.adaptation={
+    targetFormat:'16:9',status:'draft',notes:'Original HTML/GSAP landscape redesign; waiting for storyboard still approval.'
+  };
+  assert.deepEqual(originalProductionFindings(p,d,()=>true),[]);
+  p.status='ready';
+  assert.ok(originalProductionFindings(p,d,()=>true).some(item=>item.code==='FORMAT_APPROVAL'));
+});
+test('multiple original scene sources are allowed with full provenance',()=>{
+  const p=project();p.scenes=[{id:'globe',engine:'hyperframes',source:'scenes/globe/index.html'}];
+  const d=prod();d.sourceScene='scenes/globe/index.html';
+  d.sceneTemplates=[{id:'globe',template:'globe-arcs-3d',
+    originalSource:'templates/globe-arcs-3d/index.html',
+    source:'scenes/globe/index.html',parameters:'scenes/globe/params-values.json'}];
+  assert.deepEqual(originalProductionFindings(p,d,()=>true),[]);
+});
