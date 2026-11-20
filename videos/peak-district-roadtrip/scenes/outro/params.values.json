@@ -1,0 +1,16 @@
+{
+  "lines": [
+    "JOUW VOLGENDE",
+    "ROADTRIP?"
+  ],
+  "accentWord": "ROADTRIP",
+  "eyebrow": "CASTLETON · MAM TOR · LADYBOWER · BAKEWELL",
+  "theme": "dark",
+  "lang": "nl",
+  "fontSize": 110,
+  "start": 0.22,
+  "stagger": 0.13,
+  "underline": true,
+  "exit": false,
+  "duration": 5
+}
