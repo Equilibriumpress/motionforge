@@ -132,6 +132,8 @@ export async function prepareVoice(argv){
     status:'selected',costApproved:false,wordTiming:'none',
     scriptApproved:production.gates?.G2?.status==='passed'};
   if(o.mode==='paid-plan'){
+    assert(production.gates?.G2?.status==='passed',
+      'An approved G2 script is required before quoting any paid voice plan.');
     assert(o.provider&&o.voice&&o['price-source']&&Number.isFinite(Number(o.cost))&&Number(o.cost)>=0&&o.currency,
       'Paid-plan requires provider, voice, cost, currency and verified price-source.');
     assert(o.script&&existsSync(path.resolve(o.script)),'Paid voice cost needs a finalized text file.');
@@ -159,12 +161,18 @@ export async function prepareVoice(argv){
   if(o.mode==='local-tts'){
     assert(o.model&&o.license&&existsSync(path.resolve(o.license)),
       'Local TTS needs its model name and a local license file.');
-    info.model=o.model;info.modelLicense=path.basename(o.license);
+    const licenseText=await readFile(path.resolve(o.license),'utf8');
+    assert(licenseText.trim().length>10,'A readable local TTS model license is required.');
+    info.model=o.model;info.modelLicense='audio/local-tts-model-license.txt';
   }
   const lang=o.language||project.language;
   assert(/^[a-z]{2}(?:-[A-Z]{2})?$/.test(lang),'Language must be an ISO code.');
   const engine=o.engine||'words';
   assert(['words','segments'].includes(engine),'Choose words (real Whisper timings) or explicit segments (estimated).');
+  // faster-whisper auto-downloads model names such as "small": never do that
+  // without permission. Require a previously installed local ASR model.
+  if(engine==='words')assert(o.model&&existsSync(path.resolve(o.model)),
+    'Word-accurate ASR requires --model /existing/local/faster-whisper-model. No automatic model downloads.');
   const stage=await mkdtemp(path.join(os.tmpdir(),'mf-voice-'));
   try{
     const text=await readFile(path.resolve(o.script),'utf8');
@@ -181,7 +189,8 @@ export async function prepareVoice(argv){
     const language=lang.split('-')[0];
     run('python3',[path.join(root,'tools/word_timings.py'),path.join(stage,'voice.wav'),
       '--out',path.join(stage,'words-raw.json'),'--segments-out',path.join(stage,'segments.json'),
-      '--text',path.join(stage,'tts.txt'),'--language',language,'--engine',engine]);
+      '--text',path.join(stage,'tts.txt'),'--language',language,'--engine',engine,
+      ...(engine==='words'?['--model',path.resolve(o.model)]:[])]);
     const raw=JSON.parse(await readFile(path.join(stage,'words-raw.json'),'utf8'));
     const words=alignWords(validateWords(raw,duration),text);
     const captions=createCaptionChunks(words,project.format,duration);
@@ -199,6 +208,8 @@ export async function prepareVoice(argv){
     await mkdir(path.join(folder,'audio'),{recursive:true});
     for(const file of ['voice.wav','tts.txt','words.json','segments.json','captions.srt','scene-cues.json'])
       await copyFile(path.join(stage,file),path.join(folder,'audio',file));
+    if(o.mode==='local-tts')
+      await copyFile(path.resolve(o.license),path.join(folder,'audio','local-tts-model-license.txt'));
     await writeFile(existing,json(info));
     return info;
   }finally{await rm(stage,{recursive:true,force:true});}
