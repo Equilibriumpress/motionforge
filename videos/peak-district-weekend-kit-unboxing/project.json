@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "peak-district-weekend-kit-unboxing",
+  "title": "PEAK DISTRICT · THE WEEKEND KIT",
+  "description": "Fictieve Unboxing Pop-conceptvideo. G1/G2 ter goedkeuring, zonder originele scène-HTML of MP4.",
+  "status": "concept",
+  "language": "nl",
+  "format": "16:9",
+  "engine": "hyperframes",
+  "durationSeconds": 30,
+  "fps": 30,
+  "tags": [
+    "unboxing-pop",
+    "product-concept",
+    "peak-district",
+    "16:9",
+    "original-motionforge"
+  ],
+  "styleId": "unboxing-pop",
+  "templateId": "product-turntable-3d",
+  "scenes": []
+}

@@ -1,0 +1,161 @@
+{
+  "slug": "peak-district-weekend-kit-unboxing",
+  "title": "PEAK DISTRICT · THE WEEKEND KIT",
+  "description": "Fictieve productunboxing. G1/G2-voorstel; geen echte scènes of MP4 gerenderd.",
+  "stage": "G1_G2_proposal_not_scaffoldable",
+  "language": "nl",
+  "format": "16:9",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationSeconds": 30,
+  "style": "unboxing-pop",
+  "storyFormat": 8,
+  "brief": {
+    "goal": "Toon in 30 seconden de inhoud van een fictieve Weekend Kit",
+    "audience": "Nederlandstalige roadtrip- en wandelliefhebbers",
+    "platform": "YouTube, website en social media in 16:9",
+    "tone": "Speels, karton, stickers en duidelijke productvormen"
+  },
+  "direction": {
+    "concept": "Een fictieve Peak District Weekend Kit onthult achtereenvolgens vier reisproducten, met de verpakking steeds centraal.",
+    "visualRule": "Vaste top-down kraftdoos links en productnamen rechts; wit stickerpapier, donkere inkt, roze slechts op twee labels per frame, geel uitsluitend bij producttellingen; Rubik-typografie.",
+    "motif": "Roze die-cut sticker: vraag in hook, naamsticker bij producten, CTA op het slot."
+  },
+  "hooks": [
+    {
+      "type": "curiosity",
+      "text": "Wat zit er in deze Weekend Kit?"
+    },
+    {
+      "type": "count",
+      "text": "Vier onderdelen in één Peak District-doos."
+    },
+    {
+      "type": "product",
+      "text": "Dit zit in onze fictieve Peak District Weekend Kit."
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Vier producten in een fictieve demonstratiekit",
+      "source": "script.md"
+    },
+    {
+      "claim": "Mam Tor is een echte locatie in het Peak District",
+      "source": "https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/kinder-edale-and-the-high-peak/mam-tor-circular-walk"
+    }
+  ],
+  "proposedScenes": [
+    {
+      "id": "hook",
+      "title": "Wat zit er in de kit?",
+      "template": "kinetic-title",
+      "start": 0,
+      "end": 4,
+      "hero": "De gesloten kraftdoos en een roze vraagsticker",
+      "layout": "Volledig 16:9: doos links, headline op witte sticker rechts",
+      "entrance": "Originele GSAP woordopbouw plus conceptsticker",
+      "onScreenText": "WAT ZIT ER IN DE BOX?",
+      "narration": "Wat zit er in deze Weekend Kit?",
+      "custom": "Rubik 900 en Unboxing Pop-stickers door gerichte bronaanpassing",
+      "durationSeconds": 4,
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "nativeFormat": "9:16",
+      "requiredAdaptation": "Original HTML / GSAP / Three.js source redesign to 1920×1080 before calling new-from-upstream.mjs --plan"
+    },
+    {
+      "id": "box-open",
+      "title": "Open de verpakking",
+      "template": "product-turntable-3d",
+      "start": 4,
+      "end": 10,
+      "hero": "Doos met vier afzonderlijk openvouwende kleppen",
+      "layout": "Echte 1920×1080-top-down WebGL-scène, kraftondergrond, doos links",
+      "entrance": "Vier flaps 0→-170° 0,35s met 0,08s stagger, tissue wipe, eerste item squash",
+      "onScreenText": "KIJK WAT ERIN ZIT",
+      "narration": "De doos gaat open. Kijk mee.",
+      "custom": "Originele Three.js hf-seek en GSAP behouden, product-turntable-speaker vervangen door geparametriseerde kartonnen doos en scharnierende flaps",
+      "durationSeconds": 6,
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "nativeFormat": "9:16",
+      "requiredAdaptation": "Original HTML / GSAP / Three.js source redesign to 1920×1080 before calling new-from-upstream.mjs --plan"
+    },
+    {
+      "id": "item-reveal",
+      "title": "De vier onderdelen",
+      "template": "product-turntable-3d",
+      "start": 10,
+      "end": 19,
+      "hero": "Reisgids, wandelkaart, Mam Tor-kaart, stickervel",
+      "layout": "Vaste top-down camera, uitkomende producten links en naamstickers rechts",
+      "entrance": "Per item 220px rise, squash 1.08/0.92, sticker slap 1.6→1, overshoot en stagger",
+      "onScreenText": "REISGIDS · WANDELKAART · MAM TOR · STICKERS",
+      "narration": "Een reisgids, een wandelkaart, een Mam Tor-ansichtkaart en een stickervel.",
+      "custom": "Originele 3D-productscène uitbreiden tot vier verschillende vormen; geen dummy-speaker; tekstlabels stickers zonder productoverlap",
+      "durationSeconds": 9,
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "nativeFormat": "9:16",
+      "requiredAdaptation": "Original HTML / GSAP / Three.js source redesign to 1920×1080 before calling new-from-upstream.mjs --plan"
+    },
+    {
+      "id": "contents",
+      "title": "Dit zit erin",
+      "template": "checklist-reveal",
+      "start": 19,
+      "end": 25,
+      "hero": "Vier zichtbare onderdelen naast de geopende doos",
+      "layout": "Volledige flatlay links en rechts een checklist met 4 productnamen",
+      "entrance": "Oorspronkelijke getimede GSAP-checklist naast echte producten",
+      "onScreenText": "4 ONDERDELEN · ÉÉN WEEKEND KIT",
+      "narration": "Vier onderdelen voor je Peak District-weekend.",
+      "custom": "Originele checklist behouden, layout herontwerpen naar 1920×1080 en unboxing stickers",
+      "durationSeconds": 6,
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "nativeFormat": "9:16",
+      "requiredAdaptation": "Original HTML / GSAP / Three.js source redesign to 1920×1080 before calling new-from-upstream.mjs --plan"
+    },
+    {
+      "id": "outro",
+      "title": "Bewaar het idee",
+      "template": "kinetic-title",
+      "start": 25,
+      "end": 30,
+      "hero": "Complete kit met roze CTA-sticker",
+      "layout": "Box- en productflatlay links, CTA-sticker rechts, laatste frame minstens 1s hold",
+      "entrance": "Originele GSAP titelopbouw met roze sticker-slap, rustige eindhold",
+      "onScreenText": "PEAK DISTRICT · THE WEEKEND KIT\nBEWAAR DIT IDEE",
+      "narration": "Welk onderdeel kies jij eerst? Bewaar dit idee.",
+      "custom": "Origineel kinetic-title-template herontwerpen naar 16:9 en Unboxing Pop typografie",
+      "durationSeconds": 5,
+      "nativeSize": [
+        1080,
+        1920
+      ],
+      "nativeFormat": "9:16",
+      "requiredAdaptation": "Original HTML / GSAP / Three.js source redesign to 1920×1080 before calling new-from-upstream.mjs --plan"
+    }
+  ],
+  "cover": {
+    "template": "cover-still",
+    "role": "optional 16:9 thumbnail, not a timed scene",
+    "nativeSize": [
+      1080,
+      1920
+    ],
+    "requiresSourceAdaptation": true
+  },
+  "next": "User approval G1/G2. Then author 16:9 adapted original scene HTML with provenance and create the runnable video-plan.json, scaffold via original generator. Current file is a proposal, NOT a runnable CLI plan."
+}
