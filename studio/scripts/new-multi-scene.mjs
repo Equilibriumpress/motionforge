@@ -63,6 +63,12 @@ export function validateVideoPlan(plan,specs){
     'A complete five-line brief needs goal, audience, platform and tone.');
   assert(isObject(plan.direction)&&['concept','visualRule','motif'].every(k=>nonempty(plan.direction[k])),
     'Specify concept, visualRule and recurring motif for direction.json.');
+  assert(Array.isArray(plan.hooks)&&plan.hooks.length>=2&&plan.hooks.length<=3&&
+    plan.hooks.every(h=>isObject(h)&&nonempty(h.type)&&nonempty(h.text)),
+    'Provide 2–3 authored, differently framed hook options with type and text.');
+  assert(Array.isArray(plan.claims)&&plan.claims.every(c=>isObject(c)&&nonempty(c.claim)&&
+    (nonempty(c.source)||c.status==='needs-verification')),
+    'Provide a factual claim list. Each claim needs a source or needs-verification status.');
   assert(Array.isArray(plan.scenes)&&plan.scenes.length>=3&&plan.scenes.length<=30,
     'Provide 3–30 scenes: original MotionForge direction requires a recurring motif in at least three scenes.');
   assert(!Object.hasOwn(plan,'paidCalls')||plan.paidCalls===false,
@@ -79,8 +85,8 @@ export function validateVideoPlan(plan,specs){
     assert(spec,'Scene '+scene.id+': original template contract is missing.');
     assert(frameValue(scene.durationSeconds,fps),
       'Scene '+scene.id+': duration must be >=1s and align exactly with '+fps+' fps.');
-    assert(isObject(scene.direction)&&['layout','entrance','hero','onScreenText','cue','motifRole'].every(k=>nonempty(scene.direction[k])),
-      'Scene '+scene.id+': explicit cue, layout, entrance, hero, onScreenText and motifRole required.');
+    assert(isObject(scene.direction)&&['layout','entrance','hero','onScreenText','cue','motifRole','narration'].every(k=>nonempty(scene.direction[k])),
+      'Scene '+scene.id+': provide cue, layout, entrance, hero, onScreenText, narration and motifRole.');
     motifRoles.push(scene.direction.motifRole);
     const native=templateFormat(spec.size),params=normalizedParams(plan,scene,spec);
     verifyContract(spec,{template:scene.template,format:native,duration:scene.durationSeconds,params});
@@ -268,7 +274,23 @@ export async function scaffoldMultiScene(argv){
       'Platform + format: '+p.brief.platform+' · '+p.format+' ('+dims.join('×')+')',
       'Length: '+p.durationSeconds+' seconds · '+p.fps+' fps','Tone + brand: '+p.brief.tone+' · '+p.style
     ].join('\n')+'\n');
-    await writeFile(path.join(staging,'script.md'),'# '+p.title+'\n\nStatus: concept. The agent must use skills/script-and-hooks/SKILL.md for hook options, script, scene table and sourced claim list. G2 remains pending until explicit approval.\n');
+    const draftScript=[
+      '# '+p.title+' · SCRIPT CONCEPT',
+      '', 'Status: not approved. Follow skills/script-and-hooks/SKILL.md and request explicit G2 approval.',
+      '', '## Hook options (proposals, not user-approved)',
+      ...p.hooks.map((h,i)=>(i+1)+'. '+h.type+': '+h.text),
+      '', '## Timed narration and visual plan',
+      '| Time | Scene | Narration (draft) | On screen |',
+      '|---|---|---|---|',
+      ...p.scenes.map(s=>'| '+s.startSeconds.toFixed(2)+'–'+(s.startSeconds+s.durationSeconds).toFixed(2)+
+        's | '+s.id+' | '+s.direction.narration.replaceAll('|','/')+
+        ' | '+s.direction.onScreenText.replaceAll('|','/')+' |'),
+      '', '## Factual claims (independent verification required)',
+      ...(p.claims.length?p.claims.map(c=>'- '+c.claim+' — '+(c.source||'SOURCE REQUIRED')):['- None identified in this fictional concept. Confirm before G2.']),
+      '', 'Word-level timing is only assigned after a real voice is recorded; times above are estimates.',
+      ''
+    ].join('\n');
+    await writeFile(path.join(staging,'script.md'),draftScript);
     await writeFile(path.join(staging,'decisions.md'),'# Production decisions\n\nOriginal MotionForge templates: '+
       refs.map(r=>r.template).join(', ')+'.\nAll G1–G7 stages are pending. No voice, sound or paid calls were made. Source assets may be sample material: review rights and replace before delivery.\n');
     await writeFile(path.join(staging,'assets/CREDITS.md'),'# Original MotionForge source and media review\n\n'+
