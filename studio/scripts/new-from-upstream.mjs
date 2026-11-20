@@ -140,6 +140,15 @@ export async function scaffold(argv){
         if(!existsSync(path.join(scene,file)))throw Error('Original 3D runtime missing: '+file);
       }
     }
+    // Missing upstream font files are not silently accepted: otherwise a
+    // scene differs from its original style despite technically rendering.
+    const baseCss=await readFile(path.join(scene,'assets/base.css'),'utf8');
+    const expectedFonts=[...new Set([...baseCss.matchAll(/fonts\/([^"'()]+\.woff2)/g)].map(match=>match[1]))];
+    for(const font of expectedFonts){
+      if(!existsSync(path.join(scene,'assets','fonts',font)))throw Error('Required original template font missing: '+font+
+        '. Install @fontsource packages in studio and retry.');
+    }
+    await rm(path.join(scene,'preview.gif'),{force:true}); // upstream GIF stays in templates/, not duplicated in every project
     if(template==='globe-arcs-3d')for(const f of ['assets/vendor/land-50m.json','assets/vendor/topojson-client.min.js']){
       if(!existsSync(path.join(scene,f)))throw Error('Globe requires original map dependency: '+f);
     }
