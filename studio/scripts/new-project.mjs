@@ -26,11 +26,12 @@ const [width,height]=formats[format];
 const xml=text=>text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 const scene={id:'intro',title:'Opening',startSeconds:0,durationSeconds:duration,engine:'canvas',source:'scenes/intro/index.html'};
 const project={schemaVersion:1,id:slug,title,description:'Conceptvideo, uit te werken in ChatGPT.',status:'concept',language,format,engine:'canvas',durationSeconds:duration,fps,cover:'assets/cover.svg',tags:['concept'],scenes:[scene]};
+const safeJsTitle=JSON.stringify(title).replace(/</g, '\\u003c');
 const sceneHtml='<!doctype html><html lang="'+language+'"><head><meta charset="utf-8"><style>html,body{margin:0;background:#0e1622}canvas{display:block;width:100%;height:100%}</style></head><body><canvas id="c" width="'+width+'" height="'+height+'"></canvas><script>'+
   'const c=document.querySelector("#c"),g=c.getContext("2d");'+
   'window.DUR='+duration+';window.SIZE=['+width+','+height+'];'+
-  'window.render=t=>{g.fillStyle="#0e1622";g.fillRect(0,0,c.width,c.height);g.globalAlpha=Math.max(0,Math.min(1,t));g.fillStyle="#f5f7fa";g.font="bold '+Math.max(42,Math.round(width/24))+'px system-ui";g.fillText('+JSON.stringify(title)+',Math.round(c.width*.08),Math.round(c.height*.5));g.globalAlpha=1};'+
-  'window.TEXTS=t=>t<.1?[]:[{id:"title",text:'+JSON.stringify(title)+',x0:0,y0:0,x1:c.width,y1:c.height}];'+
+  'window.render=t=>{g.fillStyle="#0e1622";g.fillRect(0,0,c.width,c.height);g.globalAlpha=Math.max(0,Math.min(1,t));g.fillStyle="#f5f7fa";g.font="bold '+Math.max(42,Math.round(width/24))+'px system-ui";g.fillText('+safeJsTitle+',Math.round(c.width*.08),Math.round(c.height*.5));g.globalAlpha=1};'+
+  'window.TEXTS=t=>t<.1?[]:[{id:"title",text:'+safeJsTitle+',x0:0,y0:0,x1:c.width,y1:c.height}];'+
   'window.render(0);window.READY=true;</script></body></html>\n';
 const cover='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+width+' '+height+'"><rect width="'+width+'" height="'+height+'" fill="#0e1622"/><text x="'+width*.08+'" y="'+height*.5+'" fill="#f5f7fa" font-family="system-ui" font-weight="700" font-size="'+Math.max(40,width/24)+'">'+xml(title)+'</text></svg>\n';
 const json=v=>JSON.stringify(v,null,2)+'\n';
