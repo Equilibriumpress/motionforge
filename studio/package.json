@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
     "dev": "vite --host 0.0.0.0",
-    "prebuild": "node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
+    "prebuild": "node --test src/preview/stage-fill.test.mjs && node scripts/build-project-index.mjs && node scripts/build-motion-catalog.mjs",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "new:project": "node scripts/new-project.mjs",
