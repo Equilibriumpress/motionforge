@@ -223,6 +223,33 @@ export async function runQa(slug,{video=null,comparison=null,skipBrowser=false}=
   ['H2','User must confirm every marked factual claim.'],
   ['H3','User must verify names and number pronunciation.']])
    pending(id,reason,'qa/phone.png');
+
+ // Manual observations and external critic belong to a particular MP4.
+ // Reuse them only when SHA matches and their evidence still exists.
+ const manual=path.join(qa,'manual-annotations.json');
+ if(existsSync(manual)){
+  try{
+   const record=JSON.parse(await readFile(manual,'utf8'));
+   if(record.renderSha256===sha){
+    const allowed=new Set(['X2','X4','X5','X6','X7','X8','X9','X10',
+      'P1','P4','P5','P6','P7','P8','A2','A3','A5','H1','H2','H3']);
+    for(const [id,entry] of Object.entries(record.items||{})){
+     if(allowed.has(id)&&entry.evidence&&safe(entry.evidence)&&
+       existsSync(path.join(folder,entry.evidence)))
+       r.checks[id]=checkRecord(id,entry.status,entry.evidence,entry.reason||'');
+    }
+   }
+  }catch(err){r.note+=' Invalid manual QA annotations: '+err.message;}
+ }
+ const oldReport=path.join(qa,'report.json'),criticFile=path.join(qa,'critic-review.json');
+ if(existsSync(oldReport)&&existsSync(criticFile)){
+  try{
+   const old=JSON.parse(await readFile(oldReport,'utf8'));
+   if(old.render?.sha256===sha&&old.critic?.status==='completed'&&
+     old.critic.renderSha256===sha&&old.critic.freshContextConfirmed===true&&
+     old.critic.unresolvedFixes===0)r.critic=old.critic;
+  }catch(err){r.note+=' Previous critic evidence unreadable: '+err.message;}
+ }
  r.summary=summarizeChecks(r.checks);
  await writeFile(path.join(qa,'report.json'),JSON.stringify(r,null,2)+'\n');
  await writeFile(path.join(qa,'report.md'),reportMd(r));
