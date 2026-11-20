@@ -16,12 +16,27 @@
     if (!root) return;
     const w = Number(root.dataset.width), h = Number(root.dataset.height);
     if (!(w > 0 && h > 0)) return;
-    const z = Math.min(innerWidth / w, innerHeight / h);
-    Object.assign(root.style, {transformOrigin:'top left',transform:'scale(' + z + ')',
-      position:'absolute',left:Math.max(0,(innerWidth-w*z)/2)+'px',
-      top:Math.max(0,(innerHeight-h*z)/2)+'px',margin:'0'});
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
+    // The iframe's actual visible viewport is the video canvas.
+    // Never fit the original video inside an already letterboxed HTML wrapper.
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const z = Math.min(vw / w, vh / h);
+    Object.assign(root.style, {
+      transformOrigin:'top left',
+      transform:'scale(' + z + ')',
+      position:'absolute',
+      width:w+'px',height:h+'px',
+      left:((vw-w*z)/2)+'px',top:((vh-h*z)/2)+'px',margin:'0'
+    });
+    document.documentElement.style.overflow='hidden';
+    document.body.style.overflow='hidden';
+  }
+  function stageGeometry(){
+    const root=document.querySelector('[data-composition-id]');
+    if(!root)return null;
+    const rect=root.getBoundingClientRect();
+    return {nativeWidth:Number(root.dataset.width),nativeHeight:Number(root.dataset.height),
+      viewportWidth:window.innerWidth,viewportHeight:window.innerHeight,
+      width:rect.width,height:rect.height,left:rect.left,top:rect.top};
   }
   async function draw(t,requestId=null) {
     pending = {seconds:Math.max(0,Number(t)||0),requestId};
@@ -41,7 +56,7 @@
         // Export requests need a completed browser paint, including 3D WebGL.
         if(requestId!==null)
           await new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)));
-        send('frame',{seconds,requestId});
+        send('frame',{seconds,requestId,stage:stageGeometry()});
       } catch (error) {
         send('error',{message:String(error?.message || error),requestId});
         break;
@@ -59,7 +74,7 @@
     }
     resizeStage();
     ready = true;
-    send('ready');
+    send('ready',{stage:stageGeometry()});
     draw(0);
   }
   init.attempts = 0;
@@ -67,7 +82,7 @@
   window.addEventListener('message',event => {
     if (event.source !== window.parent || event.data?.type !== 'MF_PREVIEW') return;
     if (event.data.kind === 'seek') draw(event.data.seconds,event.data.requestId);
-    if (event.data.kind === 'ping' && ready) send('ready');
+    if (event.data.kind === 'ping' && ready) send('ready',{stage:stageGeometry()});
   });
   if (document.readyState === 'complete') init();
   else window.addEventListener('load',init,{once:true});
