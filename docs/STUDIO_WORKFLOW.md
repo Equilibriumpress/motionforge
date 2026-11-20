@@ -59,3 +59,12 @@ When creating a book trailer, walking route, data story or app preview, use the 
 The generated three-scene storyboard is an editable starter, not completed editorial content. Replace placeholder titles, sample data and mock UI with approved content. For real route animations use verified GPX/GeoJSON and a documented, properly projected map.
 
 Before opening a PR, run node tools/studio-qa.mjs <slug>. A full media review is still required before a project is marked ready. QA must flag missing files, overlaps, frame timing problems, non-deterministic code and incomplete credits.
+
+
+## MF-09: Existing upstream style and scene selection
+
+For a Studio prompt with a chosen style, read the complete original specification under skills/style-library/styles/<selected-style>/STYLE.md. For every selected scene read the exact source directory under templates/<selected-scene>/, including params.json and engine requirements. Do not re-create an approximate version from the GIF alone.
+
+Keep the chosen style consistent across scenes. Use one brand kit, project timeline, fps and aspect ratio. Check sources of claims, maps, statistics, screenshots, music and footage before publication. Read 3D engine requirements for any 3D scene.
+
+The static Studio site copies a prompt, but does not submit GitHub commits or start video renders. Complete the work via the GitHub connector, create a PR, run the relevant QA and preserve the existing approval gates.

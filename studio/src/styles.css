@@ -243,3 +243,14 @@ h1 em{font-style:normal;color:#a9f0ad}
 @media(max-width:790px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.catalog-brief{grid-template-columns:1fr 1fr}.catalog-brief label:first-child{grid-column:1/-1}.catalog-selected{grid-template-columns:1fr}.catalog-composer-header{flex-wrap:wrap}}
 @media(max-width:520px){.catalog-grid{grid-template-columns:1fr}.catalog-composer{padding:16px}.catalog-card-preview{height:185px}.catalog-toolbar label{width:100%}.catalog-brief{grid-template-columns:1fr}.catalog-brief label:first-child{grid-column:auto}.catalog-counter{margin-left:0}.catalog-tab{padding:11px 10px;font-size:12px}.catalog-composer-header h3{font-size:22px}}
 @media(prefers-reduced-motion:reduce){.catalog-card-preview img{display:none}.catalog-card-preview:after{content:'Animatievoorbeeld via bron';color:#9db3bf;font-size:12px}}
+
+
+/* MF-09: catalog navigation and library shortcut */
+.catalog-route{padding:2px 0 50px}
+.catalog-entry{display:flex;align-items:center;justify-content:space-between;gap:24px;border:1px solid #405765;background:linear-gradient(125deg,#1a2f38,#101d29);border-radius:16px;padding:24px;margin-top:40px}
+.catalog-entry h2{font-size:24px;letter-spacing:-.035em;margin:8px 0}
+.catalog-entry p{max-width:640px;color:#a7bac7;font-size:13px;line-height:1.6}
+.catalog-entry .button{flex-shrink:0;font-size:13px}
+@media(max-width:920px){.topbar-inner{gap:18px}.navigation{gap:15px}}
+@media(max-width:740px){.catalog-entry{flex-direction:column;align-items:flex-start}.nav-about{display:none}}
+@media(max-width:430px){.brand-name{font-size:13px}.navigation{gap:8px}.nav-item{font-size:11px}}

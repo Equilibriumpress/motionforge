@@ -43,3 +43,8 @@ For requests to publish or edit a MotionForge Studio project, read docs/STUDIO_W
 ## Studio templates and QA (MF-08)
 
 When a Studio video fits a book trailer, walking route, infographic or app-preview format, consult docs/STUDIO_TEMPLATES.md and use the reusable source template in studio/project-templates. Run node tools/studio-qa.mjs <slug> before opening a project PR. Do not publish schematic route drawings as genuine maps, demo numbers as real statistics, or concept UI as real app screenshots. Maintain all motion-director approvals and licensing checks.
+
+
+## Original MotionForge style/scene selection (MF-09)
+
+When a Studio project uses chosen style and scene IDs, read docs/STUDIO_UPSTREAM_CATALOG.md and the exact STYLE.md and template source files before authoring. A style is a design specification; a GIF is only an animated preview. Existing motion-director approvals, asset rights, project manifests and QA still apply.
