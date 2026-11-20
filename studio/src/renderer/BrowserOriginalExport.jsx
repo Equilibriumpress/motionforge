@@ -27,10 +27,8 @@ export default function BrowserOriginalExport({manifest}){
   if(!basic.ok){setSupport(basic);return()=>{controller.current?.abort()};}
   const check=async()=>{
    try{
-    const [w,h]=[1920,1080];
-    const [width,height]=manifest.format==='9:16'?[1080,1920]:
-      manifest.format==='1:1'?[1080,1080]:
-      manifest.format==='4:5'?[1080,1350]:[w,h];
+    const plan=exportPlan(manifest,{quality});
+    const {width,height}=plan;
     const result=await VideoEncoder.isConfigSupported({
      codec:'avc1.42E028',width,height,framerate:manifest.fps,bitrate:8000000
     });
@@ -42,7 +40,7 @@ export default function BrowserOriginalExport({manifest}){
   };
   check();
   return()=>{active=false;controller.current?.abort()};
- },[manifest.fps,manifest.format]);
+ },[manifest.fps,manifest.format,manifest.id,quality]);
  useEffect(()=>{
   if(!result?.sheet||!result?.mp4){setSheetUrl('');setVideoUrl('');return}
   const sheet=URL.createObjectURL(result.sheet);
@@ -113,6 +111,7 @@ export default function BrowserOriginalExport({manifest}){
    {error&&<p className="export-error" role="alert">{error}</p>}
    {result&&<div className="browser-render-result" role="status">
     <p className="export-done">MP4 opgenomen: {result.report.output.encodedFrames} frames. Controleer het resultaat en keur G5–G7 afzonderlijk goed.</p>
+    {result.report.output.upscaled&&<p className="export-error">De browser leverde minder bronpixels dan de gekozen uitvoerresolutie. Het resultaat is opgeschaald. Gebruik een groter browservenster of de lokale renderer voor een native export.</p>}
     {videoUrl&&<video className="browser-render-playback" src={videoUrl} controls playsInline
       aria-label="Bekijk de gerenderde MotionForge MP4"/>}
     {sheetUrl&&<img className="browser-contact-preview" src={sheetUrl} alt="Contact sheet van de werkelijk opgenomen scènes"/>}

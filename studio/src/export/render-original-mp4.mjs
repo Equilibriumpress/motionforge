@@ -225,7 +225,7 @@ export async function renderOriginalMp4(manifest,{
   if(audio)audioTask=audioSource.add(audio); // concurrently produce the two MP4 tracks
   const picks=sampleFrames(plan),selected=new Map(picks.map((f,i)=>[f,i]));
   const sheet=sheetCanvas(plan,picks);
-  let coverBlob=null,active=null,iframe=null;
+  let coverBlob=null,active=null,iframe=null,captureResolution=null;
   const base=import.meta.env.BASE_URL;
   for(let frame=0;frame<plan.frameCount;frame++){
    checkAbort(abort.signal,track);
@@ -237,6 +237,8 @@ export async function renderOriginalMp4(manifest,{
    await seekScene(iframe,moment.localSeconds,'frame-'+frame,abort.signal);
    await capturedPaint(video,abort.signal);
    checkAbort(abort.signal,track);
+   if(frame===0)captureResolution=captureCrop(video.videoWidth,video.videoHeight,
+     window.innerWidth,window.innerHeight,screen.stage.getBoundingClientRect());
    drawCurrent(video,screen.stage,canvas);
    if(frame===0)coverBlob=await blobCanvas(canvas);
    if(selected.has(frame))sheet.add(canvas,selected.get(frame),frame);
@@ -257,7 +259,11 @@ export async function renderOriginalMp4(manifest,{
    schemaVersion:1,project:plan.id,format:plan.format,source:'browser-tab-capture-original-scenes',
    output:{width:plan.width,height:plan.height,fps:plan.fps,
     requestedFrames:plan.frameCount,encodedFrames:plan.frameCount,
-    durationSeconds:plan.durationSeconds,bytes:mp4.size,videoCodec:'avc',audio:!!audio},
+    durationSeconds:plan.durationSeconds,bytes:mp4.size,videoCodec:'avc',audio:!!audio,
+    capturePixelWidth:Math.round(captureResolution?.width||0),
+    capturePixelHeight:Math.round(captureResolution?.height||0),
+    upscaled:!!captureResolution&&(captureResolution.width<plan.width*.95||
+      captureResolution.height<plan.height*.95)},
    scenes:plan.scenes.map(s=>({id:s.id,startFrame:s.startFrame,frames:s.frames,source:s.source})),
    originalSkill:'skills/qa-review/SKILL.md',
    qa:{status:'requires-review',G5:'pending',G6:'pending',G7:'pending',
