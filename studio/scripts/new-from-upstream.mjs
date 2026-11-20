@@ -80,12 +80,13 @@ export async function scaffold(argv){
   for(const file of [specPath,templateHtml,stylePath])if(!existsSync(file))throw Error('Missing original MotionForge source: '+file);
   const spec=JSON.parse(await readFile(specPath,'utf8'));
   const format=opt.get('format')||templateFormat(spec.size);
-  const duration=Number(opt.get('duration')||spec.parameters?.duration?.default||0);
+  if(!FORMATS[format])throw Error('Studio project requires a supported format: 9:16, 16:9, 1:1 or 4:5');
   let inputs={};
   if(opt.has('params')){
     inputs=JSON.parse(await readFile(path.resolve(opt.get('params')),'utf8'));
     if(!inputs||Array.isArray(inputs)||typeof inputs!=='object')throw Error('--params must be a JSON object');
   }
+  const duration=Number(opt.get('duration')??inputs.duration??spec.parameters?.duration?.default??0);
   const overrides={...inputs};
   if(spec.parameters.lang&&!('lang' in overrides))overrides.lang=lang;
   if(spec.parameters.title&&!('title' in overrides))overrides.title=title;
