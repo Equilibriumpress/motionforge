@@ -2,6 +2,7 @@
 // Builds the static GitHub Pages project registry from videos/<slug>/project.json.
 // Generated files live only in studio/public/projects/ and are never committed.
 import path from 'node:path';
+import {prepareGlobeScene} from './prepare-globe-scene.mjs';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
 import { copyFile, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
@@ -153,6 +154,9 @@ async function build() {
         const dst=path.join(targetDir,scene.source);
         requireCondition(existsSync(dst),scene.source,'scene unavailable for preview');
         if (scene.engine==='hyperframes') await ensureHyperFramesAssets(dst);
+        if (scene.engine==='hyperframes' && (await readFile(dst,'utf8')).includes('motionforge template: globe-arcs-3d')) {
+          await prepareGlobeScene(path.dirname(dst),{preview:true});
+        }
         const html=await readFile(dst,'utf8');
         requireCondition(/<\/body>/i.test(html),scene.source,'HTML missing closing body tag');
         await writeFile(dst,html.replace(/<\/body>/i,'<script>\n'+BRIDGE.replace(/<\/script/gi,'<\\/script')+'\n</script></body>'));
